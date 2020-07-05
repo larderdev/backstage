@@ -247,6 +247,7 @@ const WebsiteEntityPage = ({ entity }: { entity: Entity }) => (
     />
   </EntityPageLayout>
 );
+
 const DefaultEntityPage = ({ entity }: { entity: Entity }) => (
   <EntityPageLayout>
     <EntityPageLayout.Content

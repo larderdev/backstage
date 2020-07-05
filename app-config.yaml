@@ -165,11 +165,6 @@ scaffolder:
       baseUrl: https://gitlab.com
       token:
         $env: GITLAB_TOKEN
-  azure:
-    baseUrl: https://dev.azure.com/{your-organization}
-    api:
-      token:
-        $env: AZURE_TOKEN
 
 auth:
   providers:
