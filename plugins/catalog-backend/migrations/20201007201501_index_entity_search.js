@@ -22,7 +22,7 @@
 exports.up = async function up(knex) {
   await knex.schema.alterTable('entities_search', table => {
     table.index(['key'], 'entities_search_key');
-    table.index(['value'], 'entities_search_value');
+    // table.index(['value'], 'entities_search_value');
   });
 };
 
@@ -32,6 +32,6 @@ exports.up = async function up(knex) {
 exports.down = async function down(knex) {
   await knex.schema.alterTable('entities_search', table => {
     table.dropIndex('', 'entities_search_key');
-    table.dropIndex('', 'entities_search_value');
+    // table.dropIndex('', 'entities_search_value');
   });
 };
