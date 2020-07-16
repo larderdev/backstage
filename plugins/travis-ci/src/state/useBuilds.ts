@@ -17,9 +17,24 @@
 import { errorApiRef, useApi } from '@backstage/core';
 import { useCallback, useEffect, useState } from 'react';
 import { useAsyncRetry } from 'react-use';
-import { travisCIApiRef } from '../api/index';
+import { travisCIApiRef, TravisCIBuildResponse } from '../api/index';
 import { BASE_URL } from '../api/constants';
 import { useSettings } from './useSettings';
+
+type Build = {
+  id: string;
+  buildName: string;
+  onRestartClick: () => false | Promise<void>;
+  source: {
+    branchName: string;
+    commit: {
+      hash: string;
+      url: string;
+    };
+  };
+  status: string;
+  buildUrl: string;
+};
 
 const makeReadableStatus = (status: string | undefined) => {
   if (!status) return '';
@@ -43,16 +58,15 @@ const makeReadableStatus = (status: string | undefined) => {
 };
 
 export const transform = (
-  buildsData: any[],
+  buildsData: TravisCIBuildResponse[],
   restartBuild: { (buildId: number): Promise<void> },
-): any[] => {
+): Build[] => {
   return buildsData.map(buildData => {
-    const tableBuildInfo: any = {
+    const tableBuildInfo = {
       id: String(buildData.id),
       buildName: buildData.number,
       onRestartClick: () =>
-        typeof buildData.build_num !== 'undefined' &&
-        restartBuild(buildData.build_num),
+        typeof buildData.id !== 'undefined' && restartBuild(buildData.id),
       source: {
         branchName: String(buildData.branch.name),
         commit: {
@@ -63,8 +77,6 @@ export const transform = (
       status: makeReadableStatus(buildData.state),
       buildUrl: `${BASE_URL}${buildData['@href']}`,
     };
-
-    console.log('tableBuildInfo', tableBuildInfo);
 
     return tableBuildInfo;
   });
@@ -100,11 +112,6 @@ export function useBuilds() {
     try {
       await api.retry(buildId, {
         token: token,
-        vcs: {
-          owner: owner,
-          repo: repo,
-          type: 'github',
-        },
       });
     } catch (e) {
       errorApi.post(e);

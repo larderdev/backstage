@@ -52,11 +52,6 @@ export function useBuildWithSteps(buildId: number) {
     try {
       await api.retry(buildId, {
         token: token,
-        vcs: {
-          owner: owner,
-          repo: repo,
-          type: 'github',
-        },
       });
     } catch (e) {
       errorApi.post(e);

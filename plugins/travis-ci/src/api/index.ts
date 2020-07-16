@@ -22,17 +22,80 @@ export const travisCIApiRef = createApiRef<TravisCIApi>({
   description: 'Used by the TravisCI plugin to make requests',
 });
 
+export type TravisCIBuildResponse = {
+  '@type': string;
+  '@href': string;
+  '@representation': string;
+  '@permissions': {
+    read: boolean;
+    cancel: boolean;
+    restart: boolean;
+  };
+  id: number;
+  number: string;
+  state: string;
+  duration: number;
+  event_type: string;
+  previous_state: string;
+  pull_request_title?: string;
+  pull_request_number?: number;
+  started_at: string;
+  finished_at: string;
+  private: boolean;
+  repository: {
+    '@type': string;
+    '@href': string;
+    '@representation': string;
+    id: number;
+    name: string;
+    slug: string;
+  };
+  branch: {
+    '@type': string;
+    '@href': string;
+    '@representation': string;
+    name: string;
+  };
+  tag?: any;
+  commit: {
+    '@type': string;
+    '@representation': string;
+    id: number;
+    sha: string;
+    ref: string;
+    message: string;
+    compare_url: string;
+    committed_at: string;
+  };
+  jobs: [
+    {
+      '@type': string;
+      '@href': string;
+      '@representation': string;
+      id: number;
+    },
+  ];
+  stages: any[];
+  created_by: {
+    '@type': string;
+    '@href': string;
+    '@representation': string;
+    id: number;
+    login: string;
+  };
+  updated_at: string;
+};
+
 export class TravisCIApi {
   apiUrl: string;
   constructor(apiUrl: string = '/travisci/api') {
     this.apiUrl = apiUrl;
   }
 
-  async retry(buildNumber: number, options: any) {
-    // return postBuildActions(options.token, buildNumber, BuildAction.RETRY, {
-    //   circleHost: this.apiUrl,
-    //   ...options.vcs,
-    // });
+  async retry(buildNumber: number, { token }: { token: string }) {
+    return fetch(`${BASE_URL}build/${buildNumber}/restart`, {
+      headers: { Authorization: `token ${token}`, 'Travis-API-Version': '3' },
+    });
   }
 
   async getBuilds(
@@ -43,7 +106,7 @@ export class TravisCIApi {
       limit: number;
       offset: number;
     },
-    { token, owner, repo }: { token: string; owner: string; repo: string }, // options: CircleCIOptions,
+    { token, owner, repo }: { token: string; owner: string; repo: string },
   ) {
     const repoSlug = encodeURIComponent(`${owner}/${repo}`);
 
@@ -51,7 +114,6 @@ export class TravisCIApi {
       await fetch(
         `${BASE_URL}repo/${repoSlug}/builds?offset=${offset}&limit=${limit}`,
         {
-          // @ts-ignore
           headers: {
             Authorization: `token ${token}`,
             'Travis-API-Version': '3',
@@ -63,24 +125,18 @@ export class TravisCIApi {
     return response.builds;
   }
 
-  // return getBuildSummaries(options.token, {
-  //   options: {
-  //     limit,
-  //     offset,
-  //   },
-  //   vcs: {},
-  //   circleHost: this.apiUrl,
-  //   ...options,
-  // });
-
   // async getUser(options: CircleCIOptions) {
   //   return getMe(options.token, { circleHost: this.apiUrl, ...options });
   // }
 
-  async getBuild(buildNumber: number, options: any) {
-    // return getFullBuild(options.token, buildNumber, {
-    //   circleHost: this.apiUrl,
-    //   ...options.vcs,
-    // });
+  async getBuild(
+    buildId: number,
+    { token }: { token: string },
+  ): Promise<TravisCIBuildResponse> {
+    const response = await fetch(`${BASE_URL}build/${buildId}`, {
+      headers: { token: `${token}`, 'Travis-API-Version': '3' },
+    });
+
+    return response.json();
   }
 }
