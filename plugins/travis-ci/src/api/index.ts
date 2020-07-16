@@ -14,41 +14,26 @@
  * limitations under the License.
  */
 
-import {
-  CircleCIOptions,
-  getMe,
-  getBuildSummaries,
-  getFullBuild,
-  postBuildActions,
-  BuildAction,
-  BuildWithSteps,
-  BuildStepAction,
-  BuildSummary,
-  GitType,
-} from 'circleci-api';
 import { createApiRef } from '@backstage/core';
 import { BASE_URL } from './constants';
 
-export { GitType };
-export type { BuildWithSteps, BuildStepAction, BuildSummary };
-
-export const circleCIApiRef = createApiRef<CircleCIApi>({
+export const travisCIApiRef = createApiRef<TravisCIApi>({
   id: 'plugin.travisci.service',
   description: 'Used by the TravisCI plugin to make requests',
 });
 
-export class CircleCIApi {
+export class TravisCIApi {
   apiUrl: string;
-  constructor(apiUrl: string = '/circleci/api') {
+  constructor(apiUrl: string = '/travisci/api') {
     this.apiUrl = apiUrl;
   }
 
-  // async retry(buildNumber: number, options: CircleCIOptions) {
-  //   return postBuildActions(options.token, buildNumber, BuildAction.RETRY, {
-  //     circleHost: this.apiUrl,
-  //     ...options.vcs,
-  //   });
-  // }
+  async retry(buildNumber: number, options: any) {
+    // return postBuildActions(options.token, buildNumber, BuildAction.RETRY, {
+    //   circleHost: this.apiUrl,
+    //   ...options.vcs,
+    // });
+  }
 
   async getBuilds(
     {
@@ -58,33 +43,44 @@ export class CircleCIApi {
       limit: number;
       offset: number;
     },
-    token: string, // options: CircleCIOptions,
+    { token, owner, repo }: { token: string; owner: string; repo: string }, // options: CircleCIOptions,
   ) {
-    return (
-      await fetch(`${BASE_URL}builds?limit=${limit}&offset=${offset}`, {
-        headers: { Authorization: token },
-      })
+    const repoSlug = encodeURIComponent(`${owner}/${repo}`);
+
+    const response = await (
+      await fetch(
+        `${BASE_URL}repo/${repoSlug}/builds?offset=${offset}&limit=${limit}`,
+        {
+          // @ts-ignore
+          headers: {
+            Authorization: `token ${token}`,
+            'Travis-API-Version': '3',
+          },
+        },
+      )
     ).json();
 
-    // return getBuildSummaries(options.token, {
-    //   options: {
-    //     limit,
-    //     offset,
-    //   },
-    //   vcs: {},
-    //   circleHost: this.apiUrl,
-    //   ...options,
-    // });
+    return response.builds;
   }
+
+  // return getBuildSummaries(options.token, {
+  //   options: {
+  //     limit,
+  //     offset,
+  //   },
+  //   vcs: {},
+  //   circleHost: this.apiUrl,
+  //   ...options,
+  // });
 
   // async getUser(options: CircleCIOptions) {
   //   return getMe(options.token, { circleHost: this.apiUrl, ...options });
   // }
 
-  async getBuild(buildNumber: number, options: CircleCIOptions) {
-    return getFullBuild(options.token, buildNumber, {
-      circleHost: this.apiUrl,
-      ...options.vcs,
-    });
+  async getBuild(buildNumber: number, options: any) {
+    // return getFullBuild(options.token, buildNumber, {
+    //   circleHost: this.apiUrl,
+    //   ...options.vcs,
+    // });
   }
 }

@@ -37,13 +37,13 @@ export const App = () => {
 // TODO: allow pass in settings as props
 // When some shared settings workflow
 // will be established
-export const CircleCIWidget = () => (
-  <MemoryRouter initialEntries={['/circleci']}>
+export const TravisCIWidget = () => (
+  <MemoryRouter initialEntries={['/travisci']}>
     <AppStateProvider>
       <>
         <Routes>
-          <Route path="/circleci" element={<Builds />} />
-          <Route path="/circleci/build/:buildId" element={<BuildWithSteps />} />
+          <Route path="/travisci" element={<Builds />} />
+          <Route path="/travisci/build/:buildId" element={<BuildWithSteps />} />
         </Routes>
         <Settings />
       </>

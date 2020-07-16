@@ -22,18 +22,18 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import { useSettings } from '../../state';
 
 export type Props = { title?: string };
-export const PluginHeader: FC<Props> = ({ title = 'CircleCI' }) => {
+export const PluginHeader: FC<Props> = ({ title = 'TravisCI' }) => {
   const [, { showSettings }] = useSettings();
   const location = useLocation();
-  const notRoot = !location.pathname.match(/\/circleci\/?$/);
-  const isSettingsPage = location.pathname.match(/\/circleci\/settings\/?/);
+  const notRoot = !location.pathname.match(/\/travisci\/?$/);
+  const isSettingsPage = location.pathname.match(/\/travisci\/settings\/?/);
   return (
     <ContentHeader
       title={title}
       titleComponent={() => (
         <Box alignItems="center" display="flex">
           {notRoot && (
-            <IconButton component={RouterLink} to="/circleci">
+            <IconButton component={RouterLink} to="/travisci">
               <ArrowBack />
             </IconButton>
           )}
@@ -48,7 +48,7 @@ export const PluginHeader: FC<Props> = ({ title = 'CircleCI' }) => {
       )}
       <SupportButton>
         This plugin allows you to view and interact with your builds within the
-        Circle CI environment.
+        Travis CI environment.
       </SupportButton>
     </ContentHeader>
   );

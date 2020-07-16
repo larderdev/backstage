@@ -18,7 +18,7 @@ import React, { FC } from 'react';
 import { createRouteRef } from '@backstage/core';
 import { SvgIcon, SvgIconProps } from '@material-ui/core';
 
-const CircleCIIcon: FC<SvgIconProps> = props => (
+const TravisCIIcon: FC<SvgIconProps> = props => (
   <SvgIcon
     {...props}
     enableBackground="new 0 0 200 200"
@@ -32,7 +32,7 @@ const CircleCIIcon: FC<SvgIconProps> = props => (
 );
 
 export const travisCIRouteRef = createRouteRef({
-  icon: CircleCIIcon,
+  icon: TravisCIIcon,
   path: '/travisci',
   title: 'TravisCI',
 });

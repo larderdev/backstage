@@ -80,7 +80,7 @@ const generatedColumns: TableColumn[] = [
     field: 'buildName',
     highlight: true,
     render: (row: Partial<CITableBuildInfo>) => (
-      <Link component={RouterLink} to={`/circleci/build/${row.id}`}>
+      <Link component={RouterLink} to={`/travisci/build/${row.id}`}>
         {row.buildName}
       </Link>
     ),

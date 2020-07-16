@@ -18,10 +18,12 @@ import { CITable } from '../CITable';
 import { useBuilds } from '../../../../state';
 
 export const Builds: FC<{}> = () => {
-  const [
-    { total, loading, value, projectName, page, pageSize },
-    { setPage, retry, setPageSize },
-  ] = useBuilds();
+  const [builds, { setPage, retry, setPageSize }] = useBuilds();
+
+  console.log('builds', builds);
+
+  const { total, loading, value, projectName, page, pageSize } = builds;
+
   return (
     <CITable
       total={total}

@@ -75,7 +75,7 @@ const Settings = () => {
           <List>
             <ListItem>
               <TextField
-                name="circleci-token"
+                name="travisci-token"
                 label="Token"
                 value={token}
                 fullWidth
@@ -85,7 +85,7 @@ const Settings = () => {
             </ListItem>
             <ListItem>
               <TextField
-                name="circleci-owner"
+                name="travisci-owner"
                 fullWidth
                 label="Owner"
                 variant="outlined"
@@ -95,7 +95,7 @@ const Settings = () => {
             </ListItem>
             <ListItem>
               <TextField
-                name="circleci-repo"
+                name="travisci-repo"
                 label="Repo"
                 fullWidth
                 variant="outlined"

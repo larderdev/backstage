@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import React, { FC, useReducer, Dispatch, Reducer } from 'react';
-import { circleCIApiRef } from '../api';
+import { travisCIApiRef } from '../api';
 import type { State, Action, SettingsState } from './types';
 
 export type { SettingsState };
@@ -22,7 +22,7 @@ export type { SettingsState };
 export const AppContext = React.createContext<[State, Dispatch<Action>]>(
   [] as any,
 );
-export const STORAGE_KEY = `${circleCIApiRef.id}.settings`;
+export const STORAGE_KEY = `${travisCIApiRef.id}.settings`;
 
 const initialState: State = {
   owner: '',

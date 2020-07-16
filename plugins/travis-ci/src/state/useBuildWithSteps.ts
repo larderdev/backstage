@@ -16,14 +16,14 @@
 import { errorApiRef, useApi } from '@backstage/core';
 import { useCallback } from 'react';
 import { useAsyncRetry } from 'react-use';
-import { circleCIApiRef, GitType } from '../api/index';
+import { travisCIApiRef } from '../api/index';
 import { useAsyncPolling } from './useAsyncPolling';
 import { useSettings } from './useSettings';
 
 const INTERVAL_AMOUNT = 1500;
 export function useBuildWithSteps(buildId: number) {
   const [{ token, repo, owner }] = useSettings();
-  const api = useApi(circleCIApiRef);
+  const api = useApi(travisCIApiRef);
   const errorApi = useApi(errorApiRef);
 
   const getBuildWithSteps = useCallback(async () => {
@@ -37,7 +37,7 @@ export function useBuildWithSteps(buildId: number) {
         vcs: {
           owner: owner,
           repo: repo,
-          type: GitType.GITHUB,
+          type: 'github',
         },
       };
       const build = await api.getBuild(buildId, options);
@@ -55,7 +55,7 @@ export function useBuildWithSteps(buildId: number) {
         vcs: {
           owner: owner,
           repo: repo,
-          type: GitType.GITHUB,
+          type: 'github',
         },
       });
     } catch (e) {

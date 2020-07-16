@@ -13,57 +13,59 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import { errorApiRef, useApi } from '@backstage/core';
-import { BuildSummary, GitType } from 'circleci-api';
 import { useCallback, useEffect, useState } from 'react';
 import { useAsyncRetry } from 'react-use';
-import { circleCIApiRef } from '../api/index';
-import type { CITableBuildInfo } from '../pages/BuildsPage/lib/CITable';
+import { travisCIApiRef } from '../api/index';
+import { BASE_URL } from '../api/constants';
 import { useSettings } from './useSettings';
 
 const makeReadableStatus = (status: string | undefined) => {
   if (!status) return '';
-  return ({
-    retried: 'Retried',
-    canceled: 'Canceled',
-    infrastructure_fail: 'Infra fail',
-    timedout: 'Timedout',
-    not_run: 'Not run',
-    running: 'Running',
-    failed: 'Failed',
-    queued: 'Queued',
-    scheduled: 'Scheduled',
-    not_running: 'Not running',
-    no_tests: 'No tests',
-    fixed: 'Fixed',
-    success: 'Success',
-  } as Record<string, string>)[status];
+  return (
+    ({
+      retried: 'Retried',
+      canceled: 'Canceled',
+      infrastructure_fail: 'Infra fail',
+      timedout: 'Timedout',
+      not_run: 'Not run',
+      running: 'Running',
+      failed: 'Failed',
+      queued: 'Queued',
+      scheduled: 'Scheduled',
+      not_running: 'Not running',
+      no_tests: 'No tests',
+      fixed: 'Fixed',
+      success: 'Success',
+    } as Record<string, string>)[status] || status
+  );
 };
 
 export const transform = (
-  buildsData: BuildSummary[],
+  buildsData: any[],
   restartBuild: { (buildId: number): Promise<void> },
-): CITableBuildInfo[] => {
+): any[] => {
   return buildsData.map(buildData => {
-    const tableBuildInfo: CITableBuildInfo = {
-      id: String(buildData.build_num),
-      buildName: buildData.subject
-        ? buildData.subject +
-          (buildData.retry_of ? ` (retry of #${buildData.retry_of})` : '')
-        : '',
+    const tableBuildInfo: any = {
+      id: String(buildData.id),
+      buildName: buildData.number,
       onRestartClick: () =>
         typeof buildData.build_num !== 'undefined' &&
         restartBuild(buildData.build_num),
       source: {
-        branchName: String(buildData.branch),
+        branchName: String(buildData.branch.name),
         commit: {
-          hash: String(buildData.vcs_revision),
-          url: 'todo',
+          hash: String(buildData.commit.sha),
+          url: buildData.commit.compare_url,
         },
       },
-      status: makeReadableStatus(buildData.status),
-      buildUrl: buildData.build_url,
+      status: makeReadableStatus(buildData.state),
+      buildUrl: `${BASE_URL}${buildData['@href']}`,
     };
+
+    console.log('tableBuildInfo', tableBuildInfo);
+
     return tableBuildInfo;
   });
 };
@@ -71,7 +73,7 @@ export const transform = (
 export function useBuilds() {
   const [{ repo, owner, token }] = useSettings();
 
-  const api = useApi(circleCIApiRef);
+  const api = useApi(travisCIApiRef);
   const errorApi = useApi(errorApiRef);
 
   const [total, setTotal] = useState(0);
@@ -85,9 +87,8 @@ export function useBuilds() {
       }
 
       try {
-        return await api.getBuilds({ limit, offset }, token);
+        return await api.getBuilds({ limit, offset }, { token, owner, repo });
       } catch (e) {
-        console.log('eeeeee', e);
         errorApi.post(e);
         return Promise.reject(e);
       }
@@ -102,7 +103,7 @@ export function useBuilds() {
         vcs: {
           owner: owner,
           repo: repo,
-          type: GitType.GITHUB,
+          type: 'github',
         },
       });
     } catch (e) {
