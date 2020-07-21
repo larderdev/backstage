@@ -15,7 +15,7 @@
  */
 
 import { createApiRef } from '@backstage/core';
-import { BASE_URL } from './constants';
+import { API_BASE_URL } from './constants';
 
 function createHeaders(token: string) {
   return new Headers({
@@ -100,7 +100,7 @@ export class TravisCIApi {
   }
 
   async retry(buildNumber: number, { token }: { token: string }) {
-    return fetch(`${BASE_URL}build/${buildNumber}/restart`, {
+    return fetch(`${API_BASE_URL}build/${buildNumber}/restart`, {
       headers: createHeaders(token),
       method: 'post',
     });
@@ -120,7 +120,7 @@ export class TravisCIApi {
 
     const response = await (
       await fetch(
-        `${BASE_URL}repo/${repoSlug}/builds?offset=${offset}&limit=${limit}`,
+        `${API_BASE_URL}repo/${repoSlug}/builds?offset=${offset}&limit=${limit}`,
         {
           headers: createHeaders(token),
         },
@@ -132,7 +132,7 @@ export class TravisCIApi {
 
   async getUser(token: string) {
     return await (
-      await fetch(`${BASE_URL}user`, {
+      await fetch(`${API_BASE_URL}user`, {
         headers: createHeaders(token),
       })
     ).json();
@@ -142,7 +142,7 @@ export class TravisCIApi {
     buildId: number,
     { token }: { token: string },
   ): Promise<TravisCIBuildResponse> {
-    const response = await fetch(`${BASE_URL}build/${buildId}`, {
+    const response = await fetch(`${API_BASE_URL}build/${buildId}`, {
       headers: createHeaders(token),
     });
 

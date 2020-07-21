@@ -60,6 +60,7 @@ const makeReadableStatus = (status: string | undefined) => {
 export const transform = (
   buildsData: TravisCIBuildResponse[],
   restartBuild: { (buildId: number): Promise<void> },
+  projectName: string,
 ): Build[] => {
   return buildsData.map(buildData => {
     const tableBuildInfo = {
@@ -75,7 +76,7 @@ export const transform = (
         },
       },
       status: makeReadableStatus(buildData.state),
-      buildUrl: `${BASE_URL}${buildData['@href']}`,
+      buildUrl: `${BASE_URL}${projectName}${buildData['@href']}`,
     };
 
     return tableBuildInfo;
@@ -84,6 +85,7 @@ export const transform = (
 
 export function useBuilds() {
   const [{ repo, owner, token }] = useSettings();
+  const projectName = `${owner}/${repo}`;
 
   const api = useApi(travisCIApiRef);
   const errorApi = useApi(errorApiRef);
@@ -127,11 +129,10 @@ export function useBuilds() {
       getBuilds({
         offset: page * pageSize,
         limit: pageSize,
-      }).then(builds => transform(builds ?? [], restartBuild)),
+      }).then(builds => transform(builds ?? [], restartBuild, projectName)),
     [page, pageSize, getBuilds],
   );
 
-  const projectName = `${owner}/${repo}`;
   return [
     {
       page,

@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 import React, { FC } from 'react';
-import { Link, Typography, Box, IconButton } from '@material-ui/core';
+import { Typography, Box, IconButton } from '@material-ui/core';
 import RetryIcon from '@material-ui/icons/Replay';
 import GitHubIcon from '@material-ui/icons/GitHub';
-import { Link as RouterLink } from 'react-router-dom';
 import {
   StatusError,
   StatusWarning,
@@ -45,22 +44,21 @@ export type CITableBuildInfo = {
     passed: number;
     skipped: number;
     failed: number;
-    testUrl: string; // fixme better name
+    testUrl: string;
   };
   onRestartClick: () => void;
 };
 
-// retried, canceled, infrastructure_fail, timedout, not_run, running, failed, queued, scheduled, not_running, no_tests, fixed, success
 const getStatusComponent = (status: string | undefined = '') => {
   switch (status.toLowerCase()) {
     case 'queued':
-    case 'scheduled':
+    case 'created':
       return <StatusPending />;
-    case 'running':
+    case 'started':
       return <StatusRunning />;
     case 'failed':
       return <StatusError />;
-    case 'success':
+    case 'passed':
       return <StatusOK />;
     case 'canceled':
     default:
@@ -79,11 +77,13 @@ const generatedColumns: TableColumn[] = [
     title: 'Build',
     field: 'buildName',
     highlight: true,
-    render: (row: Partial<CITableBuildInfo>) => (
-      <Link component={RouterLink} to={`/travisci/build/${row.id}`}>
-        {row.buildName}
-      </Link>
-    ),
+    render: (row: Partial<CITableBuildInfo>) => {
+      return (
+        <a href={row.buildUrl} target="_blank">
+          {row.buildName}
+        </a>
+      );
+    },
   },
   {
     title: 'Source',

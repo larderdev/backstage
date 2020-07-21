@@ -16,7 +16,6 @@
 import React from 'react';
 import { Route, MemoryRouter, Routes } from 'react-router';
 import { BuildsPage, Builds } from '../pages/BuildsPage';
-import { DetailedViewPage, Build } from '../pages/BuildWithStepsPage';
 import { AppStateProvider } from '../state';
 import { Settings } from './Settings';
 
@@ -26,7 +25,6 @@ export const App = () => {
       <>
         <Routes>
           <Route path="/" element={<BuildsPage />} />
-          <Route path="/build/:buildId" element={<Build />} />
         </Routes>
         <Settings />
       </>
@@ -44,7 +42,6 @@ export const TravisCIWidget = () => {
         <>
           <Routes>
             <Route path="/travisci" element={<Builds />} />
-            <Route path="/travisci/build/:buildId" element={<Build />} />
           </Routes>
           <Settings />
         </>
