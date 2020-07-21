@@ -16,7 +16,7 @@
 import React, { FC, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Content, InfoCard, Progress } from '@backstage/core';
-import { BuildWithSteps, BuildStepAction } from '../../api';
+import { TravisCIBuildResponse } from '../../api';
 import { Grid, Box, Link, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { PluginHeader } from '../../components/PluginHeader';
@@ -24,17 +24,18 @@ import { ActionOutput } from './lib/ActionOutput/ActionOutput';
 import { Layout } from '../../components/Layout';
 import LaunchIcon from '@material-ui/icons/Launch';
 import { useSettings } from '../../state/useSettings';
-import { useBuildWithSteps } from '../../state/useBuildWithSteps';
+import { useBuild } from '../../state/useBuild';
 
 const IconLink = IconButton as typeof Link;
-const BuildName: FC<{ build?: BuildWithSteps }> = ({ build }) => (
+const BuildName: FC<{ build?: TravisCIBuildResponse }> = ({ build }) => (
   <Box display="flex" alignItems="center">
-    #{build?.build_num} - {build?.subject}
-    <IconLink href={build?.build_url} target="_blank">
+    #{build?.number} - {build?.['@representation']}
+    <IconLink href={build?.['@href']} target="_blank">
       <LaunchIcon />
     </IconLink>
   </Box>
 );
+
 const useStyles = makeStyles(theme => ({
   neutral: {},
   failed: {
@@ -83,28 +84,26 @@ const useStyles = makeStyles(theme => ({
 
 const pickClassName = (
   classes: ReturnType<typeof useStyles>,
-  build: BuildWithSteps = {} as BuildWithSteps,
+  build: TravisCIBuildResponse = {} as TravisCIBuildResponse,
 ) => {
-  if (build.failed) return classes.failed;
-  if (['running', 'queued'].includes(build.status!)) return classes.running;
-  if (build.status === 'success') return classes.success;
+  if (build.number) return classes.failed;
+  if (['running', 'queued'].includes(build.state!)) return classes.running;
+  if (build.state === 'success') return classes.success;
 
   return classes.neutral;
 };
 
 const Page = () => (
   <Layout>
-    <Content>
-      <BuildWithStepsView />
-    </Content>
+    <Content>{/* <BuildWithStepsView /> */}</Content>
   </Layout>
 );
 
-const BuildWithStepsView: FC<{}> = () => {
+const Build: FC<{}> = () => {
   const { buildId = '' } = useParams();
   const classes = useStyles();
   const [settings] = useSettings();
-  const [{ loading, value }, { startPolling, stopPolling }] = useBuildWithSteps(
+  const [{ loading, value }, { startPolling, stopPolling }] = useBuild(
     parseInt(buildId, 10),
   );
 
@@ -132,35 +131,27 @@ const BuildWithStepsView: FC<{}> = () => {
   );
 };
 
-const BuildsList: FC<{ build?: BuildWithSteps }> = ({ build }) => (
-  <Box>
-    {build &&
-      build.steps &&
-      build.steps.map(
-        ({ name, actions }: { name: string; actions: BuildStepAction[] }) => (
-          <ActionsList name={name} actions={actions} />
-        ),
-      )}
-  </Box>
+const BuildsList: FC<{ build?: TravisCIBuildResponse }> = ({ build }) => (
+  <Box>{build && build.number}</Box>
 );
 
-const ActionsList: FC<{ actions: BuildStepAction[]; name: string }> = ({
-  actions,
-}) => {
-  const classes = useStyles();
-  return (
-    <>
-      {actions.map((action: BuildStepAction) => (
-        <ActionOutput
-          className={action.failed ? classes.failed : classes.success}
-          action={action}
-          name={action.name}
-          url={action.output_url || ''}
-        />
-      ))}
-    </>
-  );
-};
+// const ActionsList: FC<{ actions: BuildStepAction[]; name: string }> = ({
+//   actions,
+// }) => {
+//   const classes = useStyles();
+//   return (
+//     <>
+//       {actions.map((action: BuildStepAction) => (
+//         <ActionOutput
+//           className={action.failed ? classes.failed : classes.success}
+//           action={action}
+//           name={action.name}
+//           url={action.output_url || ''}
+//         />
+//       ))}
+//     </>
+//   );
+// };
 
 export default Page;
-export { BuildWithStepsView as BuildWithSteps };
+export { Build };

@@ -16,7 +16,7 @@
 import React from 'react';
 import { Route, MemoryRouter, Routes } from 'react-router';
 import { BuildsPage, Builds } from '../pages/BuildsPage';
-import { DetailedViewPage, BuildWithSteps } from '../pages/BuildWithStepsPage';
+import { DetailedViewPage, Build } from '../pages/BuildWithStepsPage';
 import { AppStateProvider } from '../state';
 import { Settings } from './Settings';
 
@@ -25,8 +25,8 @@ export const App = () => {
     <AppStateProvider>
       <>
         <Routes>
-          <Route path="*" element={<BuildsPage />} />
-          <Route path="/build/:buildId" element={<DetailedViewPage />} />
+          <Route path="/" element={<BuildsPage />} />
+          <Route path="/build/:buildId" element={<Build />} />
         </Routes>
         <Settings />
       </>
@@ -37,16 +37,18 @@ export const App = () => {
 // TODO: allow pass in settings as props
 // When some shared settings workflow
 // will be established
-export const TravisCIWidget = () => (
-  <MemoryRouter initialEntries={['/travisci']}>
-    <AppStateProvider>
-      <>
-        <Routes>
-          <Route path="/travisci" element={<Builds />} />
-          <Route path="/travisci/build/:buildId" element={<BuildWithSteps />} />
-        </Routes>
-        <Settings />
-      </>
-    </AppStateProvider>
-  </MemoryRouter>
-);
+export const TravisCIWidget = () => {
+  return (
+    <MemoryRouter initialEntries={['/travisci']}>
+      <AppStateProvider>
+        <>
+          <Routes>
+            <Route path="/travisci" element={<Builds />} />
+            <Route path="/travisci/build/:buildId" element={<Build />} />
+          </Routes>
+          <Settings />
+        </>
+      </AppStateProvider>
+    </MemoryRouter>
+  );
+};

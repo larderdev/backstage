@@ -17,6 +17,13 @@
 import { createApiRef } from '@backstage/core';
 import { BASE_URL } from './constants';
 
+function createHeaders(token: string) {
+  return new Headers({
+    Authorization: `token ${token}`,
+    'Travis-API-Version': '3',
+  });
+}
+
 export const travisCIApiRef = createApiRef<TravisCIApi>({
   id: 'plugin.travisci.service',
   description: 'Used by the TravisCI plugin to make requests',
@@ -94,7 +101,8 @@ export class TravisCIApi {
 
   async retry(buildNumber: number, { token }: { token: string }) {
     return fetch(`${BASE_URL}build/${buildNumber}/restart`, {
-      headers: { Authorization: `token ${token}`, 'Travis-API-Version': '3' },
+      headers: createHeaders(token),
+      method: 'post',
     });
   }
 
@@ -114,10 +122,7 @@ export class TravisCIApi {
       await fetch(
         `${BASE_URL}repo/${repoSlug}/builds?offset=${offset}&limit=${limit}`,
         {
-          headers: {
-            Authorization: `token ${token}`,
-            'Travis-API-Version': '3',
-          },
+          headers: createHeaders(token),
         },
       )
     ).json();
@@ -125,16 +130,20 @@ export class TravisCIApi {
     return response.builds;
   }
 
-  // async getUser(options: CircleCIOptions) {
-  //   return getMe(options.token, { circleHost: this.apiUrl, ...options });
-  // }
+  async getUser(token: string) {
+    return await (
+      await fetch(`${BASE_URL}user`, {
+        headers: createHeaders(token),
+      })
+    ).json();
+  }
 
   async getBuild(
     buildId: number,
     { token }: { token: string },
   ): Promise<TravisCIBuildResponse> {
     const response = await fetch(`${BASE_URL}build/${buildId}`, {
-      headers: { token: `${token}`, 'Travis-API-Version': '3' },
+      headers: createHeaders(token),
     });
 
     return response.json();

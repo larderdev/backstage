@@ -21,12 +21,12 @@ import { useAsyncPolling } from './useAsyncPolling';
 import { useSettings } from './useSettings';
 
 const INTERVAL_AMOUNT = 1500;
-export function useBuildWithSteps(buildId: number) {
+export function useBuild(buildId: number) {
   const [{ token, repo, owner }] = useSettings();
   const api = useApi(travisCIApiRef);
   const errorApi = useApi(errorApiRef);
 
-  const getBuildWithSteps = useCallback(async () => {
+  const getBuild = useCallback(async () => {
     if (owner === '' || repo === '' || token === '') {
       return Promise.reject('No credentials provided');
     }
@@ -58,12 +58,10 @@ export function useBuildWithSteps(buildId: number) {
     }
   };
 
-  const { loading, value, retry } = useAsyncRetry(() => getBuildWithSteps(), [
-    getBuildWithSteps,
-  ]);
+  const { loading, value, retry } = useAsyncRetry(() => getBuild(), [getBuild]);
 
   const { startPolling, stopPolling } = useAsyncPolling(
-    getBuildWithSteps,
+    getBuild,
     INTERVAL_AMOUNT,
   );
 
@@ -71,7 +69,7 @@ export function useBuildWithSteps(buildId: number) {
     { loading, value, retry },
     {
       restartBuild,
-      getBuildWithSteps,
+      // getBuildWithSteps,
       startPolling,
       stopPolling,
     },

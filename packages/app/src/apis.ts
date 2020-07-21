@@ -62,6 +62,7 @@ import {
   GithubActionsClient,
   githubActionsApiRef,
 } from '@backstage/plugin-github-actions';
+import { TravisCIApi, travisCIApiRef } from '@backstage/plugin-travis-ci';
 
 export const apis = (config: ConfigApi) => {
   // eslint-disable-next-line no-console
@@ -82,6 +83,8 @@ export const apis = (config: ConfigApi) => {
     circleCIApiRef,
     new CircleCIApi(`${backendUrl}/proxy/circleci/api`),
   );
+
+  builder.add(travisCIApiRef, new TravisCIApi());
 
   builder.add(githubActionsApiRef, new GithubActionsClient());
 
