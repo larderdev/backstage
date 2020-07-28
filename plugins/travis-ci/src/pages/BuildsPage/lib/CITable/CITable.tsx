@@ -31,6 +31,8 @@ export type CITableBuildInfo = {
   id: string;
   buildName: string;
   buildUrl?: string;
+  finishedAt: string;
+  duration: number;
   source: {
     branchName: string;
     commit: {
@@ -77,13 +79,11 @@ const generatedColumns: TableColumn[] = [
     title: 'Build',
     field: 'buildName',
     highlight: true,
-    render: (row: Partial<CITableBuildInfo>) => {
-      return (
-        <a href={row.buildUrl} target="_blank">
-          {row.buildName}
-        </a>
-      );
-    },
+    render: (row: Partial<CITableBuildInfo>) => (
+      <a href={row.buildUrl} target="_blank">
+        {row.buildName}
+      </a>
+    ),
   },
   {
     title: 'Source',
@@ -103,6 +103,17 @@ const generatedColumns: TableColumn[] = [
         <Typography variant="button">{row.status}</Typography>
       </Box>
     ),
+  },
+  {
+    title: 'Date',
+    render: (row: Partial<CITableBuildInfo>) => {
+      return (
+        <>
+          <p>{row.finishedAt}</p>
+          <p>{row.duration} sec</p>
+        </>
+      );
+    },
   },
   {
     title: 'Actions',
@@ -126,6 +137,7 @@ type Props = {
   pageSize: number;
   onChangePageSize: (pageSize: number) => void;
 };
+
 export const CITable: FC<Props> = ({
   projectName,
   loading,

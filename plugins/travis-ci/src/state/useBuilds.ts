@@ -25,6 +25,8 @@ type Build = {
   id: string;
   buildName: string;
   onRestartClick: () => false | Promise<void>;
+  finishedAt: string;
+  duration: number;
   source: {
     branchName: string;
     commit: {
@@ -64,8 +66,8 @@ export const transform = (
 ): Build[] => {
   return buildsData.map(buildData => {
     const tableBuildInfo = {
-      id: String(buildData.id),
-      buildName: buildData.number,
+      id: buildData.number,
+      buildName: buildData.commit.message,
       onRestartClick: () =>
         typeof buildData.id !== 'undefined' && restartBuild(buildData.id),
       source: {
@@ -75,6 +77,8 @@ export const transform = (
           url: buildData.commit.compare_url,
         },
       },
+      finishedAt: buildData.finished_at,
+      duration: buildData.duration,
       status: makeReadableStatus(buildData.state),
       buildUrl: `${BASE_URL}${projectName}${buildData['@href']}`,
     };
