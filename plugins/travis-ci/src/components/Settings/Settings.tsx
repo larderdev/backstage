@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, KeyboardEvent } from 'react';
 import {
   Button,
   TextField,
@@ -56,6 +56,22 @@ const Settings = () => {
 
   const [saved, setSaved] = useState(false);
 
+  const handleSaveSettings = useCallback(() => {
+    setSaved(true);
+    saveSettings({ repo, owner, token });
+    hideSettings();
+  }, [repo, owner, token, setSaved, saveSettings, hideSettings]);
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.which === 13 && token && owner && repo) {
+        e.preventDefault();
+        handleSaveSettings();
+      }
+    },
+    [token, owner, repo, handleSaveSettings],
+  );
+
   return (
     <>
       <Snackbar
@@ -75,6 +91,7 @@ const Settings = () => {
           <List>
             <ListItem>
               <TextField
+                onKeyDown={handleKeyDown}
                 name="travisci-token"
                 label="Token"
                 value={token}
@@ -85,6 +102,7 @@ const Settings = () => {
             </ListItem>
             <ListItem>
               <TextField
+                onKeyDown={handleKeyDown}
                 name="travisci-owner"
                 fullWidth
                 label="Owner"
@@ -95,6 +113,7 @@ const Settings = () => {
             </ListItem>
             <ListItem>
               <TextField
+                onKeyDown={handleKeyDown}
                 name="travisci-repo"
                 label="Repo"
                 fullWidth
@@ -109,11 +128,7 @@ const Settings = () => {
                   data-testid="github-auth-button"
                   variant="outlined"
                   color="primary"
-                  onClick={() => {
-                    setSaved(true);
-                    saveSettings({ repo, owner, token });
-                    hideSettings();
-                  }}
+                  onClick={handleSaveSettings}
                 >
                   Save credentials
                 </Button>

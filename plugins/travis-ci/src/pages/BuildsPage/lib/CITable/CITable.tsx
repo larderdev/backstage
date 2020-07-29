@@ -26,6 +26,7 @@ import {
   Table,
   TableColumn,
 } from '@backstage/core';
+import { formatDistance } from 'date-fns';
 
 export type CITableBuildInfo = {
   id: string;
@@ -109,7 +110,7 @@ const generatedColumns: TableColumn[] = [
     render: (row: Partial<CITableBuildInfo>) => {
       return (
         <>
-          <p>{row.finishedAt}</p>
+          <p>{formatDistance(new Date(), new Date(row.finishedAt!))} ago</p>
           <p>{row.duration} sec</p>
         </>
       );
