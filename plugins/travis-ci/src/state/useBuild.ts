@@ -22,7 +22,7 @@ import { useSettings } from './useSettings';
 
 const INTERVAL_AMOUNT = 1500;
 export function useBuild(buildId: number) {
-  const [{ token, repo, owner }] = useSettings();
+  const [{ token, repo, owner, travisVersion }] = useSettings();
   const api = useApi(travisCIApiRef);
   const errorApi = useApi(errorApiRef);
 
@@ -50,7 +50,7 @@ export function useBuild(buildId: number) {
 
   const restartBuild = async () => {
     try {
-      await api.retry(buildId, {
+      await api.retry(travisVersion, buildId, {
         token: token,
       });
     } catch (e) {
@@ -69,7 +69,6 @@ export function useBuild(buildId: number) {
     { loading, value, retry },
     {
       restartBuild,
-      // getBuildWithSteps,
       startPolling,
       stopPolling,
     },

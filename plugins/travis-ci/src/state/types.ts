@@ -14,7 +14,12 @@
  * limitations under the License.
  */
 
-export type Settings = { owner: string; repo: string; token: string };
+export type Settings = {
+  owner: string;
+  repo: string;
+  token: string;
+  travisVersion: string;
+};
 export type SettingsState = Settings & {
   showSettings: boolean;
 };
@@ -28,6 +33,7 @@ type SettingsAction =
         repo: string;
         owner: string;
         token: string;
+        travisVersion: string;
       };
     }
   | { type: 'showSettings' }

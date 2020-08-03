@@ -88,7 +88,7 @@ export const transform = (
 };
 
 export function useBuilds() {
-  const [{ repo, owner, token }] = useSettings();
+  const [{ repo, owner, token, travisVersion }] = useSettings();
   const projectName = `${owner}/${repo}`;
 
   const api = useApi(travisCIApiRef);
@@ -105,18 +105,21 @@ export function useBuilds() {
       }
 
       try {
-        return await api.getBuilds({ limit, offset }, { token, owner, repo });
+        return await api.getBuilds(
+          { travisVersion, limit, offset },
+          { token, owner, repo },
+        );
       } catch (e) {
         errorApi.post(e);
         return Promise.reject(e);
       }
     },
-    [repo, token, owner, api, errorApi],
+    [travisVersion, repo, token, owner, api, errorApi],
   );
 
   const restartBuild = async (buildId: number) => {
     try {
-      await api.retry(buildId, {
+      await api.retry(travisVersion, buildId, {
         token: token,
       });
     } catch (e) {

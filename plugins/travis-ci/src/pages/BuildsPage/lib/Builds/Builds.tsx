@@ -13,22 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { CITable } from '../CITable';
 import { useBuilds } from '../../../../state';
 
-export const Builds: FC<{}> = () => {
+export const Builds: FC<{ onRestart: () => void }> = ({ onRestart }) => {
   const [
     { total, loading, value, projectName, page, pageSize },
     { setPage, retry, setPageSize },
   ] = useBuilds();
+
+  const builds = useMemo(() => {
+    if (value) {
+      return value.map(build => ({
+        ...build,
+        onRestartClick: () => {
+          build.onRestartClick();
+          onRestart();
+        },
+      }));
+    }
+
+    return [];
+  }, [value, onRestart]);
 
   return (
     <CITable
       total={total}
       loading={loading}
       retry={retry}
-      builds={value ?? []}
+      builds={builds}
       projectName={projectName}
       page={page}
       onChangePage={setPage}

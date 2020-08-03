@@ -23,6 +23,10 @@ import {
   Box,
   Dialog,
   DialogTitle,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { useSettings } from '../../state';
@@ -33,11 +37,15 @@ const Settings = () => {
       repo: repoFromStore,
       owner: ownerFromStore,
       token: tokenFromStore,
+      travisVersion: travisVersionFromStore,
       showSettings,
     },
     { saveSettings, hideSettings },
   ] = useSettings();
 
+  const [travisVersion, setTravisVersion] = useState(
+    () => travisVersionFromStore,
+  );
   const [token, setToken] = useState(() => tokenFromStore);
   const [owner, setOwner] = useState(() => ownerFromStore);
   const [repo, setRepo] = useState(() => repoFromStore);
@@ -58,9 +66,9 @@ const Settings = () => {
 
   const handleSaveSettings = useCallback(() => {
     setSaved(true);
-    saveSettings({ repo, owner, token });
+    saveSettings({ repo, owner, token, travisVersion });
     hideSettings();
-  }, [repo, owner, token, setSaved, saveSettings, hideSettings]);
+  }, [travisVersion, repo, owner, token, setSaved, saveSettings, hideSettings]);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -83,12 +91,25 @@ const Settings = () => {
         <Alert severity="success">Credentials saved.</Alert>
       </Snackbar>
       <Dialog open={showSettings} onClose={hideSettings}>
-        <DialogTitle>
-          Project Credentials
-          {/* {authed ? <StatusOK /> : <StatusFailed />} */}
-        </DialogTitle>
+        <DialogTitle>Project Credentials</DialogTitle>
         <Box minWidth="400px">
           <List>
+            <ListItem>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  Travis Version
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={travisVersion}
+                  onChange={e => setTravisVersion(e.target.value as string)}
+                >
+                  <MenuItem value="travis-ci.com">travis-ci.com</MenuItem>
+                  <MenuItem value="travis-ci.org">travis-ci.org</MenuItem>
+                </Select>
+              </FormControl>
+            </ListItem>
             <ListItem>
               <TextField
                 onKeyDown={handleKeyDown}

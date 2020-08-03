@@ -99,8 +99,12 @@ export class TravisCIApi {
     this.apiUrl = apiUrl;
   }
 
-  async retry(buildNumber: number, { token }: { token: string }) {
-    return fetch(`${API_BASE_URL}build/${buildNumber}/restart`, {
+  async retry(
+    travisVersion: string,
+    buildNumber: number,
+    { token }: { token: string },
+  ) {
+    return fetch(`https://api.${travisVersion}/build/${buildNumber}/restart`, {
       headers: createHeaders(token),
       method: 'post',
     });
@@ -108,9 +112,11 @@ export class TravisCIApi {
 
   async getBuilds(
     {
+      travisVersion,
       limit = 10,
       offset = 0,
     }: {
+      travisVersion: string;
       limit: number;
       offset: number;
     },
@@ -120,7 +126,7 @@ export class TravisCIApi {
 
     const response = await (
       await fetch(
-        `${API_BASE_URL}repo/${repoSlug}/builds?offset=${offset}&limit=${limit}`,
+        `https://api.${travisVersion}/repo/${repoSlug}/builds?offset=${offset}&limit=${limit}`,
         {
           headers: createHeaders(token),
         },

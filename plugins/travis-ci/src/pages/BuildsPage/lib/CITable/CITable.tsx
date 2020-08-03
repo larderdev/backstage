@@ -94,6 +94,7 @@ const generatedColumns: TableColumn[] = [
         <p>{row.source?.commit.hash}</p>
       </>
     ),
+    sorting: false,
   },
   {
     title: 'Status',
@@ -104,6 +105,7 @@ const generatedColumns: TableColumn[] = [
         <Typography variant="button">{row.status}</Typography>
       </Box>
     ),
+    sorting: false,
   },
   {
     title: 'Date',
@@ -124,6 +126,7 @@ const generatedColumns: TableColumn[] = [
       </IconButton>
     ),
     width: '10%',
+    sorting: false,
   },
 ];
 
@@ -151,30 +154,32 @@ export const CITable: FC<Props> = ({
   total,
 }) => {
   return (
-    <Table
-      isLoading={loading}
-      options={{ paging: true, pageSize }}
-      totalCount={total}
-      page={page}
-      actions={[
-        {
-          icon: () => <RetryIcon />,
-          tooltip: 'Refresh Data',
-          isFreeAction: true,
-          onClick: () => retry(),
-        },
-      ]}
-      data={builds}
-      onChangePage={onChangePage}
-      onChangeRowsPerPage={onChangePageSize}
-      title={
-        <Box display="flex" alignItems="center">
-          <GitHubIcon />
-          <Box mr={1} />
-          <Typography variant="h6">{projectName}</Typography>
-        </Box>
-      }
-      columns={generatedColumns}
-    />
+    <>
+      <Table
+        isLoading={loading}
+        options={{ paging: true, pageSize }}
+        totalCount={total}
+        page={page}
+        actions={[
+          {
+            icon: () => <RetryIcon />,
+            tooltip: 'Refresh Data',
+            isFreeAction: true,
+            onClick: retry,
+          },
+        ]}
+        data={builds}
+        onChangePage={onChangePage}
+        onChangeRowsPerPage={onChangePageSize}
+        title={
+          <Box display="flex" alignItems="center">
+            <GitHubIcon />
+            <Box mr={1} />
+            <Typography variant="h6">{projectName}</Typography>
+          </Box>
+        }
+        columns={generatedColumns}
+      />
+    </>
   );
 };
