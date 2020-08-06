@@ -26,7 +26,7 @@ import {
   Table,
   TableColumn,
 } from '@backstage/core';
-import { formatDistance } from 'date-fns';
+import formatDistance from 'date-fns/formatDistance';
 
 export type CITableBuildInfo = {
   id: string;
