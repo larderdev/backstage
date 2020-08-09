@@ -62,7 +62,10 @@ import {
   GithubActionsClient,
   githubActionsApiRef,
 } from '@backstage/plugin-github-actions';
-import { TravisCIApi, travisCIApiRef } from '@backstage/plugin-travis-ci';
+import {
+  TravisCIApi,
+  travisCIApiRef,
+} from '@roadiehq/backstage-plugin-travis-ci';
 
 export const apis = (config: ConfigApi) => {
   // eslint-disable-next-line no-console
