@@ -28,7 +28,7 @@ const initialState: State = {
   owner: '',
   repo: '',
   token: '',
-  travisVersion: '',
+  travisVersion: 'travis-ci.com',
   showSettings: false,
 };
 

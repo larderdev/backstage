@@ -146,7 +146,6 @@ const Settings = () => {
             <ListItem>
               <Box mt={2} display="flex" width="100%" justifyContent="center">
                 <Button
-                  data-testid="github-auth-button"
                   variant="outlined"
                   color="primary"
                   onClick={handleSaveSettings}
