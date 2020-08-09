@@ -92,7 +92,7 @@ const Settings = () => {
               <ListItem>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
-                    Travis Version
+                    Travis Domain
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
@@ -111,8 +111,10 @@ const Settings = () => {
                   label="Token"
                   value={token}
                   fullWidth
+                  placeholder="xyz123"
                   variant="outlined"
                   onChange={e => setToken(e.target.value)}
+                  helperText="Get this from your Travis CI settings page"
                 />
               </ListItem>
               <ListItem>
@@ -121,6 +123,7 @@ const Settings = () => {
                   fullWidth
                   label="Owner"
                   variant="outlined"
+                  placeholder="spotify"
                   value={owner}
                   onChange={e => setOwner(e.target.value)}
                 />
@@ -130,6 +133,7 @@ const Settings = () => {
                   name="travisci-repo"
                   label="Repo"
                   fullWidth
+                  placeholder="backstage"
                   variant="outlined"
                   value={repo}
                   onChange={e => setRepo(e.target.value)}
