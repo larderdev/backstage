@@ -81,10 +81,11 @@ const generatedColumns: TableColumn[] = [
     field: 'buildName',
     highlight: true,
     render: (row: Partial<CITableBuildInfo>) => (
-      <a href={row.buildUrl} target="_blank">
+      <a href={row.buildUrl} target="_blank" rel="noopener noreferrer">
         {row.buildName}
       </a>
     ),
+    sorting: false,
   },
   {
     title: 'Source',
@@ -117,6 +118,7 @@ const generatedColumns: TableColumn[] = [
         </>
       );
     },
+    sorting: false,
   },
   {
     title: 'Actions',

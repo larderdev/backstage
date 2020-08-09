@@ -46,7 +46,7 @@ export const PluginHeader: FC<Props> = ({ title = 'TravisCI' }) => {
           Settings
         </Button>
       )}
-      <SupportButton>
+      <SupportButton email="info@roadie.io" slackChannel="#roadie">
         This plugin allows you to view and interact with your builds within the
         Travis CI environment.
       </SupportButton>
