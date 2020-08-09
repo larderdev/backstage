@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, { useState, useEffect, useCallback, KeyboardEvent } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Button,
   TextField,
@@ -64,20 +64,14 @@ const Settings = () => {
 
   const [saved, setSaved] = useState(false);
 
-  const handleSaveSettings = useCallback(() => {
-    setSaved(true);
-    saveSettings({ repo, owner, token, travisVersion });
-    hideSettings();
-  }, [travisVersion, repo, owner, token, setSaved, saveSettings, hideSettings]);
-
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.which === 13 && token && owner && repo) {
-        e.preventDefault();
-        handleSaveSettings();
-      }
+  const handleSaveSettings = useCallback(
+    event => {
+      event.preventDefault();
+      setSaved(true);
+      saveSettings({ repo, owner, token, travisVersion });
+      hideSettings();
     },
-    [token, owner, repo, handleSaveSettings],
+    [travisVersion, repo, owner, token, setSaved, saveSettings, hideSettings],
   );
 
   return (
@@ -93,68 +87,68 @@ const Settings = () => {
       <Dialog open={showSettings} onClose={hideSettings}>
         <DialogTitle>Project Credentials</DialogTitle>
         <Box minWidth="400px">
-          <List>
-            <ListItem>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  Travis Version
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={travisVersion}
-                  onChange={e => setTravisVersion(e.target.value as string)}
-                >
-                  <MenuItem value="travis-ci.com">travis-ci.com</MenuItem>
-                  <MenuItem value="travis-ci.org">travis-ci.org</MenuItem>
-                </Select>
-              </FormControl>
-            </ListItem>
-            <ListItem>
-              <TextField
-                onKeyDown={handleKeyDown}
-                name="travisci-token"
-                label="Token"
-                value={token}
-                fullWidth
-                variant="outlined"
-                onChange={e => setToken(e.target.value)}
-              />
-            </ListItem>
-            <ListItem>
-              <TextField
-                onKeyDown={handleKeyDown}
-                name="travisci-owner"
-                fullWidth
-                label="Owner"
-                variant="outlined"
-                value={owner}
-                onChange={e => setOwner(e.target.value)}
-              />
-            </ListItem>
-            <ListItem>
-              <TextField
-                onKeyDown={handleKeyDown}
-                name="travisci-repo"
-                label="Repo"
-                fullWidth
-                variant="outlined"
-                value={repo}
-                onChange={e => setRepo(e.target.value)}
-              />
-            </ListItem>
-            <ListItem>
-              <Box mt={2} display="flex" width="100%" justifyContent="center">
-                <Button
+          <form noValidate onSubmit={handleSaveSettings}>
+            <List>
+              <ListItem>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Travis Version
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={travisVersion}
+                    onChange={e => setTravisVersion(e.target.value as string)}
+                  >
+                    <MenuItem value="travis-ci.com">travis-ci.com</MenuItem>
+                    <MenuItem value="travis-ci.org">travis-ci.org</MenuItem>
+                  </Select>
+                </FormControl>
+              </ListItem>
+              <ListItem>
+                <TextField
+                  name="travisci-token"
+                  label="Token"
+                  value={token}
+                  fullWidth
                   variant="outlined"
-                  color="primary"
-                  onClick={handleSaveSettings}
-                >
-                  Save credentials
-                </Button>
-              </Box>
-            </ListItem>
-          </List>
+                  onChange={e => setToken(e.target.value)}
+                />
+              </ListItem>
+              <ListItem>
+                <TextField
+                  name="travisci-owner"
+                  fullWidth
+                  label="Owner"
+                  variant="outlined"
+                  value={owner}
+                  onChange={e => setOwner(e.target.value)}
+                />
+              </ListItem>
+              <ListItem>
+                <TextField
+                  name="travisci-repo"
+                  label="Repo"
+                  fullWidth
+                  variant="outlined"
+                  value={repo}
+                  onChange={e => setRepo(e.target.value)}
+                />
+              </ListItem>
+              <ListItem>
+                <Box mt={2} display="flex" width="100%" justifyContent="center">
+                  <Button
+                    type="submit"
+                    variant="outlined"
+                    color="primary"
+                    onClick={handleSaveSettings}
+                  >
+                    Save credentials
+                  </Button>
+                </Box>
+              </ListItem>
+            </List>
+          </form>
         </Box>
       </Dialog>
     </>
