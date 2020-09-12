@@ -34,7 +34,7 @@
     "@backstage/cli": "^0.1.1-alpha.21",
     "@types/supertest": "^2.0.8",
     "eslint-plugin-graphql": "^4.0.0",
-    "msw": "^0.20.5",
+    "msw": "^0.21.2",
     "supertest": "^4.0.2"
   },
   "files": [
