@@ -44,13 +44,14 @@ export class GithubPublisher implements PublisherBase {
     values: RequiredTemplateValues & Record<string, JsonValue>,
   ) {
     const [owner, name] = values.storePath.split('/');
+    const description = String(values.description);
 
     const user = await this.client.users.getByUsername({ username: owner });
 
     const repoCreationPromise =
       user.data.type === 'Organization'
-        ? this.client.repos.createInOrg({ name, org: owner })
-        : this.client.repos.createForAuthenticatedUser({ name });
+        ? this.client.repos.createInOrg({ name, org: owner, description })
+        : this.client.repos.createForAuthenticatedUser({ name, description });
 
     const { data } = await repoCreationPromise;
 
