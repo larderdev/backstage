@@ -12,6 +12,9 @@ backend:
     connection: ':memory:'
   csp:
     connect-src: ["'self'", 'https:']
+    script-src:
+      - "'self'"
+      - "'unsafe-inline'"
 
 # See README.md in the proxy-backend plugin for information on the configuration format
 proxy:
