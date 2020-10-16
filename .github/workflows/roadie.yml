@@ -37,18 +37,18 @@ jobs:
         run: yarn run docker-build:app
 
       - name: docker tag frontend
-        run: docker tag spotify/backstage:latest roadiehq/backstage-k8s-demo-frontend:${{ env.IMAGE_VERSION }}
+        run: docker tag spotify/backstage:latest roadiehq/backstage-sample-app-frontend:${{ env.IMAGE_VERSION }}
 
       - name: docker push frontend
-        run: docker push roadiehq/backstage-k8s-demo-frontend:${{ env.IMAGE_VERSION }}
+        run: docker push roadiehq/backstage-sample-app-frontend:${{ env.IMAGE_VERSION }}
 
       - name: docker build backend
         run: yarn workspace example-backend build-image --file $PWD/contrib/docker/kubernetes-example-backend/Dockerfile
 
       - name: docker tag backend
-        run: docker tag example-backend:latest roadiehq/backstage-k8s-demo-backend:${{ env.IMAGE_VERSION }}
+        run: docker tag example-backend:latest roadiehq/backstage-sample-app-backend:${{ env.IMAGE_VERSION }}
 
       - name: docker push backend
-        run: docker push roadiehq/backstage-k8s-demo-backend:${{ env.IMAGE_VERSION }}
+        run: docker push roadiehq/backstage-sample-app-backend:${{ env.IMAGE_VERSION }}
 
 
