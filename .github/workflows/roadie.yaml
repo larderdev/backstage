@@ -43,7 +43,7 @@ jobs:
         run: docker push roadiehq/contentful-demo-frontend:${{ env.IMAGE_VERSION }}
 
       - name: docker build backend
-        run: yarn workspace example-backend build-image
+        run: yarn workspace example-backend build-image --file $PWD/contrib/docker/kubernetes-example-backend/Dockerfile
 
       - name: docker tag backend
         run: docker tag example-backend:latest roadiehq/contentful-demo-backend:${{ env.IMAGE_VERSION }}
