@@ -15,10 +15,12 @@ metadata:
   {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
+  {{- if .Values.ingress.tls }}
   tls:
-    - hosts:
-      - afterpay-demo.roadie.so
-      secretName: afterpay-demo-tls
+    {{- with .Values.ingress.tls }}
+    {{- toYaml . | nindent 4 }}
+    {{- end}}
+  {{- end }}
   rules:
     - host: {{ $frontendUrl.host }}
       http:
