@@ -108,11 +108,13 @@ lighthouse:
 
 ```
 
-For the CA, create a `configMap` named `<helm_release_name>-postgres-ca` with a file called `ca.crt`:
+For the CA, create a `configMap` named `<release name>-<chart name>-postgres-ca` with a file called `ca.crt`:
 
 ```
-kubectl create configmap my-backstage --from-file=ca.crt"
+kubectl create configmap my-company-backstage-postgres-ca --from-file=ca.crt"
 ```
+
+> Where the release name contains the chart name "backstage" then only the release name will be used.
 
 Now install the helm chart:
 
