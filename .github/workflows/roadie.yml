@@ -2,7 +2,7 @@ name: Build and publish Backstage Demo packages for Kubernetes
 
 on:
   push:
-    branches: [kubernetes-demo]
+    branches: [backstage-sample-app-demo]
 
 jobs:
   publish_k8s_demo:
@@ -18,8 +18,8 @@ jobs:
       - name: Docker Login
         run: docker login --username ${{ secrets.DOCKER_HUB_USERNAME }} --password ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: fetch branch kubernetes-demo
-        run: git fetch origin kubernetes-demo
+      - name: fetch branch backstage-sample-app-demo
+        run: git fetch origin backstage-sample-app-demo
 
       - name: yarn install
         run: yarn install --frozen-lockfile
