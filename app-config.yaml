@@ -62,7 +62,7 @@ techdocs:
     techdocs: 'docker'
 
 sentry:
-  organization: my-company
+  organization: roadie
 
 rollbar:
   organization: my-company
