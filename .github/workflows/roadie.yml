@@ -1,8 +1,8 @@
-name: Build and publish Backstage Demo packages for Kubernetes
+name: Build and publish Roadie on Roadie images
 
 on:
   push:
-    branches: [backstage-sample-app-demo]
+    branches: [roadie-on-roadie]
 
 jobs:
   publish_k8s_demo:
@@ -18,8 +18,8 @@ jobs:
       - name: Docker Login
         run: docker login --username ${{ secrets.DOCKER_HUB_USERNAME }} --password ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: fetch branch backstage-sample-app-demo
-        run: git fetch origin backstage-sample-app-demo
+      - name: fetch branch roadie-on-roadie
+        run: git fetch origin roadie-on-roadie
 
       - name: yarn install
         run: yarn install --frozen-lockfile
@@ -37,18 +37,18 @@ jobs:
         run: yarn run docker-build:app
 
       - name: docker tag frontend
-        run: docker tag spotify/backstage:latest roadiehq/backstage-sample-app-frontend:${{ env.IMAGE_VERSION }}
+        run: docker tag spotify/backstage:latest roadiehq/roadie-roadie-so-frontend:${{ env.IMAGE_VERSION }}
 
       - name: docker push frontend
-        run: docker push roadiehq/backstage-sample-app-frontend:${{ env.IMAGE_VERSION }}
+        run: docker push roadiehq/roadie-roadie-so-frontend:${{ env.IMAGE_VERSION }}
 
       - name: docker build backend
         run: yarn workspace example-backend build-image --file $PWD/contrib/docker/kubernetes-example-backend/Dockerfile
 
       - name: docker tag backend
-        run: docker tag example-backend:latest roadiehq/backstage-sample-app-backend:${{ env.IMAGE_VERSION }}
+        run: docker tag example-backend:latest roadiehq/roadie-roadie-so-backend:${{ env.IMAGE_VERSION }}
 
       - name: docker push backend
-        run: docker push roadiehq/backstage-sample-app-backend:${{ env.IMAGE_VERSION }}
+        run: docker push roadiehq/roadie-roadie-so-backend:${{ env.IMAGE_VERSION }}
 
 

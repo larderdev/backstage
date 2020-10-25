@@ -59,13 +59,3 @@ techdocs:
 
 proxy:
   '/lighthouse': http://{{ include "lighthouse.serviceName" . }}
-
-kubernetes:
-  serviceLocatorMethod: 'multiTenant'
-  clusterLocatorMethods:
-    - 'config'
-  clusters:
-    - url: https://kubernetes.default.svc.cluster.local:443
-      name: {{ .Values.kubernetes.clusterName | quote }}
-      serviceAccountToken: {{ .Values.kubernetes.serviceAccountToken | quote }}
-      authProvider: 'serviceAccount'

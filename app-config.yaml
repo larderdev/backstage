@@ -1,5 +1,5 @@
 app:
-  title: Backstage Example App
+  title: Roadie on Roadie
   baseUrl: http://localhost:3000
   googleAnalyticsTrackingId: # UA-000000-0
 
@@ -46,7 +46,7 @@ proxy:
         $env: NEW_RELIC_REST_API_KEY
 
 organization:
-  name: My Company
+  name: Roadie
 
 techdocs:
   storageUrl: http://localhost:7000/api/techdocs/static/docs
