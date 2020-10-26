@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: roadie-corp
+  description: A collection of all Backstage example Groups
+spec:
+  type: github
+  targets:
+    - https://github.com/roadiehq/backstage/blob/roadie-on-roadie/packages/catalog-model/examples/roadie/org.yaml

@@ -1,0 +1,22 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: roadie
+  description: The Roadie company
+spec:
+  type: organization
+  ancestors: []
+  children: [employees, contractors]
+  descendants:
+    [employees, contractors]
+---
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: human-organizations
+  description: A collection of all Roadie human organizations
+spec:
+  type: github
+  targets:
+    - https://github.com/roadiehq/backstage/blob/roadie-on-roadie/packages/catalog-model/examples/roadie/employees.yaml
+    - https://github.com/roadiehq/backstage/blob/roadie-on-roadie/packages/catalog-model/examples/roadie/contractors.yaml

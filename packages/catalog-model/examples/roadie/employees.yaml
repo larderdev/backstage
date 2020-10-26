@@ -1,0 +1,37 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: employees
+  description: All Roadie employees
+spec:
+  type: team
+  parent: roadie
+  ancestors: [roadie]
+  children: []
+  descendants: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: david.tuite
+  annotations:
+    github.com/user-login: dtuite
+spec:
+  profile:
+    displayName: David Tuite
+    email: david@roadie.io
+    picture: https://pbs.twimg.com/profile_images/573113010236964865/YON9qxRZ_400x400.jpeg
+  memberOf: [employees]
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: brian.fletcher
+  annotations:
+    github.com/user-login: punkle
+spec:
+  profile:
+    displayName: Brian Fletcher
+    email: brian@roadie.io
+    picture: https://api.curtisbrown.co.uk/media/68170/show/square
+  memberOf: [employees]
