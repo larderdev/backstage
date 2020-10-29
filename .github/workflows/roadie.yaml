@@ -2,7 +2,7 @@ name: Build and publish Docker images
 
 on:
   push:
-    branches: [contentful-demo]
+    branches: [contentful-demo-fix-github-config]
 
 jobs:
   publish_k8s_demo:
@@ -18,8 +18,8 @@ jobs:
       - name: Docker Login
         run: docker login --username ${{ secrets.DOCKER_HUB_USERNAME }} --password ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: fetch branch contentful-demo
-        run: git fetch origin contentful-demo
+      - name: fetch branch contentful-demo-fix-github-config
+        run: git fetch origin contentful-demo-fix-github-config
 
       - name: yarn install
         run: yarn install --frozen-lockfile
