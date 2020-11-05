@@ -1,5 +1,17 @@
 # @backstage/plugin-cost-insights
 
+## 0.2.1
+
+### Patch Changes
+
+- 9a294574c: Fix styling issue on Cost Insights product panels with no cost
+- Updated dependencies [7b37d65fd]
+- Updated dependencies [4aca74e08]
+- Updated dependencies [6627b626f]
+- Updated dependencies [4577e377b]
+  - @backstage/core@0.2.1
+  - @backstage/theme@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes

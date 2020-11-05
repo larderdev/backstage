@@ -1,5 +1,18 @@
 # @backstage/plugin-catalog
 
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [7b37d65fd]
+- Updated dependencies [4aca74e08]
+- Updated dependencies [6627b626f]
+- Updated dependencies [4577e377b]
+- Updated dependencies [59166e5ec]
+  - @backstage/core@0.2.1
+  - @backstage/theme@0.2.1
+  - @backstage/plugin-scaffolder@0.3.0
+
 ## 0.2.0
 
 ### Minor Changes

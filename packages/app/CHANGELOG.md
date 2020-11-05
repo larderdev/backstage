@@ -1,5 +1,25 @@
 # example-app
 
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [7b37d65fd]
+- Updated dependencies [4aca74e08]
+- Updated dependencies [9a294574c]
+- Updated dependencies [6627b626f]
+- Updated dependencies [3f05616bf]
+- Updated dependencies [803527bd3]
+- Updated dependencies [4577e377b]
+- Updated dependencies [59166e5ec]
+  - @backstage/core@0.2.1
+  - @backstage/plugin-cost-insights@0.2.1
+  - @backstage/plugin-tech-radar@0.2.1
+  - @backstage/plugin-api-docs@0.2.1
+  - @backstage/theme@0.2.1
+  - @backstage/plugin-scaffolder@0.3.0
+  - @backstage/plugin-catalog@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes

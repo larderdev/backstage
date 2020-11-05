@@ -1,5 +1,17 @@
 # @backstage/plugin-tech-radar
 
+## 0.2.1
+
+### Patch Changes
+
+- 3f05616bf: Make the footer color of the tech-radar work in both light and dark theme.
+- Updated dependencies [7b37d65fd]
+- Updated dependencies [4aca74e08]
+- Updated dependencies [6627b626f]
+- Updated dependencies [4577e377b]
+  - @backstage/core@0.2.1
+  - @backstage/theme@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes
