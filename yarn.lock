@@ -1798,30 +1798,30 @@
   dependencies:
     yaml-ast-parser "0.0.43"
 
-"@gitbeaker/core@^25.2.0":
-  version "25.2.0"
-  resolved "https://registry.npmjs.org/@gitbeaker/core/-/core-25.2.0.tgz#c2f46b65ed88aebfa69afd2e58dbf4ebe2efb2c7"
-  integrity sha512-dhCvZItI8FIzHtJ9EySQ43GmNg3j39MxDGMCpDHn+Qb1o54QS+J6XPVQrMRmJioZIyj+WZQPX/IP+/mRkx8vhg==
+"@gitbeaker/core@^25.2.0", "@gitbeaker/core@^25.3.0":
+  version "25.3.0"
+  resolved "https://registry.npmjs.org/@gitbeaker/core/-/core-25.3.0.tgz#8681028cd23b27752d06afefd5be36f1cdf0bf7c"
+  integrity sha512-gm5zwM84GQhvN2FsTHgn6lrbfw5rMcm94Ex0rRDUMyJgMCUI6sjQ0QFXzqAG8+K9T7FWHBd8QZ/TSOdf9BsaFg==
   dependencies:
-    "@gitbeaker/requester-utils" "^25.2.0"
+    "@gitbeaker/requester-utils" "^25.3.0"
     form-data "^3.0.0"
     li "^1.3.0"
     xcase "^2.0.1"
 
 "@gitbeaker/node@^25.2.0":
-  version "25.2.0"
-  resolved "https://registry.npmjs.org/@gitbeaker/node/-/node-25.2.0.tgz#cc91e83328ec32de0b1a0dac23accd2385734a66"
-  integrity sha512-FWchXYJ5agn0ptAQxtkkSKSg1ObbP2xfMzHLECxINFRBHYhg0ms8Fp8Qb+71pxJz7IMlvajyEtZaPfHBmyuh9Q==
+  version "25.3.0"
+  resolved "https://registry.npmjs.org/@gitbeaker/node/-/node-25.3.0.tgz#ce28c1496b98fa19606f366b7361462300eb8b55"
+  integrity sha512-F/G5ttZiJX0X9O132LSa14QD73dUv7k+jBvHEAmmHVrwzDS2zzoMRbnXmOy202Tb1OYqjTfiNYZ5eDd8sqPp2A==
   dependencies:
-    "@gitbeaker/core" "^25.2.0"
-    "@gitbeaker/requester-utils" "^25.2.0"
+    "@gitbeaker/core" "^25.3.0"
+    "@gitbeaker/requester-utils" "^25.3.0"
     got "^11.7.0"
     xcase "^2.0.1"
 
-"@gitbeaker/requester-utils@^25.2.0":
-  version "25.2.0"
-  resolved "https://registry.npmjs.org/@gitbeaker/requester-utils/-/requester-utils-25.2.0.tgz#f71c44e0073617877f9875dd00c4ae0d74897b09"
-  integrity sha512-pjuFIVlbxSTPdN+zFT/LBP4ym8k0OBYwUpc5WkzoOtvdTGuDX05r8ufnV07kibLDJkwDmjwnH4Hsc66yevSQTw==
+"@gitbeaker/requester-utils@^25.3.0":
+  version "25.3.0"
+  resolved "https://registry.npmjs.org/@gitbeaker/requester-utils/-/requester-utils-25.3.0.tgz#5df585f80ca6aad253795c69aa31680d98b0964a"
+  integrity sha512-DmHhzJsxbd1oMa30clvt6qrNYHRc9zZRf++R39GC2jyBtCaci/9WEllvjDVs1PTnSz3tWpgexSuC9ydPzzPtZg==
   dependencies:
     form-data "^3.0.0"
     query-string "^6.13.3"
@@ -3838,11 +3838,6 @@
   version "2.1.1"
   resolved "https://registry.npmjs.org/@sindresorhus/is/-/is-2.1.1.tgz#ceff6a28a5b4867c2dd4a1ba513de278ccbe8bb1"
   integrity sha512-/aPsuoj/1Dw/kzhkgz+ES6TxG0zfTMGLwuK2ZG00k/iJzYHTLCE8mVU8EPqEOp/lmxPoq1C1C9RYToRKb2KEfg==
-
-"@sindresorhus/is@^3.1.1":
-  version "3.1.2"
-  resolved "https://registry.npmjs.org/@sindresorhus/is/-/is-3.1.2.tgz#548650de521b344e3781fbdb0ece4aa6f729afb8"
-  integrity sha512-JiX9vxoKMmu8Y3Zr2RVathBL1Cdu4Nt4MuNWemt1Nc06A0RAin9c5FArkhGsyMBWfCu4zj+9b+GxtjAnE4qqLQ==
 
 "@sindresorhus/is@^4.0.0":
   version "4.0.0"
@@ -12657,41 +12652,7 @@ got@^10.7.0:
     to-readable-stream "^2.0.0"
     type-fest "^0.10.0"
 
-got@^11.5.2:
-  version "11.6.0"
-  resolved "https://registry.npmjs.org/got/-/got-11.6.0.tgz#4978c78f3cbc3a45ee95381f8bb6efd1db1f4638"
-  integrity sha512-ErhWb4IUjQzJ3vGs3+RR12NWlBDDkRciFpAkQ1LPUxi6OnwhGj07gQxjPsyIk69s7qMihwKrKquV6VQq7JNYLA==
-  dependencies:
-    "@sindresorhus/is" "^3.1.1"
-    "@szmarczak/http-timer" "^4.0.5"
-    "@types/cacheable-request" "^6.0.1"
-    "@types/responselike" "^1.0.0"
-    cacheable-lookup "^5.0.3"
-    cacheable-request "^7.0.1"
-    decompress-response "^6.0.0"
-    http2-wrapper "^1.0.0-beta.5.2"
-    lowercase-keys "^2.0.0"
-    p-cancelable "^2.0.0"
-    responselike "^2.0.0"
-
-got@^11.6.2:
-  version "11.7.0"
-  resolved "https://registry.npmjs.org/got/-/got-11.7.0.tgz#a386360305571a74548872e674932b4ef70d3b24"
-  integrity sha512-7en2XwH2MEqOsrK0xaKhbWibBoZqy+f1RSUoIeF1BLcnf+pyQdDsljWMfmOh+QKJwuvDIiKx38GtPh5wFdGGjg==
-  dependencies:
-    "@sindresorhus/is" "^3.1.1"
-    "@szmarczak/http-timer" "^4.0.5"
-    "@types/cacheable-request" "^6.0.1"
-    "@types/responselike" "^1.0.0"
-    cacheable-lookup "^5.0.3"
-    cacheable-request "^7.0.1"
-    decompress-response "^6.0.0"
-    http2-wrapper "^1.0.0-beta.5.2"
-    lowercase-keys "^2.0.0"
-    p-cancelable "^2.0.0"
-    responselike "^2.0.0"
-
-got@^11.7.0:
+got@^11.5.2, got@^11.6.2, got@^11.7.0:
   version "11.8.0"
   resolved "https://registry.npmjs.org/got/-/got-11.8.0.tgz#be0920c3586b07fd94add3b5b27cb28f49e6545f"
   integrity sha512-k9noyoIIY9EejuhaBNLyZ31D5328LeqnyPNXJQb2XlJZcKakLqN5m6O/ikhq/0lw56kUYS54fVm+D1x57YC9oQ==
