@@ -1,5 +1,11 @@
 # @backstage/cli
 
+## 0.2.1
+
+### Patch Changes
+
+- 902340451: Support specifying listen host/port for frontend
+
 ## 0.2.0
 
 ### Minor Changes

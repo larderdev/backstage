@@ -1,5 +1,16 @@
 # @backstage/plugin-cost-insights
 
+## 0.4.0
+
+### Minor Changes
+
+- 4040d4fcb: remove cost insights currency feature flag
+
+### Patch Changes
+
+- 17a9f48f6: remove excessive margin from cost overview banner
+- 259d848ee: Fix savings/excess display calculation
+
 ## 0.3.0
 
 ### Minor Changes

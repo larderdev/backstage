@@ -1,5 +1,16 @@
 # example-app
 
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [17a9f48f6]
+- Updated dependencies [4040d4fcb]
+- Updated dependencies [259d848ee]
+- Updated dependencies [902340451]
+  - @backstage/plugin-cost-insights@0.4.0
+  - @backstage/cli@0.2.1
+
 ## 0.2.1
 
 ### Patch Changes
