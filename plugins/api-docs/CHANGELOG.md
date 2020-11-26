@@ -1,5 +1,18 @@
 # @backstage/plugin-api-docs
 
+## 0.3.0
+
+### Minor Changes
+
+- f3bb55ee3: APIs now have real entity pages that are customizable in the app.
+  Therefore the old entity page from this plugin is removed.
+  See the `packages/app` on how to create and customize the API entity page.
+
+### Patch Changes
+
+- Updated dependencies [2daf18e80]
+  - @backstage/catalog-model@0.3.1
+
 ## 0.2.2
 
 ### Patch Changes

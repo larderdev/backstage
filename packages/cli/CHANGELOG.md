@@ -1,5 +1,11 @@
 # @backstage/cli
 
+## 0.3.2
+
+### Patch Changes
+
+- f538e2c56: Make versions:bump install new versions of dependencies that were within the specified range
+
 ## 0.3.1
 
 ### Patch Changes

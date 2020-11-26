@@ -1,5 +1,11 @@
 # @backstage/backend-common
 
+## 0.3.2
+
+### Patch Changes
+
+- 3aa7efb3f: Added support for passing false as a CSP field value, to drop it from the defaults in the backend
+
 ## 0.3.1
 
 ### Patch Changes

@@ -1,5 +1,16 @@
 # example-app
 
+## 0.2.4
+
+### Patch Changes
+
+- Updated dependencies [f3bb55ee3]
+- Updated dependencies [f538e2c56]
+- Updated dependencies [2daf18e80]
+  - @backstage/plugin-api-docs@0.3.0
+  - @backstage/cli@0.3.2
+  - @backstage/catalog-model@0.3.1
+
 ## 0.2.3
 
 ### Patch Changes

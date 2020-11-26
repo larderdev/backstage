@@ -1,5 +1,11 @@
 # @backstage/catalog-model
 
+## 0.3.1
+
+### Patch Changes
+
+- 2daf18e80: Start emitting all known relation types from the core entity kinds, based on their spec data.
+
 ## 0.3.0
 
 ### Minor Changes
