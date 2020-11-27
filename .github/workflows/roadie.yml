@@ -31,7 +31,9 @@ jobs:
         run: yarn run build
 
       - name: Set image version
-        run: echo "IMAGE_VERSION=$(cat IMAGE_VERSION)" >> $GITHUB_ENV
+        run: |
+          echo "IMAGE_VERSION=$(git describe)" >> $GITHUB_ENV
+          echo ${{ env.IMAGE_VERSION }} > IMAGE_VERSION
 
       - name: docker build frontend
         run: yarn run docker-build:app
@@ -51,4 +53,9 @@ jobs:
       - name: docker push backend
         run: docker push roadiehq/backstage-sample-app-backend:${{ env.IMAGE_VERSION }}
 
-
+      - name: docker update latest tags
+        run: |
+          docker tag spotify/backstage:latest roadiehq/backstage-sample-app-frontend:latest
+          docker push roadiehq/backstage-sample-app-frontend:latest
+          docker tag example-backend:latest roadiehq/backstage-sample-app-backend:latest
+          docker push roadiehq/backstage-sample-app-backend:latest
