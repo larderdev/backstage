@@ -40,6 +40,13 @@ proxy:
         $env: TRAVISCI_AUTH_TOKEN
       travis-api-version: 3
 
+  '/argocd/api':
+    target: https://159.65.209.132/api/v1
+    changeOrigin: true
+    headers:
+      Authorization:
+        $env: ARGOCD_AUTH_TOKEN
+
   '/newrelic/apm/api':
     target: https://api.newrelic.com/v2
     headers:

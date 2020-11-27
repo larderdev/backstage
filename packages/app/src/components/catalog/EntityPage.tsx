@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import React, { ReactNode } from 'react';
 import { ApiEntity, Entity } from '@backstage/catalog-model';
 import { EmptyState } from '@backstage/core';
 import {
@@ -52,10 +53,6 @@ import { Router as SentryRouter } from '@backstage/plugin-sentry';
 import { EmbeddedDocsRouter as DocsRouter } from '@backstage/plugin-techdocs';
 import { Button, Grid } from '@material-ui/core';
 import {
-  isPluginApplicableToEntity as isBuildkiteAvailable,
-  Router as BuildkiteRouter,
-} from '@roadiehq/backstage-plugin-buildkite';
-import {
   isPluginApplicableToEntity as isGitHubAvailable,
   LanguagesCard,
   ReadMeCard,
@@ -72,7 +69,14 @@ import {
   RecentTravisCIBuildsWidget,
   Router as TravisCIRouter,
 } from '@roadiehq/backstage-plugin-travis-ci';
-import React, { ReactNode } from 'react';
+import {
+  Router as BuildkiteRouter,
+  isPluginApplicableToEntity as isBuildkiteAvailable,
+} from '@roadiehq/backstage-plugin-buildkite';
+import {
+  ArgoCDDetailsWidget,
+  isPluginApplicableToEntity as isArgoCDAvailable,
+} from '@roadiehq/backstage-plugin-argo-cd';
 
 export const CICDSwitcher = ({ entity }: { entity: Entity }) => {
   // This component is just an example of how you can implement your company's logic in entity page.
@@ -123,6 +127,9 @@ const RecentCICDRunsSwitcher = ({ entity }: { entity: Entity }) => {
       break;
     case isTravisCIAvailable(entity):
       content = <RecentTravisCIBuildsWidget entity={entity} />;
+      break;
+    case isArgoCDAvailable(entity):
+      content = <ArgoCDDetailsWidget entity={entity} />;
       break;
     default:
       content = null;
