@@ -34,7 +34,7 @@ jobs:
 
       - name: Set image version
         run: |
-          echo "IMAGE_VERSION=$(git describe)" >> $GITHUB_ENV
+          echo "IMAGE_VERSION=$(git describe --tags --always)" >> $GITHUB_ENV
           echo ${{ env.IMAGE_VERSION }} > IMAGE_VERSION
 
       - name: docker build frontend
