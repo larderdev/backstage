@@ -14,17 +14,26 @@
  * limitations under the License.
  */
 
-export { BarChart } from './BarChart';
-export type { BarChartProps } from './BarChart';
-export { BarChartLegend } from './BarChartLegend';
-export type {
-  BarChartLegendProps,
-  BarChartLegendOptions,
-} from './BarChartLegend';
-export { BarChartTooltip } from './BarChartTooltip';
-export type { BarChartTooltipProps } from './BarChartTooltip';
-export { BarChartTooltipItem } from './BarChartTooltipItem';
-export type {
-  TooltipItem,
-  BarChartTooltipItemProps,
-} from './BarChartTooltipItem';
+import { Entity, EntityName } from '@backstage/catalog-model';
+
+/**
+ * Get the related entity references.
+ */
+export function getEntityRelations(
+  entity: Entity | undefined,
+  relationType: string,
+  filter?: { kind: string },
+): EntityName[] {
+  let entityNames =
+    entity?.relations
+      ?.filter(r => r.type === relationType)
+      ?.map(r => r.target) || [];
+
+  if (filter?.kind) {
+    entityNames = entityNames?.filter(
+      e => e.kind.toLowerCase() === filter.kind.toLowerCase(),
+    );
+  }
+
+  return entityNames;
+}
