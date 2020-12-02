@@ -41,10 +41,11 @@ proxy:
       travis-api-version: 3
 
   '/argocd/api':
-    target: https://159.65.209.132/api/v1
+    target: https://159.65.209.132/api/v1/
     changeOrigin: true
+    secure: false
     headers:
-      Authorization:
+      Cookie:
         $env: ARGOCD_AUTH_TOKEN
 
   '/newrelic/apm/api':
