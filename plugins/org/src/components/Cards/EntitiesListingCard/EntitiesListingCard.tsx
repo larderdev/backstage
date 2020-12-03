@@ -84,14 +84,8 @@ const EntitiesListingTable = ({ entity }: { entity: Entity }) => {
   );
 };
 
-export const EntitiesListingCard = ({
-  entity,
-  variant,
-}: {
-  entity: Entity;
-  variant: string;
-}) => (
-  <InfoCard title="Entities" variant={variant}>
+export const EntitiesListingCard = ({ entity }: { entity: Entity }) => (
+  <InfoCard title="Entities">
     <EntitiesListingTable entity={entity} />
   </InfoCard>
 );

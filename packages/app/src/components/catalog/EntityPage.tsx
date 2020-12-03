@@ -334,6 +334,9 @@ const UserOverviewContent = ({ entity }: { entity: UserEntity }) => (
     <Grid item xs={12} md={6}>
       <OwnershipCard entity={entity} variant="gridItem" />
     </Grid>
+    <Grid item xs={12}>
+      <EntitiesListingCard entity={entity} />
+    </Grid>
   </Grid>
 );
 
