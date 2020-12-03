@@ -58,6 +58,7 @@ import {
   MembersListCard,
   GroupProfileCard,
   UserProfileCard,
+  EntitiesListingCard,
 } from '@backstage/plugin-org';
 import { Router as SentryRouter } from '@backstage/plugin-sentry';
 import { EmbeddedDocsRouter as DocsRouter } from '@backstage/plugin-techdocs';
@@ -356,6 +357,9 @@ const GroupOverviewContent = ({ entity }: { entity: GroupEntity }) => (
     </Grid>
     <Grid item xs={12}>
       <MembersListCard entity={entity} />
+    </Grid>
+    <Grid item xs={12}>
+      <EntitiesListingCard entity={entity} />
     </Grid>
   </Grid>
 );
