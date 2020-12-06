@@ -34,6 +34,7 @@ import { Router as TechRadarRouter } from '@backstage/plugin-tech-radar';
 import { Router as LighthouseRouter } from '@backstage/plugin-lighthouse';
 import { Router as RegisterComponentRouter } from '@backstage/plugin-register-component';
 import { Router as SettingsRouter } from '@backstage/plugin-user-settings';
+import { AuthPopup } from '@roadiehq/backstage-plugin-vouch-redirect';
 import { Route, Routes, Navigate } from 'react-router';
 
 import { EntityPage } from './components/catalog/EntityPage';
@@ -83,6 +84,7 @@ const AppRoutes = () => (
       element={<RegisterComponentRouter catalogRouteRef={catalogRouteRef} />}
     />
     <Route path="/settings" element={<SettingsRouter />} />
+    <Route path="/authpopup" element={<AuthPopup />} />
     {...deprecatedAppRoutes}
   </Routes>
 );
