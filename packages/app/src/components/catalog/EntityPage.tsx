@@ -74,6 +74,7 @@ import {
   LanguagesCard,
   ReadMeCard,
   ReleasesCard,
+  ProtectedBranchesCard,
   Router as GitHubInsightsRouter,
 } from '@roadiehq/backstage-plugin-github-insights';
 import {
@@ -174,6 +175,9 @@ const ComponentOverviewContent = ({ entity }: { entity: Entity }) => (
         </Grid>
         <Grid item md={6}>
           <ReadMeCard entity={entity} maxHeight={350} />
+        </Grid>
+        <Grid item md={3}>
+          <ProtectedBranchesCard entity={entity} maxHeight={350} />
         </Grid>
       </>
     )}
