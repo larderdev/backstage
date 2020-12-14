@@ -23,6 +23,7 @@ changesets
 Changesets
 chanwit
 Chanwit
+ci
 cisphobia
 cissexist
 classname
@@ -42,6 +43,7 @@ const
 cookiecutter
 css
 dariddler
+dataflow
 deadnaming
 destructured
 dev
@@ -64,6 +66,7 @@ facto
 failover
 Figma
 Firekube
+Fiverr
 freben
 Fredrik
 github
@@ -186,6 +189,7 @@ sparklines
 Spotifiers
 spotify
 Spotify
+sqlite
 squidfunk
 src
 stefanalund
