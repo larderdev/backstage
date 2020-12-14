@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://backstage.io/blog</id>
-    <title>Backstage Blog</title>
+    <title>Backstage Service Catalog and Developer Platform Blog</title>
     <updated>2020-10-22T06:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://backstage.io/blog"/>
-    <subtitle>The best place to stay up-to-date with the latest Backstage news and events.</subtitle>
+    <subtitle>The best place to stay up-to-date with the latest Backstage Service Catalog and Developer Platform news and events.</subtitle>
     <logo>https://backstage.io/undefined</logo>
     <rights>Copyright © 2020 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</rights>
     <entry>
@@ -18,7 +18,7 @@
 <p>Are we turning engineers into accountants? Nope, we’re just letting engineers do what they do best, in the place that feels natural to them: inside Backstage.</p>
 ]]></summary>
         <author>
-            <name>Janisa Anandamohan</name>
+            <name>Janisa Anandamohan, Spotify</name>
             <uri>https://twitter.com/janisa_a</uri>
         </author>
     </entry>
@@ -33,7 +33,7 @@
 <p><img src="https://backstage.io/img/cards-plugins.png" alt="plugins"></p>
 ]]></summary>
         <author>
-            <name>Stefan Ålund</name>
+            <name>Stefan Ålund, Spotify</name>
             <uri>https://twitter.com/stalund</uri>
         </author>
     </entry>
@@ -46,7 +46,7 @@
 <p>We are excited to launch the Backstage Design System, which includes a <a href="https://www.figma.com/community/file/850673348101741100">Figma UI kit</a>, a rich set of <a href="http://backstage.io/storybook">reusable code components</a> on Storybook, and <a href="https://backstage.io/docs/dls/design">Guidelines</a> for designers and developers as they build plugins for Backstage.</p>
 ]]></summary>
         <author>
-            <name>Kat Zhou</name>
+            <name>Kat Zhou, Spotify</name>
             <uri>http://twitter.com/katherinemzhou</uri>
         </author>
     </entry>
@@ -59,7 +59,7 @@
 <p><img src="/blog/assets/cncf-sandbox/cncf.png" alt="cncf"></p>
 ]]></summary>
         <author>
-            <name>Stefan Ålund</name>
+            <name>Stefan Ålund, Spotify</name>
             <uri>https://twitter.com/stalund</uri>
         </author>
     </entry>
@@ -73,7 +73,7 @@
 </iframe>
 ]]></summary>
         <author>
-            <name>Gary Niemen</name>
+            <name>Gary Niemen, Spotify</name>
             <uri>https://github.com/garyniemen</uri>
         </author>
     </entry>
@@ -88,7 +88,7 @@
 </video>
 ]]></summary>
         <author>
-            <name>Stefan Ålund</name>
+            <name>Stefan Ålund, Spotify</name>
             <uri>https://twitter.com/stalund</uri>
         </author>
     </entry>
@@ -101,7 +101,7 @@
 <p>Getting authentication right is important. It helps keep your platform safe, it’s one of the first things users will interact with, and there are many different authentication providers to support. To this end, we chose to use <a href="http://www.passportjs.org/">Passport</a> to provide an easy-to-use, out-of-the-box experience that can be extended to your own, pre-existing authentication providers (known as strategies). The Auth APIs in Backstage serve two purposes: identify the user and provide a way for plugins to request access to third-party services on behalf of the user. We’ve already implemented Google and GitHub authentication to provide examples and to get you started.</p>
 ]]></summary>
         <author>
-            <name>Lee Mills</name>
+            <name>Lee Mills, Spotify</name>
             <uri>https://github.com/leemills83</uri>
         </author>
     </entry>
@@ -114,7 +114,7 @@
 <p><img src="/blog/assets/6/header.png" alt="img"></p>
 ]]></summary>
         <author>
-            <name>Stefan Ålund</name>
+            <name>Stefan Ålund, Spotify</name>
             <uri>http://twitter.com/stalund</uri>
         </author>
     </entry>
@@ -128,7 +128,7 @@
 <p><img src="/blog/assets/20-05-20/Service_Catalog_MVP.png" alt="img"></p>
 ]]></summary>
         <author>
-            <name>Stefan Ålund</name>
+            <name>Stefan Ålund, Spotify</name>
             <uri>http://twitter.com/stalund</uri>
         </author>
     </entry>
@@ -141,7 +141,7 @@
 <p>One of the great things about the open source community is once you put your work out there, you really never know where it might end up. That’s certainly the case here.</p>
 ]]></summary>
         <author>
-            <name>Jeff Feng</name>
+            <name>Jeff Feng, Spotify</name>
             <uri>https://github.com/fengypants</uri>
         </author>
     </entry>
@@ -154,7 +154,7 @@
 <p>Just a few weeks ago, we released our internal plugin for [Lighthouse website audits] as our first open source plugin, so the whole community could use it. Today, we’re excited to add a new plugin to that list — say hello to the [Tech Radar plugin]!</p>
 ]]></summary>
         <author>
-            <name>Bilawal Hameed</name>
+            <name>Bilawal Hameed, Spotify</name>
             <uri>http://twitter.com/bilawalhameed</uri>
         </author>
     </entry>
@@ -168,7 +168,7 @@
 <p>In this blog post we’ll look at what a Backstage app is and how to create one using our <a href="https://www.npmjs.com/package/@backstage/cli">CLI</a>.</p>
 ]]></summary>
         <author>
-            <name>Marcus Eide</name>
+            <name>Marcus Eide, Spotify</name>
             <uri>https://github.com/marcuseide</uri>
         </author>
     </entry>
@@ -181,7 +181,7 @@
 <p>We’re proud to announce that our first internal plugin at Spotify has been open-sourced as part of Backstage. This plugin works with the newly open-sourced <a href="https://github.com/spotify/lighthouse-audit-service">lighthouse-audit-service</a> to run and track Lighthouse audits for your websites.</p>
 ]]></summary>
         <author>
-            <name>Paul Marbach</name>
+            <name>Paul Marbach, Spotify</name>
             <uri>http://twitter.com/fastfrwrd</uri>
         </author>
     </entry>
@@ -194,7 +194,7 @@
 <p>Two days ago, we released the open source version of <a href="https://backstage.io/">Backstage</a>, our homegrown developer portal. And we learned a thing or two via the feedback we received. So, I wanted to take this opportunity to further explain what we’re trying to do with Backstage — and more importantly, what we want to give to the greater engineering community beyond Spotify.</p>
 ]]></summary>
         <author>
-            <name>Stefan Ålund</name>
+            <name>Stefan Ålund, Spotify</name>
             <uri>http://twitter.com/stalund</uri>
         </author>
     </entry>
@@ -209,7 +209,7 @@
 <p><img src="/blog/assets/blog_1.png" alt="img"></p>
 ]]></summary>
         <author>
-            <name>Stefan Ålund</name>
+            <name>Stefan Ålund, Spotify</name>
             <uri>http://twitter.com/stalund</uri>
         </author>
     </entry>

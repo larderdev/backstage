@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0">
     <channel>
-        <title>Backstage Blog</title>
+        <title>Backstage Service Catalog and Developer Platform Blog</title>
         <link>https://backstage.io/blog</link>
-        <description>The best place to stay up-to-date with the latest Backstage news and events.</description>
+        <description>The best place to stay up-to-date with the latest Backstage Service Catalog and Developer Platform news and events.</description>
         <lastBuildDate>Thu, 22 Oct 2020 06:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
-            <title>Backstage Blog</title>
+            <title>Backstage Service Catalog and Developer Platform Blog</title>
             <url>https://backstage.io/undefined</url>
             <link>https://backstage.io/blog</link>
         </image>
