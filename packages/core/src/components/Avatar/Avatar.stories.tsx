@@ -14,14 +14,29 @@
  * limitations under the License.
  */
 
-export {
-  readBitbucketIntegrationConfig,
-  readBitbucketIntegrationConfigs,
-} from './config';
-export type { BitbucketIntegrationConfig } from './config';
-export {
-  getBitbucketDefaultBranch,
-  getBitbucketDownloadUrl,
-  getBitbucketFileFetchUrl,
-  getBitbucketRequestOptions,
-} from './core';
+import React from 'react';
+import { Avatar } from './Avatar';
+
+export default {
+  title: 'Data Display/Avatar',
+  component: Avatar,
+};
+
+export const Default = () => (
+  <Avatar
+    displayName="Jenny Doe"
+    // Avatar of the backstage GitHub org
+    picture="https://avatars1.githubusercontent.com/u/72526453?s=200&v=4"
+  />
+);
+
+export const NameFallback = () => <Avatar displayName="Jenny Doe" />;
+
+export const Empty = () => <Avatar />;
+
+export const CustomStyling = () => (
+  <Avatar
+    displayName="Jenny Doe"
+    customStyles={{ width: '24px', height: '24px', fontSize: '8px' }}
+  />
+);

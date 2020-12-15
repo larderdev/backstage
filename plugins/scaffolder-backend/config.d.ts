@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-export {
-  readBitbucketIntegrationConfig,
-  readBitbucketIntegrationConfigs,
-} from './config';
-export type { BitbucketIntegrationConfig } from './config';
-export {
-  getBitbucketDefaultBranch,
-  getBitbucketDownloadUrl,
-  getBitbucketFileFetchUrl,
-  getBitbucketRequestOptions,
-} from './core';
+export interface Config {
+  /** Configuration options for the scaffolder plugin */
+  scaffolder?: {
+    github?: {
+      [key: string]: string;
+    };
+    gitlab?: {
+      api: { [key: string]: string };
+    };
+    azure?: {
+      baseUrl: string;
+      api: { [key: string]: string };
+    };
+  };
+}

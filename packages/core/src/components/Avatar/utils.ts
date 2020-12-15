@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 
-export {
-  readBitbucketIntegrationConfig,
-  readBitbucketIntegrationConfigs,
-} from './config';
-export type { BitbucketIntegrationConfig } from './config';
-export {
-  getBitbucketDefaultBranch,
-  getBitbucketDownloadUrl,
-  getBitbucketFileFetchUrl,
-  getBitbucketRequestOptions,
-} from './core';
+export function stringToColor(str: string) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  let color = '#';
+  for (let i = 0; i < 3; i++) {
+    const value = (hash >> (i * 8)) & 0xff;
+    color += `00${value.toString(16)}`.substr(-2);
+  }
+  return color;
+}
+
+export function extractInitials(value: string) {
+  return value.match(/\b\w/g)!.join('').substring(0, 2);
+}

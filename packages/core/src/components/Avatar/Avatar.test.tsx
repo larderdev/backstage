@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-export {
-  readBitbucketIntegrationConfig,
-  readBitbucketIntegrationConfigs,
-} from './config';
-export type { BitbucketIntegrationConfig } from './config';
-export {
-  getBitbucketDefaultBranch,
-  getBitbucketDownloadUrl,
-  getBitbucketFileFetchUrl,
-  getBitbucketRequestOptions,
-} from './core';
+import { render } from '@testing-library/react';
+import React from 'react';
+import { Avatar } from './Avatar';
+
+describe('<Avatar />', () => {
+  it('renders without exploding', async () => {
+    const { getByText } = render(<Avatar displayName="John Doe" />);
+
+    expect(getByText('JD')).toBeInTheDocument();
+  });
+});

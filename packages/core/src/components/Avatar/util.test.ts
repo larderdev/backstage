@@ -14,14 +14,24 @@
  * limitations under the License.
  */
 
-export {
-  readBitbucketIntegrationConfig,
-  readBitbucketIntegrationConfigs,
-} from './config';
-export type { BitbucketIntegrationConfig } from './config';
-export {
-  getBitbucketDefaultBranch,
-  getBitbucketDownloadUrl,
-  getBitbucketFileFetchUrl,
-  getBitbucketRequestOptions,
-} from './core';
+import { extractInitials, stringToColor } from './utils';
+
+describe('stringToColor', () => {
+  it('extract color', async () => {
+    expect(stringToColor('Jenny Doe')).toEqual('#7809fa');
+  });
+});
+
+describe('extractInitials', () => {
+  it('extract initials', async () => {
+    expect(extractInitials('Jenny Doe')).toEqual('JD');
+  });
+
+  it('extract single letter for short name', async () => {
+    expect(extractInitials('Doe')).toEqual('D');
+  });
+
+  it('limit the initials to two letters', async () => {
+    expect(extractInitials('John Jonathan Doe')).toEqual('JJ');
+  });
+});
