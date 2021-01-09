@@ -110,12 +110,8 @@ yarn add @backstage/plugin-techdocs-backend
 add the following</p>
 <pre><code class="hljs css language-typescript"><span class="hljs-keyword">import</span> {
   createRouter,
-  DirectoryPreparer,
   Preparers,
   Generators,
-  TechdocsGenerator,
-  CommonGitPreparer,
-  UrlPreparer,
   Publisher,
 } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-techdocs-backend'</span>;
 <span class="hljs-keyword">import</span> { PluginEnvironment } <span class="hljs-keyword">from</span> <span class="hljs-string">'../types'</span>;
@@ -128,30 +124,25 @@ add the following</p>
   reader,
 }: PluginEnvironment</span>) </span>{
   <span class="hljs-comment">// Preparers are responsible for fetching source files for documentation.</span>
-  <span class="hljs-keyword">const</span> preparers = <span class="hljs-keyword">new</span> Preparers();
-
-  <span class="hljs-keyword">const</span> directoryPreparer = <span class="hljs-keyword">new</span> DirectoryPreparer(logger);
-  preparers.register(<span class="hljs-string">'dir'</span>, directoryPreparer);
-
-  <span class="hljs-keyword">const</span> commonGitPreparer = <span class="hljs-keyword">new</span> CommonGitPreparer(logger);
-  preparers.register(<span class="hljs-string">'github'</span>, commonGitPreparer);
-  preparers.register(<span class="hljs-string">'gitlab'</span>, commonGitPreparer);
-  preparers.register(<span class="hljs-string">'azure/api'</span>, commonGitPreparer);
-
-  <span class="hljs-keyword">const</span> urlPreparer = <span class="hljs-keyword">new</span> UrlPreparer(reader, logger);
-  preparers.register(<span class="hljs-string">'url'</span>, urlPreparer);
+  <span class="hljs-keyword">const</span> preparers = <span class="hljs-keyword">await</span> Preparers.fromConfig(config, {
+    logger,
+    reader,
+  });
 
   <span class="hljs-comment">// Generators are used for generating documentation sites.</span>
-  <span class="hljs-keyword">const</span> generators = <span class="hljs-keyword">new</span> Generators();
-  <span class="hljs-keyword">const</span> techdocsGenerator = <span class="hljs-keyword">new</span> TechdocsGenerator(logger, config);
-  generators.register(<span class="hljs-string">'techdocs'</span>, techdocsGenerator);
+  <span class="hljs-keyword">const</span> generators = <span class="hljs-keyword">await</span> Generators.fromConfig(config, {
+    logger,
+  });
 
-  <span class="hljs-comment">// Publishers are used for</span>
+  <span class="hljs-comment">// Publisher is used for</span>
   <span class="hljs-comment">// 1. Publishing generated files to storage</span>
   <span class="hljs-comment">// 2. Fetching files from storage and passing them to TechDocs frontend.</span>
-  <span class="hljs-keyword">const</span> publisher = Publisher.fromConfig(config, logger, discovery);
+  <span class="hljs-keyword">const</span> publisher = <span class="hljs-keyword">await</span> Publisher.fromConfig(config, {
+    logger,
+    discovery,
+  });
 
-  <span class="hljs-comment">// Docker client used by the generators.</span>
+  <span class="hljs-comment">// Docker client (conditionally) used by the generators, based on techdocs.generators config.</span>
   <span class="hljs-keyword">const</span> dockerClient = <span class="hljs-keyword">new</span> Docker();
 
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> createRouter({
@@ -266,7 +257,7 @@ to see all your documentation sites.</p>
 <li><a href="/docs/features/techdocs/creating-and-publishing">Creating and publishing your docs</a></li>
 <li><a href="/docs/features/techdocs/techdocs-overview">Back to README</a></li>
 </ul>
-</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/features/techdocs/techdocs-overview"><span class="arrow-prev">← </span><span>Overview</span></a><a class="docs-next button" href="/docs/features/techdocs/concepts"><span>Concepts</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#adding-techdocs-frontend-plugin">Adding TechDocs frontend plugin</a></li><li><a href="#adding-techdocs-backend-plugin">Adding TechDocs Backend plugin</a></li><li><a href="#setting-the-configuration">Setting the configuration</a><ul class="toc-headings"><li><a href="#setting-techdocs-urls">Setting TechDocs URLs</a></li><li><a href="#should-techdocs-backend-generate-docs">Should TechDocs Backend generate docs?</a></li><li><a href="#choosing-storage-publisher">Choosing storage (publisher)</a></li><li><a href="#disabling-docker-in-docker-situation-optional">Disabling Docker in Docker situation (Optional)</a></li></ul></li><li><a href="#running-backstage-locally">Running Backstage locally</a></li><li><a href="#additional-reading">Additional reading</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div class="footer-title"><a href="/"><h2 class="footerLogo"></h2></a></div><div><h5>Docs</h5><a href="/docs/overview/what-is-backstage">What is Backstage?</a><a href="/docs/getting-started/">Getting started</a><a href="/docs/features/software-catalog/software-catalog-overview">Service Catalog</a><a href="/docs/plugins/create-a-plugin">Create a Plugin</a><a href="/docs/dls/design">Designing for Backstage</a></div><div><h5>Community</h5><a href="https://discord.gg/MUpMjP2">Support chatroom</a><a href="https://github.com/backstage/backstage/blob/master/CONTRIBUTING.md">Contributing</a><a href="https://mailchi.mp/spotify/backstage-community">Subscribe to our newsletter</a><a href="https://www.cncf.io/sandbox-projects/">CNCF Sandbox</a></div><div><h5>More</h5><a href="https://spotify.github.io/">Open Source @ Spotify</a><a href="https://engineering.atspotify.com/">Spotify Engineering Blog</a><a href="https://developer.spotify.com/">Spotify for Developers</a><a href="https://github.com/backstage/backstage">GitHub</a><a class="github-button" href="https://github.com/backstage/backstage" data-icon="octicon-star" data-count-href="/backstage/backstage/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/SpotifyEng" class="twitter-follow-button">Follow @SpotifyEng</a></div></div></section><p style="text-align:center"><a href="https://spotify.github.io">Made with ❤️  at Spotify</a></p><p class="copyright">Copyright © 2020 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</p></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/features/techdocs/techdocs-overview"><span class="arrow-prev">← </span><span>Overview</span></a><a class="docs-next button" href="/docs/features/techdocs/concepts"><span>Concepts</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#adding-techdocs-frontend-plugin">Adding TechDocs frontend plugin</a></li><li><a href="#adding-techdocs-backend-plugin">Adding TechDocs Backend plugin</a></li><li><a href="#setting-the-configuration">Setting the configuration</a><ul class="toc-headings"><li><a href="#setting-techdocs-urls">Setting TechDocs URLs</a></li><li><a href="#should-techdocs-backend-generate-docs">Should TechDocs Backend generate docs?</a></li><li><a href="#choosing-storage-publisher">Choosing storage (publisher)</a></li><li><a href="#disabling-docker-in-docker-situation-optional">Disabling Docker in Docker situation (Optional)</a></li></ul></li><li><a href="#running-backstage-locally">Running Backstage locally</a></li><li><a href="#additional-reading">Additional reading</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div class="footer-title"><a href="/"><h2 class="footerLogo"></h2></a></div><div><h5>Docs</h5><a href="/docs/overview/what-is-backstage">What is Backstage?</a><a href="/docs/getting-started/">Getting started</a><a href="/docs/features/software-catalog/software-catalog-overview">Service Catalog</a><a href="/docs/plugins/create-a-plugin">Create a Plugin</a><a href="/docs/dls/design">Designing for Backstage</a></div><div><h5>Community</h5><a href="https://discord.gg/MUpMjP2">Support chatroom</a><a href="https://github.com/backstage/backstage/blob/master/CONTRIBUTING.md">Contributing</a><a href="https://mailchi.mp/spotify/backstage-community">Subscribe to our newsletter</a><a href="https://www.cncf.io/sandbox-projects/">CNCF Sandbox</a></div><div><h5>More</h5><a href="https://spotify.github.io/">Open Source @ Spotify</a><a href="https://engineering.atspotify.com/">Spotify Engineering Blog</a><a href="https://developer.spotify.com/">Spotify for Developers</a><a href="https://github.com/backstage/backstage">GitHub</a><a class="github-button" href="https://github.com/backstage/backstage" data-icon="octicon-star" data-count-href="/backstage/backstage/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/SpotifyEng" class="twitter-follow-button">Follow @SpotifyEng</a></div></div></section><p style="text-align:center"><a href="https://spotify.github.io">Made with ❤️  at Spotify</a></p><p class="copyright">Copyright © 2021 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</p></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
                 document.addEventListener('keyup', function(e) {
                   if (e.target !== document.body) {
                     return;

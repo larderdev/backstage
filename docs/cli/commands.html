@@ -82,6 +82,7 @@ app:diff                 Diff an existing app with the creation template
 app:serve                Serve an app for local development
 
 backend:build            Build a backend plugin
+backend:bundle           Bundle the backend into a deployment archive
 backend:build-image      Bundles the package into a docker image
 backend:dev              Start local development server with HMR for the backend
 
@@ -191,7 +192,7 @@ Options:
   -h, --help       display help for command
 </code></pre>
 <h2><a class="anchor" aria-hidden="true" id="backendbuild"></a><a href="#backendbuild" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>backend:build</h2>
-<p>Scope: <code>backend</code>, <code>backend-plugin</code></p>
+<p>Scope: <code>backend-plugin</code></p>
 <p>This builds a backend package for publishing and use in production. The build
 output is written to <code>dist/</code>. Be sure to list any additional file that the
 package depends on at runtime in the <code>&quot;files&quot;</code> field inside <code>package.json</code>, a
@@ -200,6 +201,42 @@ common example being the <code>migrations</code> directory.</p>
 
 Options:
   -h, --help  display help for command
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="backendbundle"></a><a href="#backendbundle" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>backend:bundle</h2>
+<p>Scope: <code>backend</code></p>
+<p>Bundle the backend and all of its local dependencies into a deployment archive.
+The archive is written to <code>dist/bundle.tar.gz</code>, and contains the packaged
+version of all dependencies of the target package, along with the target package
+itself. The layout of the packages in the archive is the same as the directory
+layout in the target monorepo, and the bundle also contains the root
+<code>package.json</code> and <code>yarn.lock</code>.</p>
+<p>To use the bundle, extract it into a target directory, run
+<code>yarn install --production</code>, and then start the target backend package using for
+example <code>node package/backend</code>.</p>
+<p>The <code>dist/bundle.tar.gz</code> is accompanied by a <code>dist/skeleton.tar.gz</code>, which has
+the same layout, but only contains <code>package.json</code> files and <code>yarn.lock</code>. This
+can be used to run a <code>yarn install</code> in environments that will benefit from the
+caching that this enables, such as Docker image builds. To use the skeleton
+archive, simply extract it first, run install, and then extract the main bundle.</p>
+<p>The following is an example of a <code>Dockerfile</code> that can be used to package the
+output of <code>backstage-cli backend:bundle</code> into an image:</p>
+<pre><code class="hljs css language-Dockerfile"><span class="hljs-keyword">FROM</span> node:<span class="hljs-number">14</span>-buster
+<span class="hljs-keyword">WORKDIR</span><span class="bash"> /app</span>
+
+<span class="hljs-keyword">ADD</span><span class="bash"> yarn.lock package.json packages/backend/dist/skeleton.tar.gz ./</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> yarn install --production --network-timeout 600000 &amp;&amp; rm -rf <span class="hljs-string">"<span class="hljs-variable">$(yarn cache dir)</span>"</span></span>
+
+<span class="hljs-keyword">ADD</span><span class="bash"> packages/backend/dist/bundle.tar.gz app-config.yaml ./</span>
+
+<span class="hljs-keyword">CMD</span><span class="bash"> node packages/backend</span>
+</code></pre>
+<pre><code class="hljs css language-text">Usage: backstage-cli backend:bundle [options]
+
+Bundle the backend into a deployment archive
+
+Options:
+  --build-dependencies  Build all local package dependencies before bundling the backend
+  -h, --help            display help for command
 </code></pre>
 <h2><a class="anchor" aria-hidden="true" id="backendbuild-image"></a><a href="#backendbuild-image" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>backend:build-image</h2>
 <p>Scope: <code>backend</code></p>
@@ -469,7 +506,7 @@ package. This essentially calls <code>yarn pack</code> in each included package 
 the resulting archive in the target <code>workspace-dir</code>.</p>
 <pre><code class="hljs css language-text">Usage: backstage-cli build-workspace [options] &lt;workspace-dir&gt;
 </code></pre>
-</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/cli/index"><span class="arrow-prev">← </span><span>Overview</span></a><a class="docs-next button" href="/docs/features/software-catalog/software-catalog-overview"><span>Overview</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#help">help</a></li><li><a href="#appbuild">app:build</a></li><li><a href="#appdiff">app:diff</a></li><li><a href="#appserve">app:serve</a></li><li><a href="#backendbuild">backend:build</a></li><li><a href="#backendbuild-image">backend:build-image</a></li><li><a href="#backenddev">backend:dev</a></li><li><a href="#create-plugin">create-plugin</a></li><li><a href="#remove-plugin">remove-plugin</a></li><li><a href="#pluginbuild">plugin:build</a></li><li><a href="#pluginserve">plugin:serve</a></li><li><a href="#plugindiff">plugin:diff</a></li><li><a href="#build">build</a></li><li><a href="#lint">lint</a></li><li><a href="#test">test</a></li><li><a href="#configprint">config:print</a></li><li><a href="#configcheck">config:check</a></li><li><a href="#versionsbump">versions:bump</a></li><li><a href="#versionscheck">versions:check</a></li><li><a href="#prepack">prepack</a></li><li><a href="#postpack">postpack</a></li><li><a href="#clean">clean</a></li><li><a href="#build-workspace">build-workspace</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div class="footer-title"><a href="/"><h2 class="footerLogo"></h2></a></div><div><h5>Docs</h5><a href="/docs/overview/what-is-backstage">What is Backstage?</a><a href="/docs/getting-started/">Getting started</a><a href="/docs/features/software-catalog/software-catalog-overview">Service Catalog</a><a href="/docs/plugins/create-a-plugin">Create a Plugin</a><a href="/docs/dls/design">Designing for Backstage</a></div><div><h5>Community</h5><a href="https://discord.gg/MUpMjP2">Support chatroom</a><a href="https://github.com/backstage/backstage/blob/master/CONTRIBUTING.md">Contributing</a><a href="https://mailchi.mp/spotify/backstage-community">Subscribe to our newsletter</a><a href="https://www.cncf.io/sandbox-projects/">CNCF Sandbox</a></div><div><h5>More</h5><a href="https://spotify.github.io/">Open Source @ Spotify</a><a href="https://engineering.atspotify.com/">Spotify Engineering Blog</a><a href="https://developer.spotify.com/">Spotify for Developers</a><a href="https://github.com/backstage/backstage">GitHub</a><a class="github-button" href="https://github.com/backstage/backstage" data-icon="octicon-star" data-count-href="/backstage/backstage/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/SpotifyEng" class="twitter-follow-button">Follow @SpotifyEng</a></div></div></section><p style="text-align:center"><a href="https://spotify.github.io">Made with ❤️  at Spotify</a></p><p class="copyright">Copyright © 2020 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</p></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/cli/index"><span class="arrow-prev">← </span><span>Overview</span></a><a class="docs-next button" href="/docs/features/software-catalog/software-catalog-overview"><span>Overview</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#help">help</a></li><li><a href="#appbuild">app:build</a></li><li><a href="#appdiff">app:diff</a></li><li><a href="#appserve">app:serve</a></li><li><a href="#backendbuild">backend:build</a></li><li><a href="#backendbundle">backend:bundle</a></li><li><a href="#backendbuild-image">backend:build-image</a></li><li><a href="#backenddev">backend:dev</a></li><li><a href="#create-plugin">create-plugin</a></li><li><a href="#remove-plugin">remove-plugin</a></li><li><a href="#pluginbuild">plugin:build</a></li><li><a href="#pluginserve">plugin:serve</a></li><li><a href="#plugindiff">plugin:diff</a></li><li><a href="#build">build</a></li><li><a href="#lint">lint</a></li><li><a href="#test">test</a></li><li><a href="#configprint">config:print</a></li><li><a href="#configcheck">config:check</a></li><li><a href="#versionsbump">versions:bump</a></li><li><a href="#versionscheck">versions:check</a></li><li><a href="#prepack">prepack</a></li><li><a href="#postpack">postpack</a></li><li><a href="#clean">clean</a></li><li><a href="#build-workspace">build-workspace</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div class="footer-title"><a href="/"><h2 class="footerLogo"></h2></a></div><div><h5>Docs</h5><a href="/docs/overview/what-is-backstage">What is Backstage?</a><a href="/docs/getting-started/">Getting started</a><a href="/docs/features/software-catalog/software-catalog-overview">Service Catalog</a><a href="/docs/plugins/create-a-plugin">Create a Plugin</a><a href="/docs/dls/design">Designing for Backstage</a></div><div><h5>Community</h5><a href="https://discord.gg/MUpMjP2">Support chatroom</a><a href="https://github.com/backstage/backstage/blob/master/CONTRIBUTING.md">Contributing</a><a href="https://mailchi.mp/spotify/backstage-community">Subscribe to our newsletter</a><a href="https://www.cncf.io/sandbox-projects/">CNCF Sandbox</a></div><div><h5>More</h5><a href="https://spotify.github.io/">Open Source @ Spotify</a><a href="https://engineering.atspotify.com/">Spotify Engineering Blog</a><a href="https://developer.spotify.com/">Spotify for Developers</a><a href="https://github.com/backstage/backstage">GitHub</a><a class="github-button" href="https://github.com/backstage/backstage" data-icon="octicon-star" data-count-href="/backstage/backstage/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/SpotifyEng" class="twitter-follow-button">Follow @SpotifyEng</a></div></div></section><p style="text-align:center"><a href="https://spotify.github.io">Made with ❤️  at Spotify</a></p><p class="copyright">Copyright © 2021 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</p></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
                 document.addEventListener('keyup', function(e) {
                   if (e.target !== document.body) {
                     return;

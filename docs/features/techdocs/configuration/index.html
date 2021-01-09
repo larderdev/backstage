@@ -68,17 +68,14 @@ configuration options for TechDocs.</p>
 <pre><code class="hljs css language-yaml"><span class="hljs-comment"># File: app-config.yaml</span>
 
 <span class="hljs-attr">techdocs:</span>
-
   <span class="hljs-comment"># TechDocs makes API calls to techdocs-backend using this URL. e.g. get docs of an entity, get metadata, etc.</span>
 
   <span class="hljs-attr">requestUrl:</span> <span class="hljs-string">http://localhost:7000/api/techdocs</span>
-
 
   <span class="hljs-comment"># Just another route in techdocs-backend where TechDocs requests the static files from. This URL uses an HTTP middleware</span>
   <span class="hljs-comment"># to serve files from either a local directory or an External storage provider.</span>
 
   <span class="hljs-attr">storageUrl:</span> <span class="hljs-string">http://localhost:7000/api/techdocs/static/docs</span>
-
 
   <span class="hljs-comment"># generators.techdocs can have two values: 'docker' or 'local'. This is to determine how to run the generator - whether to</span>
   <span class="hljs-comment"># spin up the techdocs-container docker image or to run mkdocs locally (assuming all the dependencies are taken care of).</span>
@@ -89,7 +86,6 @@ configuration options for TechDocs.</p>
   <span class="hljs-attr">generators:</span>
     <span class="hljs-attr">techdocs:</span> <span class="hljs-string">'docker'</span>
 
-
   <span class="hljs-comment"># techdocs.builder can be either 'local' or 'external.</span>
   <span class="hljs-comment"># If builder is set to 'local' and you open a TechDocs page, techdocs-backend will try to generate the docs, publish to storage</span>
   <span class="hljs-comment"># and show the generated docs afterwords. This is the "Basic" setup of the TechDocs Architecture.</span>
@@ -99,34 +95,46 @@ configuration options for TechDocs.</p>
 
   <span class="hljs-attr">builder:</span> <span class="hljs-string">'local'</span>
 
-
   <span class="hljs-comment"># techdocs.publisher is used to configure the Storage option, whether you want to use the local filesystem to store generated docs</span>
   <span class="hljs-comment"># or you want to use External storage providers like Google Cloud Storage, AWS S3, etc.</span>
 
   <span class="hljs-attr">publisher:</span>
-
-    <span class="hljs-comment"># techdocs.publisher.type can be - 'local' or 'googleGcs' (awsS3, azureStorage, etc. to be available as well).</span>
+    <span class="hljs-comment"># techdocs.publisher.type can be - 'local' or 'googleGcs' or 'awsS3' (azureStorage to be available in future).</span>
     <span class="hljs-comment"># When set to 'local', techdocs-backend will create a 'static' directory at its root to store generated documentation files.</span>
     <span class="hljs-comment"># When set to 'googleGcs', techdocs-backend will use a Google Cloud Storage Bucket to store generated documentation files.</span>
+    <span class="hljs-comment"># When set to 'awsS3', techdocs-backend will use an Amazon Web Service (AWS) S3 bucket to store generated documentation files.</span>
 
     <span class="hljs-attr">type:</span> <span class="hljs-string">'local'</span>
-
 
     <span class="hljs-comment"># Required when techdocs.publisher.type is set to 'googleGcs'. Skip otherwise.</span>
 
     <span class="hljs-attr">googleGcs:</span>
       <span class="hljs-comment"># An API key is required to write to a storage bucket.</span>
       <span class="hljs-attr">credentials:</span>
-        <span class="hljs-string">$file:</span> <span class="hljs-string">'/path/to/google_application_credentials.json'</span><span class="hljs-string">,</span>
+        <span class="hljs-string">$file:</span> <span class="hljs-string">'/path/to/google_application_credentials.json'</span>
 
       <span class="hljs-comment"># Your GCP Project ID where the Cloud Storage Bucket is hosted.</span>
       <span class="hljs-attr">projectId:</span> <span class="hljs-string">'gcp-project-id'</span>
 
       <span class="hljs-comment"># Cloud Storage Bucket Name</span>
-      <span class="hljs-attr">bucketName:</span> <span class="hljs-string">'techdocs-storage'</span><span class="hljs-string">,</span>
+      <span class="hljs-attr">bucketName:</span> <span class="hljs-string">'techdocs-storage'</span>
 
+    <span class="hljs-comment"># Required when techdocs.publisher.type is set to 'awsS3'. Skip otherwise.</span>
+
+    <span class="hljs-attr">awsS3:</span>
+      <span class="hljs-comment"># An API key is required to write to a storage bucket.</span>
+      <span class="hljs-attr">credentials:</span>
+        <span class="hljs-attr">accessKeyId:</span>
+          <span class="hljs-string">$env:</span> <span class="hljs-string">TECHDOCS_AWSS3_ACCESS_KEY_ID_CREDENTIAL</span>
+        <span class="hljs-attr">secretAccessKey:</span>
+          <span class="hljs-string">$env:</span> <span class="hljs-string">TECHDOCS_AWSS3_SECRET_ACCESS_KEY_CREDENTIAL</span>
+      <span class="hljs-attr">region:</span>
+        <span class="hljs-string">$env:</span> <span class="hljs-string">AWSS3_REGION</span>
+
+      <span class="hljs-comment"># AWS S3 Bucket Name</span>
+      <span class="hljs-attr">bucketName:</span> <span class="hljs-string">'techdocs-storage'</span>
 </code></pre>
-</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/features/techdocs/creating-and-publishing"><span class="arrow-prev">← </span><span>Creating and Publishing Documentation</span></a><a class="docs-next button" href="/docs/features/techdocs/using-cloud-storage"><span class="function-name-prevnext">Using Cloud Storage for TechDocs generated files</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div class="footer-title"><a href="/"><h2 class="footerLogo"></h2></a></div><div><h5>Docs</h5><a href="/docs/overview/what-is-backstage">What is Backstage?</a><a href="/docs/getting-started/">Getting started</a><a href="/docs/features/software-catalog/software-catalog-overview">Service Catalog</a><a href="/docs/plugins/create-a-plugin">Create a Plugin</a><a href="/docs/dls/design">Designing for Backstage</a></div><div><h5>Community</h5><a href="https://discord.gg/MUpMjP2">Support chatroom</a><a href="https://github.com/backstage/backstage/blob/master/CONTRIBUTING.md">Contributing</a><a href="https://mailchi.mp/spotify/backstage-community">Subscribe to our newsletter</a><a href="https://www.cncf.io/sandbox-projects/">CNCF Sandbox</a></div><div><h5>More</h5><a href="https://spotify.github.io/">Open Source @ Spotify</a><a href="https://engineering.atspotify.com/">Spotify Engineering Blog</a><a href="https://developer.spotify.com/">Spotify for Developers</a><a href="https://github.com/backstage/backstage">GitHub</a><a class="github-button" href="https://github.com/backstage/backstage" data-icon="octicon-star" data-count-href="/backstage/backstage/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/SpotifyEng" class="twitter-follow-button">Follow @SpotifyEng</a></div></div></section><p style="text-align:center"><a href="https://spotify.github.io">Made with ❤️  at Spotify</a></p><p class="copyright">Copyright © 2020 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</p></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/features/techdocs/creating-and-publishing"><span class="arrow-prev">← </span><span>Creating and Publishing Documentation</span></a><a class="docs-next button" href="/docs/features/techdocs/using-cloud-storage"><span class="function-name-prevnext">Using Cloud Storage for TechDocs generated files</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div class="footer-title"><a href="/"><h2 class="footerLogo"></h2></a></div><div><h5>Docs</h5><a href="/docs/overview/what-is-backstage">What is Backstage?</a><a href="/docs/getting-started/">Getting started</a><a href="/docs/features/software-catalog/software-catalog-overview">Service Catalog</a><a href="/docs/plugins/create-a-plugin">Create a Plugin</a><a href="/docs/dls/design">Designing for Backstage</a></div><div><h5>Community</h5><a href="https://discord.gg/MUpMjP2">Support chatroom</a><a href="https://github.com/backstage/backstage/blob/master/CONTRIBUTING.md">Contributing</a><a href="https://mailchi.mp/spotify/backstage-community">Subscribe to our newsletter</a><a href="https://www.cncf.io/sandbox-projects/">CNCF Sandbox</a></div><div><h5>More</h5><a href="https://spotify.github.io/">Open Source @ Spotify</a><a href="https://engineering.atspotify.com/">Spotify Engineering Blog</a><a href="https://developer.spotify.com/">Spotify for Developers</a><a href="https://github.com/backstage/backstage">GitHub</a><a class="github-button" href="https://github.com/backstage/backstage" data-icon="octicon-star" data-count-href="/backstage/backstage/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/SpotifyEng" class="twitter-follow-button">Follow @SpotifyEng</a></div></div></section><p style="text-align:center"><a href="https://spotify.github.io">Made with ❤️  at Spotify</a></p><p class="copyright">Copyright © 2021 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</p></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
                 document.addEventListener('keyup', function(e) {
                   if (e.target !== document.body) {
                     return;

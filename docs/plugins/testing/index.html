@@ -70,13 +70,13 @@ frameworks and libraries like <a href="https://mochajs.org/">Mocha</a>,
 <a href="https://jasmine.github.io/">Jasmine</a>, and <a href="http://www.chaijs.com/">Chai</a>.</p>
 <h2><a class="anchor" aria-hidden="true" id="running-tests"></a><a href="#running-tests" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Running Tests</h2>
 <p>Running all tests:</p>
-<pre><code class="hljs">yarn test-react
+<pre><code class="hljs">yarn test
 </code></pre>
 <p>Running an individual test (e.g. <code>MyComponent.test.js</code>):</p>
-<pre><code class="hljs">yarn test-react MyComponent
+<pre><code class="hljs">yarn test MyComponent
 </code></pre>
 <p>To run both <code>MyComponent.test.js</code> and <code>MyControl.test.js</code> suite of tests:</p>
-<pre><code class="hljs">yarn test-react MyCo
+<pre><code class="hljs">yarn test MyCo
 </code></pre>
 <p>Note: if <code>console.logs</code> are not appearing, run only the individual test you are
 working on.
@@ -95,10 +95,10 @@ import a third-party library if you needed (like Chai or
 render React components.</p>
 <h2><a class="anchor" aria-hidden="true" id="testing-utilities"></a><a href="#testing-utilities" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Testing Utilities</h2>
 <p>TODO.</p>
-<h1><a class="anchor" aria-hidden="true" id="writing-unit-tests"></a><a href="#writing-unit-tests" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Writing Unit Tests</h1>
+<h2><a class="anchor" aria-hidden="true" id="writing-unit-tests"></a><a href="#writing-unit-tests" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Writing Unit Tests</h2>
 <p>The following principles are good guides for determining if you are writing high
 quality frontend unit tests.</p>
-<h2><a class="anchor" aria-hidden="true" id="bad-unit-test-principle"></a><a href="#bad-unit-test-principle" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Bad Unit Test Principle</h2>
+<h3><a class="anchor" aria-hidden="true" id="bad-unit-test-principle"></a><a href="#bad-unit-test-principle" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Bad Unit Test Principle</h3>
 <blockquote>
 <p>No unit test is better than a bad one.</p>
 </blockquote>
@@ -110,14 +110,14 @@ into erroneous assumptions.</li>
 <li>Adds to future work by requiring updates to the unit test for irrelevant code
 changes.</li>
 </ul>
-<h2><a class="anchor" aria-hidden="true" id="inputoutput-principle"></a><a href="#inputoutput-principle" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Input/Output Principle</h2>
+<h3><a class="anchor" aria-hidden="true" id="inputoutput-principle"></a><a href="#inputoutput-principle" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Input/Output Principle</h3>
 <blockquote>
 <p>A unit test verifies an output matches an expected input.</p>
 </blockquote>
 <p>For backend, this would be that when you provide configuration X, then the
 object responds with Y. For frontend, this would be that when you provide
 properties X to a component, then the visual functionality responds with Y.</p>
-<h2><a class="anchor" aria-hidden="true" id="blackbox-principle"></a><a href="#blackbox-principle" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Blackbox Principle</h2>
+<h3><a class="anchor" aria-hidden="true" id="blackbox-principle"></a><a href="#blackbox-principle" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Blackbox Principle</h3>
 <blockquote>
 <p>A good unit test does not tell the object how it should do its job but should
 only compare inputs to outputs.</p>
@@ -125,7 +125,7 @@ only compare inputs to outputs.</p>
 <p>Consider a unit test for a form. A good unit test would not test the order of
 the form fields. Instead, it would verify that the inputs to the form fields
 lead to a certain backend call when submit is clicked.</p>
-<h2><a class="anchor" aria-hidden="true" id="scalability-principle"></a><a href="#scalability-principle" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Scalability Principle</h2>
+<h3><a class="anchor" aria-hidden="true" id="scalability-principle"></a><a href="#scalability-principle" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Scalability Principle</h3>
 <blockquote>
 <p>Unit test quality is directly proportionate to how much code can change
 without having to touch the unit test.</p>
@@ -135,7 +135,7 @@ changes. Poor unit tests are written so that every time you make a tiny change
 to the code, you have to update the unit test. A good unit test suite allows a
 lot of flexibility in <em>how</em> the code is written so that future refactoring can
 occur without having to touch the original unit tests.</p>
-<h2><a class="anchor" aria-hidden="true" id="increasing-complexity-principle"></a><a href="#increasing-complexity-principle" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Increasing Complexity Principle</h2>
+<h3><a class="anchor" aria-hidden="true" id="increasing-complexity-principle"></a><a href="#increasing-complexity-principle" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Increasing Complexity Principle</h3>
 <blockquote>
 <p>The ordering of unit tests in a suite should proceed from least specific to
 most specific.</p>
@@ -151,7 +151,7 @@ prior to a test that validates the output. If you do not test this, then simply
 throwing an error saying that output was incorrect will lead the next developer
 into thinking they may have broken the entire functionality of the object rather
 than simply letting them know they had an invalid input.</p>
-<h2><a class="anchor" aria-hidden="true" id="broken-functionality-principle"></a><a href="#broken-functionality-principle" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Broken Functionality Principle</h2>
+<h3><a class="anchor" aria-hidden="true" id="broken-functionality-principle"></a><a href="#broken-functionality-principle" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Broken Functionality Principle</h3>
 <blockquote>
 <p>Generally, a unit test should not test exactly how the output appears, it
 should test that the functionality has an expected <em>general</em> response to an
@@ -165,7 +165,7 @@ when it is hovered. This would be a poor unit test, because if you decide to
 test a slightly different color on the button the unit test will break. A better
 unit test would verify that the button's CSS classname is assigned properly on
 hover or test for something completely different.</p>
-<h2><a class="anchor" aria-hidden="true" id="example-loading-indicator"></a><a href="#example-loading-indicator" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Example: Loading Indicator</h2>
+<h3><a class="anchor" aria-hidden="true" id="example-loading-indicator"></a><a href="#example-loading-indicator" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Example: Loading Indicator</h3>
 <p>A classic unit test on frontends is verifying a loading indicator displays when
 a backend request is being made.</p>
 <p><strong>Here are some things we could test for <em>when data is loading</em>:</strong></p>
@@ -213,8 +213,9 @@ loading is broken, not that the loading indicator is broken.</p>
 <p>A utility function is a function with no side effects. It takes in arguments and
 returns a result or displays an error or console message, like so:</p>
 <p><strong><code>StringUtil ellipsis</code></strong></p>
-<pre><code class="hljs">export function ellipsis(text, maxLength, midCharIx = 0, ellipsis = '...') {
-  // Do something blackbox. We should not care about the internals, only inputs and outputs.
+<pre><code class="hljs css language-js"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ellipsis</span>(<span class="hljs-params">text, maxLength, midCharIx = <span class="hljs-number">0</span>, ellipsis = <span class="hljs-string">'...'</span></span>) </span>{
+  <span class="hljs-comment">// Do something blackbox. We should not care about the internals,</span>
+  <span class="hljs-comment">// only inputs and outputs.</span>
   ...
   return someFinalValue;
 }
@@ -229,30 +230,30 @@ returns a result or displays an error or console message, like so:</p>
 <blockquote>
 <p>Handle Invalid Input (handle thrown errors):</p>
 </blockquote>
-<pre><code class="hljs">it('Throws an error on improper arguments', () =&gt; {
-  expect(() =&gt; {
+<pre><code class="hljs css language-js">it(<span class="hljs-string">'Throws an error on improper arguments'</span>, () =&gt; {
+  expect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
     ellipsis();
-  }).toThrowError('Expected \'text\' to be defined');
+  }).toThrowError(<span class="hljs-string">"Expected 'text' to be defined"</span>);
 });
 </code></pre>
 <blockquote>
 <p>Verify default input arguments:</p>
 </blockquote>
-<pre><code class="hljs">it('Works with defaults', () =&gt; {
-  expect(ellipsis('Hello world', 3)).toBe('Hel...');
-  expect(ellipsis('', 3)).toBe('');
-  expect(ellipsis('H', 3)).toBe('H');
-  expect(ellipsis('Hello', 5)).toBe('Hello');
+<pre><code class="hljs css language-js">it(<span class="hljs-string">'Works with defaults'</span>, () =&gt; {
+  expect(ellipsis(<span class="hljs-string">'Hello world'</span>, <span class="hljs-number">3</span>)).toBe(<span class="hljs-string">'Hel...'</span>);
+  expect(ellipsis(<span class="hljs-string">''</span>, <span class="hljs-number">3</span>)).toBe(<span class="hljs-string">''</span>);
+  expect(ellipsis(<span class="hljs-string">'H'</span>, <span class="hljs-number">3</span>)).toBe(<span class="hljs-string">'H'</span>);
+  expect(ellipsis(<span class="hljs-string">'Hello'</span>, <span class="hljs-number">5</span>)).toBe(<span class="hljs-string">'Hello'</span>);
 });
 </code></pre>
 <blockquote>
 <p>Verify output for expected input arguments:</p>
 </blockquote>
 <p>This is especially true for edge cases!</p>
-<pre><code class="hljs">it('Works with midCharIx', () =&gt; {
-  expect(ellipsis('Hello world', 3, 6)).toBe('...o w...');
-  expect(ellipsis('', 3, 6)).toBe('');
-  expect(ellipsis('Backstage is amazing', 4, 10)).toBe('...e is...');
+<pre><code class="hljs css language-js">it(<span class="hljs-string">'Works with midCharIx'</span>, () =&gt; {
+  expect(ellipsis(<span class="hljs-string">'Hello world'</span>, <span class="hljs-number">3</span>, <span class="hljs-number">6</span>)).toBe(<span class="hljs-string">'...o w...'</span>);
+  expect(ellipsis(<span class="hljs-string">''</span>, <span class="hljs-number">3</span>, <span class="hljs-number">6</span>)).toBe(<span class="hljs-string">''</span>);
+  expect(ellipsis(<span class="hljs-string">'Backstage is amazing'</span>, <span class="hljs-number">4</span>, <span class="hljs-number">10</span>)).toBe(<span class="hljs-string">'...e is...'</span>);
 });
 </code></pre>
 <h2><a class="anchor" aria-hidden="true" id="non-react-classes"></a><a href="#non-react-classes" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Non-React Classes</h2>
@@ -365,8 +366,8 @@ but can be
 IDE.</p>
 <p>In most cases, we have found that using <code>console.log</code> works well.</p>
 <p>Note: if your console.logs are not being displayed, focus your specific unit
-test from the command line by running them like so <code>yarn test-react MyTest</code>.</p>
-</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/plugins/call-existing-api"><span class="arrow-prev">← </span><span>Call Existing API</span></a><a class="docs-next button" href="/docs/plugins/publishing"><span>Publishing</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#running-tests">Running Tests</a></li><li><a href="#naming-test-files">Naming Test Files</a></li><li><a href="#third-party-dependencies">Third-Party Dependencies</a></li><li><a href="#testing-utilities">Testing Utilities</a></li><li><a href="#bad-unit-test-principle">Bad Unit Test Principle</a></li><li><a href="#inputoutput-principle">Input/Output Principle</a></li><li><a href="#blackbox-principle">Blackbox Principle</a></li><li><a href="#scalability-principle">Scalability Principle</a></li><li><a href="#increasing-complexity-principle">Increasing Complexity Principle</a></li><li><a href="#broken-functionality-principle">Broken Functionality Principle</a></li><li><a href="#example-loading-indicator">Example: Loading Indicator</a></li><li><a href="#utility-functions">Utility Functions</a></li><li><a href="#non-react-classes">Non-React Classes</a><ul class="toc-headings"><li><a href="#api-testing-principles">API Testing Principles</a></li><li><a href="#mocking-api-calls">Mocking API Calls</a></li></ul></li><li><a href="#react-components">React Components</a><ul class="toc-headings"><li><a href="#working-with-the-react-lifecycle">Working with the React Lifecycle</a></li><li><a href="#accessing-store-theme-routing-browser-history-etc">Accessing <code>store</code>, <code>theme</code>, routing, browser history, etc.</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div class="footer-title"><a href="/"><h2 class="footerLogo"></h2></a></div><div><h5>Docs</h5><a href="/docs/overview/what-is-backstage">What is Backstage?</a><a href="/docs/getting-started/">Getting started</a><a href="/docs/features/software-catalog/software-catalog-overview">Service Catalog</a><a href="/docs/plugins/create-a-plugin">Create a Plugin</a><a href="/docs/dls/design">Designing for Backstage</a></div><div><h5>Community</h5><a href="https://discord.gg/MUpMjP2">Support chatroom</a><a href="https://github.com/backstage/backstage/blob/master/CONTRIBUTING.md">Contributing</a><a href="https://mailchi.mp/spotify/backstage-community">Subscribe to our newsletter</a><a href="https://www.cncf.io/sandbox-projects/">CNCF Sandbox</a></div><div><h5>More</h5><a href="https://spotify.github.io/">Open Source @ Spotify</a><a href="https://engineering.atspotify.com/">Spotify Engineering Blog</a><a href="https://developer.spotify.com/">Spotify for Developers</a><a href="https://github.com/backstage/backstage">GitHub</a><a class="github-button" href="https://github.com/backstage/backstage" data-icon="octicon-star" data-count-href="/backstage/backstage/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/SpotifyEng" class="twitter-follow-button">Follow @SpotifyEng</a></div></div></section><p style="text-align:center"><a href="https://spotify.github.io">Made with ❤️  at Spotify</a></p><p class="copyright">Copyright © 2020 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</p></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
+test from the command line by running them like so <code>yarn test MyTest</code>.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/plugins/call-existing-api"><span class="arrow-prev">← </span><span>Call Existing API</span></a><a class="docs-next button" href="/docs/plugins/publishing"><span>Publishing</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#running-tests">Running Tests</a></li><li><a href="#naming-test-files">Naming Test Files</a></li><li><a href="#third-party-dependencies">Third-Party Dependencies</a></li><li><a href="#testing-utilities">Testing Utilities</a></li><li><a href="#writing-unit-tests">Writing Unit Tests</a><ul class="toc-headings"><li><a href="#bad-unit-test-principle">Bad Unit Test Principle</a></li><li><a href="#inputoutput-principle">Input/Output Principle</a></li><li><a href="#blackbox-principle">Blackbox Principle</a></li><li><a href="#scalability-principle">Scalability Principle</a></li><li><a href="#increasing-complexity-principle">Increasing Complexity Principle</a></li><li><a href="#broken-functionality-principle">Broken Functionality Principle</a></li><li><a href="#example-loading-indicator">Example: Loading Indicator</a></li></ul></li><li><a href="#utility-functions">Utility Functions</a></li><li><a href="#non-react-classes">Non-React Classes</a><ul class="toc-headings"><li><a href="#api-testing-principles">API Testing Principles</a></li><li><a href="#mocking-api-calls">Mocking API Calls</a></li></ul></li><li><a href="#react-components">React Components</a><ul class="toc-headings"><li><a href="#working-with-the-react-lifecycle">Working with the React Lifecycle</a></li><li><a href="#accessing-store-theme-routing-browser-history-etc">Accessing <code>store</code>, <code>theme</code>, routing, browser history, etc.</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div class="footer-title"><a href="/"><h2 class="footerLogo"></h2></a></div><div><h5>Docs</h5><a href="/docs/overview/what-is-backstage">What is Backstage?</a><a href="/docs/getting-started/">Getting started</a><a href="/docs/features/software-catalog/software-catalog-overview">Service Catalog</a><a href="/docs/plugins/create-a-plugin">Create a Plugin</a><a href="/docs/dls/design">Designing for Backstage</a></div><div><h5>Community</h5><a href="https://discord.gg/MUpMjP2">Support chatroom</a><a href="https://github.com/backstage/backstage/blob/master/CONTRIBUTING.md">Contributing</a><a href="https://mailchi.mp/spotify/backstage-community">Subscribe to our newsletter</a><a href="https://www.cncf.io/sandbox-projects/">CNCF Sandbox</a></div><div><h5>More</h5><a href="https://spotify.github.io/">Open Source @ Spotify</a><a href="https://engineering.atspotify.com/">Spotify Engineering Blog</a><a href="https://developer.spotify.com/">Spotify for Developers</a><a href="https://github.com/backstage/backstage">GitHub</a><a class="github-button" href="https://github.com/backstage/backstage" data-icon="octicon-star" data-count-href="/backstage/backstage/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/SpotifyEng" class="twitter-follow-button">Follow @SpotifyEng</a></div></div></section><p style="text-align:center"><a href="https://spotify.github.io">Made with ❤️  at Spotify</a></p><p class="copyright">Copyright © 2021 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</p></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
                 document.addEventListener('keyup', function(e) {
                   if (e.target !== document.body) {
                     return;

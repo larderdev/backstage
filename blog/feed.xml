@@ -4,7 +4,7 @@
         <title>Backstage Service Catalog and Developer Platform Blog</title>
         <link>https://backstage.io/blog</link>
         <description>The best place to stay up-to-date with the latest Backstage Service Catalog and Developer Platform news and events.</description>
-        <lastBuildDate>Thu, 22 Oct 2020 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 22 Dec 2020 06:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
@@ -12,7 +12,16 @@
             <url>https://backstage.io/undefined</url>
             <link>https://backstage.io/blog</link>
         </image>
-        <copyright>Copyright © 2020 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</copyright>
+        <copyright>Copyright © 2021 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</copyright>
+        <item>
+            <title><![CDATA[Announcing the Backstage Stability Index]]></title>
+            <link>https://backstage.io/blog/2020/12/22/stability-index.html</link>
+            <guid>https://backstage.io/blog/2020/12/22/stability-index.html</guid>
+            <pubDate>Tue, 22 Dec 2020 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p><strong>TL;DR</strong> Backstage is heading out of alpha and moving onto the path to stable releases and an eventual version 1.0. As the community and ecosystem continue to grow at an increasing rate, we want to provide a solid foundation for everyone building things in, with, and around Backstage. So, today we’re introducing the <a href="https://backstage.io/docs/overview/stability-index">Stability Index</a> — a simple way to find out how likely (or unlikely) a specific package or plugin inside Backstage might be updated with major changes. By indicating the reliability of key features and APIs, this quick reference will help contributors and adopters better plan and coordinate their development efforts going forward.</p>
+<p><img src="/blog/assets/2020-12-22/stability-index-hero.gif" alt="Animation cycling between stability index scores"></p>
+]]></description>
+        </item>
         <item>
             <title><![CDATA[New Cost Insights plugin: The engineer’s solution to taming cloud costs]]></title>
             <link>https://backstage.io/blog/2020/10/22/cost-insights-plugin.html</link>
