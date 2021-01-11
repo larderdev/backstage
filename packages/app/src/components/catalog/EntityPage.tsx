@@ -91,6 +91,11 @@ import {
   Router as TravisCIRouter,
 } from '@roadiehq/backstage-plugin-travis-ci';
 import React, { ReactNode } from 'react';
+import {
+  Router as SecurityInsightsRouter,
+  SecurityInsightsWidget,
+  isPluginApplicableToEntity as isSecurityInsightsAvailable,
+} from '@roadiehq/backstage-plugin-security-insights';
 
 export const CICDSwitcher = ({ entity }: { entity: Entity }) => {
   // This component is just an example of how you can implement your company's logic in entity page.
@@ -187,6 +192,13 @@ const ComponentOverviewContent = ({ entity }: { entity: Entity }) => (
         <PullRequestsStatsCard entity={entity} />
       </Grid>
     )}
+    {isSecurityInsightsAvailable(entity) && (
+      <>
+        <Grid item md={6}>
+          <SecurityInsightsWidget entity={entity} />
+        </Grid>
+      </>
+    )}
   </Grid>
 );
 
@@ -242,6 +254,11 @@ const ServiceEntityPage = ({ entity }: { entity: Entity }) => (
       path="/code-insights"
       title="Code Insights"
       element={<GitHubInsightsRouter entity={entity} />}
+    />
+    <EntityPageLayout.Content
+      path="/security-insights"
+      title="Security Insights"
+      element={<SecurityInsightsRouter entity={entity} />}
     />
   </EntityPageLayout>
 );
