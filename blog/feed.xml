@@ -4,7 +4,7 @@
         <title>Backstage Service Catalog and Developer Platform Blog</title>
         <link>https://backstage.io/blog</link>
         <description>The best place to stay up-to-date with the latest Backstage Service Catalog and Developer Platform news and events.</description>
-        <lastBuildDate>Tue, 22 Dec 2020 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 12 Jan 2021 06:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
@@ -13,6 +13,16 @@
             <link>https://backstage.io/blog</link>
         </image>
         <copyright>Copyright © 2021 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</copyright>
+        <item>
+            <title><![CDATA[New Backstage feature: Kubernetes for Service owners]]></title>
+            <link>https://backstage.io/blog/2021/01/12/new-backstage-feature-kubernetes-for-service-owners.html</link>
+            <guid>https://backstage.io/blog/2021/01/12/new-backstage-feature-kubernetes-for-service-owners.html</guid>
+            <pubDate>Tue, 12 Jan 2021 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p><img src="/blog/assets/21-01-12/backstage-k8s-1-hero.gif" alt="Animation of Kubernetes and cloud provider icons becoming the Backstage logo"></p>
+<p>TLDR; We’re rethinking the Kubernetes developer experience with a new feature: a Kubernetes monitoring tool that’s designed around the needs of service owners, not cluster admins. Now developers can easily check the health of their services no matter how or where those services are deployed — whether it’s on a local host for testing or in production on dozens of clusters around the world.</p>
+<p>And since Backstage uses the native Kubernetes API, the feature works with whichever cloud provider (AWS, Azure, GCP, etc.) or managed service (OpenShift, IBM Cloud, GKE, etc.) you already use.</p>
+]]></description>
+        </item>
         <item>
             <title><![CDATA[Announcing the Backstage Stability Index]]></title>
             <link>https://backstage.io/blog/2020/12/22/stability-index.html</link>
@@ -28,7 +38,7 @@
             <guid>https://backstage.io/blog/2020/10/22/cost-insights-plugin.html</guid>
             <pubDate>Thu, 22 Oct 2020 06:00:00 GMT</pubDate>
             <description><![CDATA[<p>How did Spotify save millions on cloud costs within a matter of months?? We made cost optimization just another part of the daily development process. Our newly open sourced <a href="https://github.com/backstage/backstage/tree/master/plugins/cost-insights">Cost Insights plugin</a> makes a team’s cloud costs visible — and actionable — right inside Backstage. So engineers can see the impact of their cloud usage (down to a product and resource level) and make optimizations wherever and whenever it makes sense. By managing cloud costs from the ground up, you can make smarter decisions that let you continue to build and scale quickly, without wasting resources.</p>
-<iframe width="780" height="440" src="https://www.youtube.com/embed/YLAd5hdXR_Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="780" height="440" src="https://www.youtube.com/embed/YLAd5hdXR_Q" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
 <p>Are we turning engineers into accountants? Nope, we’re just letting engineers do what they do best, in the place that feels natural to them: inside Backstage.</p>
 ]]></description>
         </item>
@@ -67,7 +77,7 @@
             <guid>https://backstage.io/blog/2020/09/08/announcing-tech-docs.html</guid>
             <pubDate>Tue, 08 Sep 2020 06:00:00 GMT</pubDate>
             <description><![CDATA[<p>Since we <a href="https://backstage.io/blog/2020/03/16/announcing-backstage">open sourced Backstage</a>, one of the most requested features has been for a technical documentation plugin. Well, good news. The first open source version of TechDocs is here. Now let’s start collaborating and making it better, together.</p>
-<iframe width="780" height="440" src="https://www.youtube.com/embed/mOLCgdPw1iA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+<iframe width="780" height="440" src="https://www.youtube.com/embed/mOLCgdPw1iA" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen>
 </iframe>
 ]]></description>
         </item>
