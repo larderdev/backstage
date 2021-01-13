@@ -44,3 +44,4 @@ export { plugin as Buildkite } from '@roadiehq/backstage-plugin-buildkite';
 export { plugin as Search } from '@backstage/plugin-search';
 export { plugin as Org } from '@backstage/plugin-org';
 export { plugin as SecurityInsights } from '@roadiehq/backstage-plugin-security-insights';
+export { plugin as AWSLambda } from '@roadiehq/backstage-plugin-aws-lambda';

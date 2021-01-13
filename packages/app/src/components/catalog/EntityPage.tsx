@@ -96,6 +96,10 @@ import {
   SecurityInsightsWidget,
   isPluginApplicableToEntity as isSecurityInsightsAvailable,
 } from '@roadiehq/backstage-plugin-security-insights';
+import {
+  AWSLambdaOverviewWidget,
+  isPluginApplicableToEntity as isLambdaWidgetAvailable,
+} from '@roadiehq/backstage-plugin-aws-lambda';
 
 export const CICDSwitcher = ({ entity }: { entity: Entity }) => {
   // This component is just an example of how you can implement your company's logic in entity page.
@@ -198,6 +202,11 @@ const ComponentOverviewContent = ({ entity }: { entity: Entity }) => (
           <SecurityInsightsWidget entity={entity} />
         </Grid>
       </>
+    )}
+    {isLambdaWidgetAvailable(entity) && (
+      <Grid item md={6}>
+        <AWSLambdaOverviewWidget entity={entity} />
+      </Grid>
     )}
   </Grid>
 );

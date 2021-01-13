@@ -45,6 +45,7 @@ import techdocs from './plugins/techdocs';
 import graphql from './plugins/graphql';
 import app from './plugins/app';
 import { PluginEnvironment } from './types';
+import aws from './plugins/aws';
 
 function makeCreateEnv(config: Config) {
   const root = getRootLogger();
@@ -79,6 +80,7 @@ async function main() {
   const kubernetesEnv = useHotMemoize(module, () => createEnv('kubernetes'));
   const graphqlEnv = useHotMemoize(module, () => createEnv('graphql'));
   const appEnv = useHotMemoize(module, () => createEnv('app'));
+  const awsEnv = useHotMemoize(module, () => createEnv('aws'));
 
   const apiRouter = Router();
   apiRouter.use('/catalog', await catalog(catalogEnv));
@@ -89,6 +91,7 @@ async function main() {
   apiRouter.use('/kubernetes', await kubernetes(kubernetesEnv));
   apiRouter.use('/proxy', await proxy(proxyEnv));
   apiRouter.use('/graphql', await graphql(graphqlEnv));
+  apiRouter.use('/aws', await aws(awsEnv));
   apiRouter.use(notFoundHandler());
 
   const service = createServiceBuilder(module)
