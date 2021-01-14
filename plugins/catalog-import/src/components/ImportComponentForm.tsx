@@ -30,7 +30,7 @@ import { ComponentIdValidators } from '../util/validate';
 import { useGithubRepos } from '../util/useGithubRepos';
 import { ConfigSpec } from './ImportComponentPage';
 import { catalogApiRef } from '@backstage/plugin-catalog';
-import { urlType } from '../util/urls';
+import { urlType, urlSource } from '../util/urls';
 
 const useStyles = makeStyles<BackstageTheme>(theme => ({
   form: {
@@ -70,9 +70,19 @@ export const RegisterComponentForm = ({
     const { componentLocation: target } = formData;
     try {
       if (!isMounted()) return;
-      const type = urlType(target);
+      const [type, source] = [urlType(target), urlSource(target)];
 
       if (type === 'tree') {
+        // TODO: after more providers are supported for the config generation remove this guard
+        if (source !== 'github.com') {
+          errorApi.post(
+            new Error(
+              `Generating config for provider ${source} is not supported. Please create config file on your own.`,
+            ),
+          );
+          return;
+        }
+
         saveConfig({
           type,
           location: target,

@@ -29,3 +29,7 @@ export function urlType(url: string): UrlType {
 
   return 'tree';
 }
+
+export function urlSource(url: string): string {
+  return parseGitUri(url).source;
+}
