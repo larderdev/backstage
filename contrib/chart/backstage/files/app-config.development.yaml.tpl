@@ -1,7 +1,14 @@
+app:
+  googleAnalyticsTrackingId: UA-166771003-5
+
 backend:
   lighthouseHostname: {{ include "lighthouse.serviceName" . | quote }}
   listen:
       port: {{ .Values.appConfig.backend.listen.port | default 7000 }}
+  csp:
+    script-src:
+      - "'self'"
+      - "'unsafe-inline'"
   database:
     client: {{ .Values.appConfig.backend.database.client | quote }}
     connection:
@@ -49,3 +56,17 @@ sentry:
 techdocs:
   generators:
     techdocs: 'local'
+
+proxy:
+  '/lighthouse': http://{{ include "lighthouse.serviceName" . }}
+
+kubernetes:
+  serviceLocatorMethod:
+    type: multiTenant
+  clusterLocatorMethods:
+    - type: config
+      clusters:
+        - url: {{ .Values.kubernetes.clusterUrl }}
+          name: {{ .Values.kubernetes.clusterName }}
+          authProvider: serviceAccount
+          serviceAccountToken: {{ .Values.kubernetes.serviceAccountToken }}

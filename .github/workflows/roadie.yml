@@ -1,0 +1,60 @@
+name: Build and publish Backstage Demo packages for Kubernetes
+
+on:
+  push:
+    branches: [backstage-sample-app-demo]
+
+jobs:
+  publish_k8s_demo:
+    runs-on: ubuntu-latest
+
+    env:
+      CI: true
+      NODE_OPTIONS: --max-old-space-size=4096
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+
+      - name: Docker Login
+        run: docker login --username ${{ secrets.DOCKER_HUB_USERNAME }} --password ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: fetch branch backstage-sample-app-demo
+        run: git fetch origin backstage-sample-app-demo
+
+      - name: yarn install
+        run: yarn install --frozen-lockfile
+
+      - name: type checking and declarations
+        run: yarn run tsc --incremental false
+
+      - name: build all packages - TS to JS
+        run: yarn run build
+
+      - name: Set image version
+        run: |
+          echo "IMAGE_VERSION=$(git describe --tags --always)" >> $GITHUB_ENV
+          echo ${{ env.IMAGE_VERSION }} > IMAGE_VERSION
+
+      - name: docker build frontend
+        run: docker build --file $PWD/contrib/docker/frontend-with-nginx/Dockerfile --tag roadiehq/backstage-sample-app-frontend:${{ env.IMAGE_VERSION }} .
+
+      - name: docker push frontend
+        run: docker push roadiehq/backstage-sample-app-frontend:${{ env.IMAGE_VERSION }}
+
+      - name: docker build backend
+        run: yarn workspace example-backend build-image --file $PWD/contrib/docker/kubernetes-example-backend/Dockerfile
+
+      - name: docker tag backend
+        run: docker tag example-backend:latest roadiehq/backstage-sample-app-backend:${{ env.IMAGE_VERSION }}
+
+      - name: docker push backend
+        run: docker push roadiehq/backstage-sample-app-backend:${{ env.IMAGE_VERSION }}
+
+      - name: docker update latest tags
+        run: |
+          docker tag roadiehq/backstage-sample-app-frontend:${{ env.IMAGE_VERSION }} roadiehq/backstage-sample-app-frontend:latest
+          docker push roadiehq/backstage-sample-app-frontend:latest
+          docker tag example-backend:latest roadiehq/backstage-sample-app-backend:latest
+          docker push roadiehq/backstage-sample-app-backend:latest
