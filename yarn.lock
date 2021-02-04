@@ -2615,36 +2615,39 @@
     winston "^3.2.1"
 
 "@backstage/catalog-model@^0.2.0":
-  version "0.7.0"
+  version "0.2.0"
+  resolved "https://registry.npmjs.org/@backstage/catalog-model/-/catalog-model-0.2.0.tgz#e3fe2a4ddeb6a9b6ec480c80cb2b9c39cb245576"
+  integrity sha512-Y1ocdRpBlxK/VrJQjHlQd0bgADECd1B2NRjwd8ss46ibT5hwLvMOfD80+Fa7oPLu0ktJrH4lq0pNIIJIml48zA==
   dependencies:
-    "@backstage/config" "^0.1.2"
+    "@backstage/config" "^0.1.1"
     "@types/json-schema" "^7.0.5"
     "@types/yup" "^0.29.8"
-    ajv "^7.0.3"
     json-schema "^0.2.5"
     lodash "^4.17.15"
     uuid "^8.0.0"
     yup "^0.29.3"
 
 "@backstage/catalog-model@^0.4.0":
-  version "0.7.0"
+  version "0.4.0"
+  resolved "https://registry.npmjs.org/@backstage/catalog-model/-/catalog-model-0.4.0.tgz#197c33eabaad4752c1ce947c71e6a6d6cfe8b54d"
+  integrity sha512-M/OcXsOKs0Xfo6jq9EGbhhFW2Mq9DFMTxcEPAQlHkI7yOKl+AsWXVY550L25yfaIYgGXsJwy9XKUTtdaT1TmTQ==
   dependencies:
-    "@backstage/config" "^0.1.2"
+    "@backstage/config" "^0.1.1"
     "@types/json-schema" "^7.0.5"
     "@types/yup" "^0.29.8"
-    ajv "^7.0.3"
     json-schema "^0.2.5"
     lodash "^4.17.15"
     uuid "^8.0.0"
     yup "^0.29.3"
 
 "@backstage/catalog-model@^0.5.0":
-  version "0.7.0"
+  version "0.5.0"
+  resolved "https://registry.npmjs.org/@backstage/catalog-model/-/catalog-model-0.5.0.tgz#0f09c15470ffb76ac9cd1597d3a06cd7d8d39789"
+  integrity sha512-6umkDpiKRC+e2OBnmXXJTKI92RG2at8q+uY4MaqgWYBf9/O1qNW661xKy17dBFZ721EyDGe7Rr0lKbof+pK6BQ==
   dependencies:
     "@backstage/config" "^0.1.2"
     "@types/json-schema" "^7.0.5"
     "@types/yup" "^0.29.8"
-    ajv "^7.0.3"
     json-schema "^0.2.5"
     lodash "^4.17.15"
     uuid "^8.0.0"
@@ -2765,17 +2768,17 @@
     yup "^0.29.3"
 
 "@backstage/core@^0.3.0":
-  version "0.5.0"
+  version "0.3.2"
+  resolved "https://registry.npmjs.org/@backstage/core/-/core-0.3.2.tgz#a8209126d5076cf4a8b9bd632fe4e5e2edb62916"
+  integrity sha512-i5d+Wh8js4qEWoAsPY5L7HVSWpumr1OhfF2dUCGYdyW6AMqVJPca6+n6zp1Rg2CO+J9norp44XAVVCbyhtUpig==
   dependencies:
-    "@backstage/config" "^0.1.2"
-    "@backstage/core-api" "^0.2.8"
-    "@backstage/theme" "^0.2.2"
+    "@backstage/config" "^0.1.1"
+    "@backstage/core-api" "^0.2.1"
+    "@backstage/theme" "^0.2.1"
     "@material-ui/core" "^4.11.0"
     "@material-ui/icons" "^4.9.1"
     "@material-ui/lab" "4.0.0-alpha.45"
-    "@testing-library/react-hooks" "^3.4.2"
     "@types/dagre" "^0.7.44"
-    "@types/prop-types" "^15.7.3"
     "@types/react" "^16.9"
     "@types/react-sparklines" "^1.7.0"
     classnames "^2.2.6"
@@ -2784,7 +2787,7 @@
     d3-shape "^2.0.0"
     d3-zoom "^2.0.0"
     dagre "^0.8.5"
-    immer "^8.0.1"
+    immer "^7.0.9"
     lodash "^4.17.15"
     material-table "^1.69.1"
     prop-types "^15.7.2"
@@ -2804,7 +2807,9 @@
     zen-observable "^0.8.15"
 
 "@backstage/core@^0.4.0":
-  version "0.5.0"
+  version "0.4.4"
+  resolved "https://registry.npmjs.org/@backstage/core/-/core-0.4.4.tgz#83d5ce5c8dd8a9803badc1dde389b5bde963e959"
+  integrity sha512-UEZhPBC7DAZEOCRAYQ9XcXch5JDuPn+wYNp65Ik60SSz/RFjqhq8D3P7V074cMQqWLAddVDj5dUrNeN8N1gAUQ==
   dependencies:
     "@backstage/config" "^0.1.2"
     "@backstage/core-api" "^0.2.8"
@@ -2812,7 +2817,6 @@
     "@material-ui/core" "^4.11.0"
     "@material-ui/icons" "^4.9.1"
     "@material-ui/lab" "4.0.0-alpha.45"
-    "@testing-library/react-hooks" "^3.4.2"
     "@types/dagre" "^0.7.44"
     "@types/prop-types" "^15.7.3"
     "@types/react" "^16.9"
@@ -2823,7 +2827,7 @@
     d3-shape "^2.0.0"
     d3-zoom "^2.0.0"
     dagre "^0.8.5"
-    immer "^8.0.1"
+    immer "^7.0.9"
     lodash "^4.17.15"
     material-table "^1.69.1"
     prop-types "^15.7.2"
@@ -10463,6 +10467,11 @@ caseless@~0.12.0:
   resolved "https://registry.npmjs.org/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
+cash-dom@^4.1.5:
+  version "4.1.5"
+  resolved "https://registry.npmjs.org/cash-dom/-/cash-dom-4.1.5.tgz#0ef0cf205bc7603aa4e2dfada5808442a7a0e6ca"
+  integrity sha512-E6MO0A6ms5iZPtexznQXWRkFEvqdPqCmdx/SiJr2PnhOQNhZNfALkLG5t83Hk3J5JELzED7PJuzhMoS2tT64XA==
+
 chainsaw@~0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/chainsaw/-/chainsaw-0.1.0.tgz#5eab50b28afe58074d0d58291388828b5e5fbc98"
@@ -14041,6 +14050,11 @@ fast-levenshtein@^2.0.6, fast-levenshtein@~2.0.6:
   resolved "https://registry.npmjs.org/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
   integrity sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
 
+fast-memoize@^2.5.1:
+  version "2.5.2"
+  resolved "https://registry.npmjs.org/fast-memoize/-/fast-memoize-2.5.2.tgz#79e3bb6a4ec867ea40ba0e7146816f6cdce9b57e"
+  integrity sha512-Ue0LwpDYErFbmNnZSF0UH6eImUwDmogUO1jyE+JbN2gsQz/jICm1Ve7t9QT0rNSsfJt+Hs4/S3GnsDVjL4HVrw==
+
 fast-safe-stringify@^2.0.4:
   version "2.0.7"
   resolved "https://registry.npmjs.org/fast-safe-stringify/-/fast-safe-stringify-2.0.7.tgz#124aa885899261f68aedb42a7c080de9da608743"
@@ -16074,6 +16088,11 @@ immer@1.10.0:
   version "1.10.0"
   resolved "https://registry.npmjs.org/immer/-/immer-1.10.0.tgz#bad67605ba9c810275d91e1c2a47d4582e98286d"
   integrity sha512-O3sR1/opvCDGLEVcvrGTMtLac8GJ5IwZC4puPrLuRj3l7ICKvkmA0vGuU9OW8mV9WIBRnaxp5GJh9IEAaNOoYg==
+
+immer@^7.0.9:
+  version "7.0.15"
+  resolved "https://registry.npmjs.org/immer/-/immer-7.0.15.tgz#dc3bc6db87401659d2e737c67a21b227c484a4ad"
+  integrity sha512-yM7jo9+hvYgvdCQdqvhCNRRio0SCXc8xDPzA25SvKWa7b1WVPjLwQs1VYU5JPXjcJPTqAa5NP5dqpORGYBQ2AA==
 
 immer@^8.0.1:
   version "8.0.1"
@@ -22591,6 +22610,13 @@ rc@^1.2.7, rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+re-resizable@^6.9.0:
+  version "6.9.0"
+  resolved "https://registry.npmjs.org/re-resizable/-/re-resizable-6.9.0.tgz#9c3059b389ced6ade602234cc5bb1e12d231cd47"
+  integrity sha512-3cUDG81ylyqI0Pdgle/RHwwRYq0ORZzsUaySOCO8IbEtNyaRtrIHYm/jMQ5pjcNiKCxR3vsSymIQZHwJq4gg2Q==
+  dependencies:
+    fast-memoize "^2.5.1"
+
 react-app-polyfill@^1.0.4:
   version "1.0.6"
   resolved "https://registry.npmjs.org/react-app-polyfill/-/react-app-polyfill-1.0.6.tgz#890f8d7f2842ce6073f030b117de9130a5f385f0"
@@ -22954,6 +22980,16 @@ react-resize-detector@^2.3.0:
     lodash.throttle "^4.1.1"
     prop-types "^15.6.0"
     resize-observer-polyfill "^1.5.0"
+
+react-resize-panel@^0.3.5:
+  version "0.3.5"
+  resolved "https://registry.npmjs.org/react-resize-panel/-/react-resize-panel-0.3.5.tgz#43aa3450bf5b5a2566b40c4201445ced96c2a905"
+  integrity sha512-iyHOFTrSt+WV4Ilzi81x6KH3FU7VsGP736rmxepwGrgAEATmCvXzZdluTm3NpsptP7aC3hLODmXwnxusyA393A==
+  dependencies:
+    cash-dom "^4.1.5"
+    classnames "^2.2.6"
+    lodash.debounce "^4.0.8"
+    react-draggable "^4.0.3"
 
 react-router-dom@6.0.0-beta.0:
   version "6.0.0-beta.0"

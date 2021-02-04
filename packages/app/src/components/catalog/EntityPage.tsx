@@ -92,7 +92,11 @@ import {
   RecentTravisCIBuildsWidget,
   Router as TravisCIRouter,
 } from '@roadiehq/backstage-plugin-travis-ci';
-import { Router as DatadogRouter } from '@roadiehq/backstage-plugin-datadog';
+import {
+  Router as DatadogRouter,
+  GraphWidget as DatadogGraphWidget,
+  isGraphAnnotation as isDatadogWidgetAvailable,
+} from '@roadiehq/backstage-plugin-datadog';
 
 export const CICDSwitcher = ({ entity }: { entity: Entity }) => {
   // This component is just an example of how you can implement your company's logic in entity page.
@@ -187,6 +191,11 @@ const ComponentOverviewContent = ({ entity }: { entity: Entity }) => (
     {isPullRequestsAvailable(entity) && (
       <Grid item sm={4}>
         <PullRequestsStatsCard entity={entity} />
+      </Grid>
+    )}
+    {isDatadogWidgetAvailable(entity) && (
+      <Grid item>
+        <DatadogGraphWidget entity={entity} />
       </Grid>
     )}
   </Grid>
