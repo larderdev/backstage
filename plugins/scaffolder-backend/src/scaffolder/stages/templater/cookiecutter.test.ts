@@ -56,6 +56,7 @@ describe('CookieCutter Templater', () => {
       dockerClient: mockDocker,
     });
 
+    expect(fs.ensureDir).toBeCalledWith(path.join('tempdir', 'intermediate'));
     expect(fs.writeJson).toBeCalledWith(
       path.join('tempdir', 'template', 'cookiecutter.json'),
       expect.objectContaining(values),
@@ -227,8 +228,8 @@ describe('CookieCutter Templater', () => {
         args: expect.arrayContaining([
           '--no-input',
           '-o',
-          'tempdir/intermediate',
-          'tempdir/template',
+          path.join('tempdir', 'intermediate'),
+          path.join('tempdir', 'template'),
           '--verbose',
         ]),
         logStream: stream,

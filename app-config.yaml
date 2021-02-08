@@ -74,8 +74,6 @@ organization:
 
 # Reference documentation http://backstage.io/docs/features/techdocs/configuration
 techdocs:
-  requestUrl: http://localhost:7000/api/techdocs
-  storageUrl: http://localhost:7000/api/techdocs/static/docs
   builder: 'local' # Alternatives - 'external'
   generators:
     techdocs: 'docker' # Alternatives - 'local'
@@ -243,6 +241,7 @@ scaffolder:
       baseUrl: https://gitlab.com
       token:
         $env: GITLAB_TOKEN
+    visibility: public # or 'internal' or 'private'
   azure:
     baseUrl: https://dev.azure.com/{your-organization}
     api:
@@ -255,6 +254,7 @@ scaffolder:
         $env: BITBUCKET_USERNAME
       token:
         $env: BITBUCKET_TOKEN
+    visibility: public # or or 'private'
 
 auth:
   environment: development

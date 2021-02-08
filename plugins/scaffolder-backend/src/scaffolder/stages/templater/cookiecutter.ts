@@ -26,7 +26,7 @@ export class CookieCutter implements TemplaterBase {
     directory: string,
   ): Promise<Record<string, JsonValue>> {
     try {
-      return await fs.readJSON(`${directory}/cookiecutter.json`);
+      return await fs.readJSON(path.join(directory, 'cookiecutter.json'));
     } catch (ex) {
       if (ex.code !== 'ENOENT') {
         throw ex;
@@ -44,6 +44,7 @@ export class CookieCutter implements TemplaterBase {
   }: TemplaterRunOptions): Promise<void> {
     const templateDir = path.join(workspacePath, 'template');
     const intermediateDir = path.join(workspacePath, 'intermediate');
+    await fs.ensureDir(intermediateDir);
     const resultDir = path.join(workspacePath, 'result');
 
     // First lets grab the default cookiecutter.json file
@@ -54,7 +55,7 @@ export class CookieCutter implements TemplaterBase {
       ...values,
     };
 
-    await fs.writeJSON(`${templateDir}/cookiecutter.json`, cookieInfo);
+    await fs.writeJSON(path.join(templateDir, 'cookiecutter.json'), cookieInfo);
 
     const cookieCutterInstalled = await commandExists('cookiecutter');
     if (cookieCutterInstalled) {
