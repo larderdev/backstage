@@ -69,7 +69,7 @@ can use this to split out logic in your code for manual A/B testing, etc.</p>
 <pre><code class="hljs css language-typescript"><span class="hljs-keyword">import</span> { createPlugin } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/core'</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> createPlugin({
-  id: <span class="hljs-string">'welcome'</span>,
+  id: <span class="hljs-string">'plugin-name'</span>,
   register({ featureFlags }) {
     featureFlags.register(<span class="hljs-string">'enable-example-feature'</span>);
   },
