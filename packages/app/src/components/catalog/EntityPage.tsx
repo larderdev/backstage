@@ -96,8 +96,10 @@ import {
 import {
   Router as DatadogRouter,
   GraphWidget as DatadogGraphWidget,
-  isGraphAnnotation as isDatadogWidgetAvailable,
+  isDatadogGraphAvailable,
 } from '@roadiehq/backstage-plugin-datadog';
+
+console.log(isDatadogGraphAvailable);
 
 export const CICDSwitcher = ({ entity }: { entity: Entity }) => {
   // This component is just an example of how you can implement your company's logic in entity page.
@@ -203,7 +205,7 @@ const ComponentOverviewContent = ({ entity }: { entity: Entity }) => (
         <PullRequestsStatsCard entity={entity} />
       </Grid>
     )}
-    {isDatadogWidgetAvailable(entity) && (
+    {isDatadogGraphAvailable(entity) && (
       <Grid item>
         <DatadogGraphWidget entity={entity} />
       </Grid>
