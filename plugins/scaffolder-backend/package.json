@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@backstage/backend-common": "^0.5.2",
+    "@backstage/catalog-client": "^0.3.5",
     "@backstage/catalog-model": "^0.7.1",
     "@backstage/config": "^0.1.2",
     "@backstage/integration": "^0.3.2",
@@ -53,6 +54,7 @@
     "helmet": "^4.0.0",
     "isomorphic-git": "^1.8.0",
     "jsonschema": "^1.2.6",
+    "knex": "^0.21.6",
     "morgan": "^1.10.0",
     "uuid": "^8.2.0",
     "winston": "^3.2.1",
@@ -71,6 +73,7 @@
   },
   "files": [
     "dist",
+    "migrations",
     "config.d.ts"
   ],
   "configSchema": "config.d.ts"
