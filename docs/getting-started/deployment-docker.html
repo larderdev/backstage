@@ -172,7 +172,7 @@ the repo root:</p>
 <span class="hljs-keyword">COPY</span><span class="bash"> packages packages</span>
 <span class="hljs-keyword">COPY</span><span class="bash"> plugins plugins</span>
 
-<span class="hljs-keyword">RUN</span><span class="bash"> find packages \! -name <span class="hljs-string">"package.json"</span> -mindepth 2 -maxdepth 2 -<span class="hljs-built_in">print</span> | xargs rm -rf</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> find packages \! -name <span class="hljs-string">"package.json"</span> -mindepth 2 -maxdepth 2 -<span class="hljs-built_in">exec</span> rm -rf {} \+</span>
 
 <span class="hljs-comment"># Stage 2 - Install dependencies and build packages</span>
 <span class="hljs-keyword">FROM</span> node:<span class="hljs-number">14</span>-buster-slim AS build
