@@ -1,6 +1,6 @@
 app:
   title: Backstage Example App
-  baseUrl: http://localhost:3000
+  baseUrl: http://localhost:7000
   googleAnalyticsTrackingId: # UA-000000-0
   #datadogRum:
   #  clientToken: '123456789'
@@ -132,7 +132,8 @@ kafka:
 integrations:
   github:
     - host: github.com
-      token: ${GITHUB_TOKEN}
+      token:
+        $env: GITHUB_TOKEN
     ### Example for how to add your GitHub Enterprise instance using the API:
     # - host: ghe.example.net
     #   apiBaseUrl: https://ghe.example.net/api/v3
@@ -172,7 +173,8 @@ catalog:
     githubOrg:
       providers:
         - target: https://github.com
-          token: ${GITHUB_TOKEN}
+          token:
+            $env: GITHUB_TOKEN
         #### Example for how to add your GitHub Enterprise instance using the API:
         # - target: https://ghe.example.net
         #   apiBaseUrl: https://ghe.example.net/api
@@ -220,36 +222,37 @@ catalog:
     # backend, for example packages/backend/.
 
     # Backstage example components
-    - type: file
-      target: ../catalog-model/examples/all-components.yaml
+    - type: url
+      target: https://github.com/backstage/backstage/tree/master/packages/catalog-model/examples/all-components.yaml
     # Example component for github-actions and TechDocs
-    - type: file
-      target: ../../plugins/github-actions/examples/sample.yaml
+    - type: url
+      target: https://github.com/backstage/backstage/tree/master/plugins/github-actions/examples/sample.yaml
     # Example component for TechDocs
-    - type: file
-      target: ../../plugins/techdocs-backend/examples/documented-component/catalog-info.yaml
+    - type: url
+      target: https://github.com/backstage/backstage/tree/master/plugins/techdocs-backend/examples/documented-component/catalog-info.yaml
     # Backstage example APIs
-    - type: file
-      target: ../catalog-model/examples/all-apis.yaml
+    - type: url
+      target: https://github.com/backstage/backstage/tree/master/packages/catalog-model/examples/all-apis.yaml
     # Backstage example resources
-    - type: file
-      target: ../catalog-model/examples/all-resources.yaml
+    - type: url
+      target: https://github.com/backstage/backstage/tree/master/packages/catalog-model/examples/all-resources.yaml
     # Backstage example systems
-    - type: file
-      target: ../catalog-model/examples/all-systems.yaml
+    - type: url
+      target: https://github.com/backstage/backstage/tree/master/packages/catalog-model/examples/all-systems.yaml
     # Backstage example domains
-    - type: file
-      target: ../catalog-model/examples/all-domains.yaml
+    - type: url
+      target: https://github.com/backstage/backstage/tree/master/packages/catalog-model/examples/all-domains.yaml
     # Backstage example templates
-    - type: file
-      target: ../../plugins/scaffolder-backend/sample-templates/all-templates.yaml
+    - type: url
+      target: https://github.com/backstage/backstage/tree/master/plugins/scaffolder-backend/sample-templates/all-templates.yaml
     # Backstage example groups and users
-    - type: file
-      target: ../catalog-model/examples/acme-corp.yaml
+    - type: url
+      target: https://github.com/backstage/backstage/tree/master/packages/catalog-model/examples/acme-corp.yaml
 
 scaffolder:
   github:
-    token: ${GITHUB_TOKEN}
+    token:
+      $env: GITHUB_TOKEN
     visibility: public # or 'internal' or 'private'
   gitlab:
     api:
@@ -275,59 +278,60 @@ auth:
   providers:
     google:
       development:
-        clientId: ${AUTH_GOOGLE_CLIENT_ID}
-        clientSecret: ${AUTH_GOOGLE_CLIENT_SECRET}
+        clientId: arbitrary-value
+        clientSecret: arbitrary-value
     github:
       development:
-        clientId: ${AUTH_GITHUB_CLIENT_ID}
-        clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
-        enterpriseInstanceUrl: ${AUTH_GITHUB_ENTERPRISE_INSTANCE_URL}
+        clientId: arbitrary-value
+        clientSecret: arbitrary-value
+        enterpriseInstanceUrl: arbitrary-value
     gitlab:
       development:
-        clientId: ${AUTH_GITLAB_CLIENT_ID}
-        clientSecret: ${AUTH_GITLAB_CLIENT_SECRET}
-        audience: ${GITLAB_BASE_URL}
+        clientId: arbitrary-value
+        clientSecret: arbitrary-value
+        audience: arbitrary-value
     saml:
       entryPoint: 'http://localhost:7001/'
       issuer: 'passport-saml'
     okta:
       development:
-        clientId: ${AUTH_OKTA_CLIENT_ID}
-        clientSecret: ${AUTH_OKTA_CLIENT_SECRET}
-        audience: ${AUTH_OKTA_AUDIENCE}
+        clientId: arbitrary-value
+        clientSecret: arbitrary-value
+        audience: arbitrary-value
     oauth2:
       development:
-        clientId: ${AUTH_OAUTH2_CLIENT_ID}
-        clientSecret: ${AUTH_OAUTH2_CLIENT_SECRET}
-        authorizationUrl: ${AUTH_OAUTH2_AUTH_URL}
-        tokenUrl: ${AUTH_OAUTH2_TOKEN_URL}
+        clientId: arbitrary-value
+        clientSecret: arbitrary-value
+        authorizationUrl: arbitrary-value
+        tokenUrl: arbitrary-value
         ###
         # provide a list of scopes as needed for your OAuth2 Server:
         #
         # scope: saml-login-selector openid profile email
     oidc:
       development:
-        metadataUrl: ${AUTH_OIDC_METADATA_URL}
-        clientId: ${AUTH_OIDC_CLIENT_ID}
-        clientSecret: ${AUTH_OIDC_CLIENT_SECRET}
-        authorizationUrl: ${AUTH_OIDC_AUTH_URL}
-        tokenUrl: ${AUTH_OIDC_TOKEN_URL}
-        tokenSignedResponseAlg: ${AUTH_OIDC_TOKEN_SIGNED_RESPONSE_ALG}
+        metadataUrl: arbirarty-value
+        clientId: arbirarty-value
+        clientSecret: arbirarty-value
+        authorizationUrl: arbirarty-value
+        tokenUrl: arbirarty-value
+        tokenSignedResponseAlg: arbirarty-value
     auth0:
       development:
-        clientId: ${AUTH_AUTH0_CLIENT_ID}
-        clientSecret: ${AUTH_AUTH0_CLIENT_SECRET}
-        domain: ${AUTH_AUTH0_DOMAIN}
+        clientId: arbirarty-value
+        clientSecret: arbirarty-value
+        domain: arbirarty-value
     microsoft:
       development:
-        clientId: ${AUTH_MICROSOFT_CLIENT_ID}
-        clientSecret: ${AUTH_MICROSOFT_CLIENT_SECRET}
-        tenantId: ${AUTH_MICROSOFT_TENANT_ID}
+        clientId: arbirarty-value
+        clientSecret: arbirarty-value
+        tenantId: arbirarty-value
     onelogin:
       development:
-        clientId: ${AUTH_ONELOGIN_CLIENT_ID}
-        clientSecret: ${AUTH_ONELOGIN_CLIENT_SECRET}
-        issuer: ${AUTH_ONELOGIN_ISSUER}
+        clientId: arbirarty-value
+        clientSecret: arbirarty-value
+        issuer: arbirarty-value
+
 costInsights:
   engineerCost: 200000
   products:
@@ -352,6 +356,7 @@ costInsights:
       default: true
     MSC:
       name: Monthly Subscribers
+
 homepage:
   clocks:
     - label: UTC
@@ -362,5 +367,6 @@ homepage:
       timezone: 'Europe/Stockholm'
     - label: TYO
       timezone: 'Asia/Tokyo'
+
 pagerduty:
   eventsBaseUrl: 'https://events.pagerduty.com/v2'
