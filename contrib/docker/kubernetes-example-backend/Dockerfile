@@ -13,6 +13,8 @@ RUN cd /tmp && curl -O https://www.python.org/ftp/python/3.8.2/Python-3.8.2.tar.
 RUN apt update
 RUN apt install -y mkdocs
 
+RUN pip3.8 install graphviz
+RUN pip3.8 install plantuml
 RUN pip3.8 install mkdocs-techdocs-core
 
 RUN pip3.8 install cookiecutter && \
