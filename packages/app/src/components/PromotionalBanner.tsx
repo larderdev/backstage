@@ -26,8 +26,7 @@ const useStyles = makeStyles(() => ({
     alignItems: 'center',
     // This is designed to align with some backstage components below.
     paddingRight: 24,
-    position: 'sticky',
-    top: 0,
+    // If made sticky, it needs to have this z-index to get over everything else.
     zIndex: 101,
   },
 
