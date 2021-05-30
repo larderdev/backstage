@@ -93,6 +93,8 @@ import {
   EntityGithubInsightsLanguagesCard,
   EntityGithubInsightsReadmeCard,
   EntityGithubInsightsReleasesCard,
+  EntityGithubInsightsContributorsCard,
+  EntityGithubInsightsComplianceCard,
   isGithubInsightsAvailable,
 } from '@roadiehq/backstage-plugin-github-insights';
 import {
@@ -223,7 +225,7 @@ const overviewContent = (
       </EntitySwitch.Case>
     </EntitySwitch>
 
-    <Grid item md={8} xs={12}>
+    <Grid item md={6} xs={12}>
       <EntityAboutCard variant="gridItem" />
     </Grid>
 
@@ -238,7 +240,15 @@ const overviewContent = (
     {cicdCard}
 
     <Grid item sm={6}>
-      <EntityLinksCard />
+      <div style={{ marginBottom: 24 }}>
+        <EntityLinksCard />
+      </div>
+
+      <EntitySwitch>
+        <EntitySwitch.Case if={isGithubInsightsAvailable}>
+          <EntityGithubInsightsComplianceCard />
+        </EntitySwitch.Case>
+      </EntitySwitch>
     </Grid>
 
     <EntitySwitch>
@@ -246,9 +256,10 @@ const overviewContent = (
         <Grid item md={6}>
           <EntityGithubInsightsLanguagesCard />
           <EntityGithubInsightsReleasesCard />
+          <EntityGithubInsightsContributorsCard />
         </Grid>
         <Grid item md={6}>
-          <EntityGithubInsightsReadmeCard maxHeight={350} />
+          <EntityGithubInsightsReadmeCard maxHeight={630} />
         </Grid>
       </EntitySwitch.Case>
     </EntitySwitch>
