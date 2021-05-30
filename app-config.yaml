@@ -1,7 +1,9 @@
 app:
-  title: Backstage Example App
+  title: Backstage Developer Portal Demo
   baseUrl: http://localhost:3000
-  googleAnalyticsTrackingId: # UA-000000-0
+  # This must be here rather than in contrib/chart/backstage/files/app-config.development.yaml.tpl 
+  # because this is a build time config.
+  googleAnalyticsTrackingId: UA-166771003-11
   #datadogRum:
   #  clientToken: '123456789'
   #  applicationId: qwerty
@@ -100,7 +102,8 @@ proxy:
         $env: SNYK_TOKEN
 
 organization:
-  name: My Company
+  # Build time config
+  name: Roadie
 
 # Reference documentation http://backstage.io/docs/features/techdocs/configuration
 # Note: After experimenting with basic setup, use CI/CD to generate docs
