@@ -103,7 +103,7 @@ proxy:
 
 organization:
   # Build time config
-  name: Roadie
+  name: Backstage Demo
 
 # Reference documentation http://backstage.io/docs/features/techdocs/configuration
 # Note: After experimenting with basic setup, use CI/CD to generate docs

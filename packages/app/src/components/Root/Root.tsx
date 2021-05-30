@@ -42,6 +42,8 @@ import {
   SidebarScrollWrapper,
 } from '@backstage/core-components';
 
+import { PromotionalBanner } from '../PromotionalBanner';
+
 const useSidebarLogoStyles = makeStyles({
   root: {
     width: sidebarConfig.drawerWidthClosed,
@@ -101,6 +103,7 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
       <SidebarDivider />
       <SidebarSettings />
     </Sidebar>
+    <PromotionalBanner />
     {children}
   </SidebarPage>
 );
