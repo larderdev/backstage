@@ -1,0 +1,168 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Configuring Plugin Databases · Backstage Service Catalog and Developer Platform</title><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="generator" content="Docusaurus"/><meta name="description" content="Guide on how to configure Backstage databases."/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Configuring Plugin Databases · Backstage Service Catalog and Developer Platform"/><meta property="og:type" content="website"/><meta property="og:url" content="https://backstage.io/"/><meta property="og:description" content="Guide on how to configure Backstage databases."/><meta property="og:image" content="https://backstage.io/img/sharing-opengraph.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://backstage.io/img/twitter-summary.png"/><link rel="shortcut icon" href="/img/favicon.ico"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css"/><link rel="alternate" type="application/atom+xml" href="https://backstage.io/blog/atom.xml" title="Backstage Service Catalog and Developer Platform Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://backstage.io/blog/feed.xml" title="Backstage Service Catalog and Developer Platform Blog RSS Feed"/><script>
+              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+              ga('create', 'UA-163836834-5', 'auto');
+              ga('send', 'pageview');
+            </script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono:500,700&amp;display=swap"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script type="text/javascript" src="https://unpkg.com/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script><script type="text/javascript" src="/js/medium-zoom.js"></script><script type="text/javascript" src="/js/dismissable-banner.js"></script><script type="text/javascript" src="/js/scroll-nav-to-view-in-docs.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><h2 class="headerTitle">Backstage Service Catalog and Developer Platform</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="https://github.com/backstage/backstage" target="_self">GitHub</a></li><li class=""><a href="/docs/overview/what-is-backstage" target="_self">Docs</a></li><li class=""><a href="/plugins" target="_self">Plugins</a></li><li class=""><a href="/blog" target="_self">Blog</a></li><li class=""><a href="/demos" target="_self">Demos</a></li><li class=""><a href="https://mailchi.mp/spotify/backstage-community" target="_self">Newsletter</a></li><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/backstage/backstage/edit/master/docs/tutorials/configuring-plugin-databases.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">Configuring Plugin Databases</h1></header><article><div><span><p>This guide covers a variety of production persistence use cases which are
+supported out of the box by Backstage. The database manager allows the developer
+to set the client and database connection details on a per plugin basis in
+addition to the base client and connection configuration. This means that you
+can use a SQLite 3 in-memory database for a specific plugin whilst using
+PostgreSQL for everything else and so on.</p>
+<p>By default, Backstage uses automatically created databases for each plugin whose
+names follow the <code>backstage_plugin_&lt;pluginId&gt;</code> pattern, e.g.
+<code>backstage_plugin_auth</code>. You can configure a different database name prefix for
+use cases where you have multiple deployments running on a shared database
+instance or cluster.</p>
+<p>With infrastructure defined as code or data (Terraform, AWS CloudFormation,
+etc.), you may have database credentials which lack permissions to create new
+databases or you do not have control over the database names. In these
+instances, you can set the database name and connection information on a per
+plugin basis as mentioned earlier.</p>
+<p>Backstage supports all of these use cases with the <code>DatabaseManager</code> provided by
+<code>@backstage/backend-common</code>. We will now cover how to use and configure
+Backstage's databases.</p>
+<h2><a class="anchor" aria-hidden="true" id="prerequisites"></a><a href="#prerequisites" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Prerequisites</h2>
+<h3><a class="anchor" aria-hidden="true" id="dependencies"></a><a href="#dependencies" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Dependencies</h3>
+<p>Please ensure the appropriate database drivers are installed in your <code>backend</code>
+package. If you intend to use both <code>postgres</code> and <code>sqlite3</code>, you can install
+both of them.</p>
+<pre><code class="hljs css language-shell">cd packages/backend
+<span class="hljs-meta">
+#</span><span class="bash"> install pg <span class="hljs-keyword">if</span> you need postgres</span>
+yarn add pg
+<span class="hljs-meta">
+#</span><span class="bash"> install sqlite3 <span class="hljs-keyword">if</span> you intend to <span class="hljs-built_in">set</span> it as the client</span>
+yarn add sqlite3
+</code></pre>
+<p>From an operational perspective, you only need to install drivers for clients
+that are actively used.</p>
+<h3><a class="anchor" aria-hidden="true" id="database-manager"></a><a href="#database-manager" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Database Manager</h3>
+<p>Existing Backstage instances should be updated to use <code>DatabaseManager</code> from
+<code>@backstage/backend-common</code> in your <code>packages/backend/src/index.ts</code> file, the
+<code>SingleConnectionDatabaseManager</code> has been deprecated. Import the manager and
+update the references as shown below if this is not the case:</p>
+<pre><code class="hljs css language-diff">import {
+<span class="hljs-deletion">-  SingleConnectionDatabaseManager,</span>
+<span class="hljs-addition">+  DatabaseManager,</span>
+} from '@backstage/backend-common';
+
+// ...
+
+function makeCreateEnv(config: Config) {
+  // ...
+<span class="hljs-deletion">-  const databaseManager = SingleConnectionDatabaseManager.fromConfig(config);</span>
+<span class="hljs-addition">+  const databaseManager = DatabaseManager.fromConfig(config);</span>
+  // ...
+}
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="configuration"></a><a href="#configuration" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Configuration</h2>
+<p>You should set the base database client and connection information in your
+<code>app-config.yaml</code> (or equivalent) file. The base client and configuration is
+used as the default which is extended for each plugin with the same or unset
+client type. If a client type is specified for a specific plugin which does not
+match the base client, the configuration set for the plugin will be used as is
+without extending the base configuration.</p>
+<p>Client type and configuration for plugins need to be defined under
+<strong><code>backend.database.plugin.&lt;pluginId&gt;</code></strong>. As an example, <code>catalog</code> is the
+<code>pluginId</code> for the catalog plugin and any configuration defined under that block
+is specific to that plugin. We will now explore more detailed example
+configurations below.</p>
+<h3><a class="anchor" aria-hidden="true" id="minimal-in-memory-configuration"></a><a href="#minimal-in-memory-configuration" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Minimal In-Memory Configuration</h3>
+<p>In the example below, we are using <code>sqlite3</code> in-memory databases for all
+plugins. You may want to use this configuration for testing or other non-durable
+use cases.</p>
+<pre><code class="hljs css language-yaml"><span class="hljs-attr">backend:</span>
+  <span class="hljs-attr">database:</span>
+    <span class="hljs-attr">client:</span> <span class="hljs-string">sqlite3</span>
+    <span class="hljs-attr">connection:</span> <span class="hljs-string">':memory:'</span>
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="postgresql"></a><a href="#postgresql" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>PostgreSQL</h3>
+<p>The example below uses PostgreSQL (<code>pg</code>) as the database client for all plugins.
+The <code>auth</code> plugin uses a user defined database name instead of the automatically
+generated one which would have been <code>backstage_plugin_auth</code>.</p>
+<pre><code class="hljs css language-yaml"><span class="hljs-attr">backend:</span>
+  <span class="hljs-attr">database:</span>
+    <span class="hljs-attr">client:</span> <span class="hljs-string">pg</span>
+    <span class="hljs-attr">connection:</span>
+      <span class="hljs-attr">host:</span> <span class="hljs-string">some.example-pg-instance.tld</span>
+      <span class="hljs-attr">user:</span> <span class="hljs-string">postgres</span>
+      <span class="hljs-attr">password:</span> <span class="hljs-string">password</span>
+      <span class="hljs-attr">port:</span> <span class="hljs-number">5432</span>
+    <span class="hljs-attr">plugin:</span>
+      <span class="hljs-attr">auth:</span>
+        <span class="hljs-attr">connection:</span>
+          <span class="hljs-attr">database:</span> <span class="hljs-string">pg_auth_set_by_user</span>
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="custom-database-name-prefix"></a><a href="#custom-database-name-prefix" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Custom Database Name Prefix</h3>
+<p>The configuration below uses <code>example_prefix_</code> as the database name prefix
+instead of <code>backstage_plugin_</code>. Plugins such as <code>auth</code> and <code>catalog</code> will use
+databases named <code>example_prefix_auth</code> and <code>example_prefix_catalog</code> respectively.</p>
+<pre><code class="hljs css language-yaml"><span class="hljs-attr">backend:</span>
+  <span class="hljs-attr">database:</span>
+    <span class="hljs-attr">client:</span> <span class="hljs-string">pg</span>
+    <span class="hljs-attr">connection:</span>
+      <span class="hljs-attr">host:</span> <span class="hljs-string">some.example-pg-instance.tld</span>
+      <span class="hljs-attr">user:</span> <span class="hljs-string">postgres</span>
+      <span class="hljs-attr">password:</span> <span class="hljs-string">password</span>
+      <span class="hljs-attr">port:</span> <span class="hljs-number">5432</span>
+    <span class="hljs-attr">prefix:</span> <span class="hljs-string">'example_prefix_'</span>
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="connection-configuration-per-plugin"></a><a href="#connection-configuration-per-plugin" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Connection Configuration Per Plugin</h3>
+<p>Both <code>auth</code> and <code>catalog</code> use connection configuration with different
+credentials and database names. This type of configuration can be useful for
+environments with infrastructure as code or data which may provide randomly
+generated credentials and/or database names.</p>
+<pre><code class="hljs css language-yaml"><span class="hljs-attr">backend:</span>
+  <span class="hljs-attr">database:</span>
+    <span class="hljs-attr">client:</span> <span class="hljs-string">pg</span>
+    <span class="hljs-attr">connection:</span> <span class="hljs-string">'postgresql://some.example-pg-instance.tld:5432'</span>
+    <span class="hljs-attr">plugin:</span>
+      <span class="hljs-attr">auth:</span>
+        <span class="hljs-attr">connection:</span> <span class="hljs-string">'postgresql://fort:knox@some.example-pg-instance.tld:5432/unwitting_fox_jumps'</span>
+      <span class="hljs-attr">catalog:</span>
+        <span class="hljs-attr">connection:</span> <span class="hljs-string">'postgresql://bank:reserve@some.example-pg-instance.tld:5432/shuffle_ransack_playback'</span>
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="postgresql-and-sqlite-3"></a><a href="#postgresql-and-sqlite-3" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>PostgreSQL and SQLite 3</h3>
+<p>The example below uses PostgreSQL (<code>pg</code>) as the database client for all plugins
+except the <code>auth</code> plugin which uses <code>sqlite3</code>. As the <code>auth</code> plugin's client
+type is different from the base client type, the connection configuration for
+<code>auth</code> is used verbatim without extending the base configuration for PostgreSQL.</p>
+<pre><code class="hljs css language-yaml"><span class="hljs-attr">backend:</span>
+  <span class="hljs-attr">database:</span>
+    <span class="hljs-attr">client:</span> <span class="hljs-string">pg</span>
+    <span class="hljs-attr">connection:</span> <span class="hljs-string">'postgresql://foo:bar@some.example-pg-instance.tld:5432'</span>
+    <span class="hljs-attr">plugin:</span>
+      <span class="hljs-attr">auth:</span>
+        <span class="hljs-attr">client:</span> <span class="hljs-string">sqlite3</span>
+        <span class="hljs-attr">connection:</span> <span class="hljs-string">':memory:'</span>
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="check-your-databases"></a><a href="#check-your-databases" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Check Your Databases</h2>
+<p>The <code>DatabaseManager</code> will attempt to create the databases if they do not exist.
+If you have set credentials per plugin because the credentials in the base
+configuration do not have permissions to create databases, you must ensure they
+exist before starting the service. The service will not be able to create them,
+it can only use them.</p>
+<p>Good luck!</p>
+</span></div></article></div><div class="docLastUpdate"><em>Last updated on 6/17/2021</em></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#prerequisites">Prerequisites</a><ul class="toc-headings"><li><a href="#dependencies">Dependencies</a></li><li><a href="#database-manager">Database Manager</a></li></ul></li><li><a href="#configuration">Configuration</a><ul class="toc-headings"><li><a href="#minimal-in-memory-configuration">Minimal In-Memory Configuration</a></li><li><a href="#postgresql">PostgreSQL</a></li><li><a href="#custom-database-name-prefix">Custom Database Name Prefix</a></li><li><a href="#connection-configuration-per-plugin">Connection Configuration Per Plugin</a></li><li><a href="#postgresql-and-sqlite-3">PostgreSQL and SQLite 3</a></li></ul></li><li><a href="#check-your-databases">Check Your Databases</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div class="footer-title"><a href="/"><h2 class="footerLogo"></h2></a></div><div><h5>Docs</h5><a href="/docs/overview/what-is-backstage">What is Backstage?</a><a href="/docs/getting-started/">Getting started</a><a href="/docs/features/software-catalog/software-catalog-overview">Service Catalog</a><a href="/docs/plugins/create-a-plugin">Create a Plugin</a><a href="/docs/dls/design">Designing for Backstage</a></div><div><h5>Community</h5><a href="https://discord.gg/MUpMjP2">Support chatroom</a><a href="https://github.com/backstage/backstage/blob/master/CONTRIBUTING.md">Contributing</a><a href="https://mailchi.mp/spotify/backstage-community">Subscribe to our newsletter</a><a href="https://www.cncf.io/sandbox-projects/">CNCF Sandbox</a></div><div><h5>More</h5><a href="https://spotify.github.io/">Open Source @ Spotify</a><a href="https://engineering.atspotify.com/">Spotify Engineering Blog</a><a href="https://developer.spotify.com/">Spotify for Developers</a><a href="https://github.com/backstage/backstage">GitHub</a><a class="github-button" href="https://github.com/backstage/backstage" data-icon="octicon-star" data-count-href="/backstage/backstage/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/SpotifyEng" class="twitter-follow-button">Follow @SpotifyEng</a></div></div></section><p style="text-align:center"><a href="https://spotify.github.io">Made with ❤️ at Spotify</a></p><p class="copyright">Copyright © 2021 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</p></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
+                document.addEventListener('keyup', function(e) {
+                  if (e.target !== document.body) {
+                    return;
+                  }
+                  // keyCode for '/' (slash)
+                  if (e.keyCode === 191) {
+                    const search = document.getElementById('search_input_react');
+                    search && search.focus();
+                  }
+                });
+              </script><script>
+              var search = docsearch({
+                
+                apiKey: '8d115c9875ba0f4feaee95bab55a1645',
+                indexName: 'backstage',
+                inputSelector: '#search_input_react'
+              });
+            </script></body></html>
