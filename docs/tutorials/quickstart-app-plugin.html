@@ -184,11 +184,9 @@ changes, let's start by wiping this component clean.</p>
 } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/core'</span>;
 <span class="hljs-keyword">import</span> { graphql } <span class="hljs-keyword">from</span> <span class="hljs-string">'@octokit/graphql'</span>;
 
-<span class="hljs-keyword">const</span> ExampleFetchComponent = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> ExampleFetchComponent = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
   <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Nothing to see yet<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
 };
-
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> ExampleFetchComponent;
 </code></pre>
 <ol start="3">
 <li>Save that and ensure you see no errors. Comment out the unused imports if
