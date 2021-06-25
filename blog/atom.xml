@@ -2,12 +2,43 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://backstage.io/blog</id>
     <title>Backstage Service Catalog and Developer Platform Blog</title>
-    <updated>2021-05-20T06:00:00.000Z</updated>
+    <updated>2021-06-24T06:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://backstage.io/blog"/>
     <subtitle>The best place to stay up-to-date with the latest Backstage Service Catalog and Developer Platform news and events.</subtitle>
     <logo>https://backstage.io/undefined</logo>
     <rights>Copyright © 2021 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</rights>
+    <entry>
+        <title type="html"><![CDATA[Announcing the Backstage Search platform: a customizable search tool built just for you]]></title>
+        <id>https://backstage.io/blog/2021/06/24/announcing-backstage-search-platform.html</id>
+        <link href="https://backstage.io/blog/2021/06/24/announcing-backstage-search-platform.html"/>
+        <updated>2021-06-24T06:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p><img src="/blog/assets/21-06-24/backstage-search-platform.png" alt="Backstage Search platform"></p>
+<p><strong>TLDR;</strong> The new Backstage Search is now available in alpha, ready for you to start building on. A total rethinking of the core search feature in Backstage, it’s more than just a box you type into — it’s a mini platform all by itself. With its composable frontend and extensible backend, you can design and build the search tool that suits your organization’s needs.</p>
+<p>So, you don’t just get an improved out-of-the-box experience for searching whatever is in your software catalog. You can also add support for searching other sources, too. Customize it the way you want and you can search your catalog, your plugins and docs — and even external sources, like Stack Overflow and Confluence — all at once, all right inside Backstage.</p>
+<p>With one query, your teams can find exactly what they’re looking for: anything and everything.</p>
+]]></summary>
+        <author>
+            <name>Emma Indal, Spotify</name>
+            <uri>https://www.linkedin.com/in/emma-indal</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[How Spotify is helping more companies adopt Backstage]]></title>
+        <id>https://backstage.io/blog/2021/06/22/spotify-backstage-is-growing.html</id>
+        <link href="https://backstage.io/blog/2021/06/22/spotify-backstage-is-growing.html"/>
+        <updated>2021-06-22T06:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p><a href="https://backstage.spotify.com/"><img src="/blog/assets/21-06-22/spotify-backstage-header.gif" alt="The Backstage community is growing! In just over a year, Backstage has gone from a few open source building blocks to a thriving platform used by engineering orgs with thousands of developers. But even with 30+ adopting companies and 400+ contributors, we are still in the very early stages of reaching the platform’s potential."></a>
+<em><a href="https://backstage.spotify.com">backstage.spotify.com</a></em></p>
+<p>The Backstage community is growing! In just over <a href="https://engineering.atspotify.com/2021/03/16/happy-birthday-backstage-spotifys-biggest-open-source-project-grows-up-fast/">a year</a>, Backstage has gone from a few open source building blocks to a thriving platform used by engineering orgs with thousands of developers. But even with 30+ <a href="https://github.com/backstage/backstage/blob/master/ADOPTERS.md">adopting companies</a> and 400+ contributors, we are still in the very early stages of reaching the platform’s potential.</p>
+<p>In order to grow Backstage further, Spotify is increasing the support we provide both adopters (the people integrating Backstage into their organizations) and contributors (the people building features and improving the code). The more companies that adopt Backstage, the more support the project gets, the stronger the platform becomes for everyone.</p>
+<p>And while Spotify remains committed to maturing the Backstage platform — both as original creator and active maintainer — we also want to make room for the community to take greater ownership. Backstage may have started inside Spotify, but it belongs to all of you. So, we hope you join us in what’s next.</p>
+]]></summary>
+        <author>
+            <name>Austin Lamon, Spotify</name>
+            <uri>https://www.linkedin.com/in/austinlamon</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Where do you start when adopting Backstage?]]></title>
         <id>https://backstage.io/blog/2021/05/20/adopting-backstage.html</id>
