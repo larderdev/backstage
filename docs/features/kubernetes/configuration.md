@@ -98,6 +98,11 @@ kubectl -n <NAMESPACE> get secret $(kubectl -n <NAMESPACE> get sa <SERVICE_ACCOU
 | base64 --decode
 ```
 
+##### `clusters.\*.assumeRole` (optional)
+
+A role can be used for accessing the kubernetes API using the `assumeRole`
+option. This enables cross account access.
+
 #### `gke`
 
 This cluster locator is designed to work with Kubernetes clusters running in

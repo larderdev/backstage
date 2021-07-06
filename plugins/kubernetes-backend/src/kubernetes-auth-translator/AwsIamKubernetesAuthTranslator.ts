@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import AWS, { Credentials } from 'aws-sdk';
+import AWS from 'aws-sdk';
 import { sign } from 'aws4';
 import { ClusterDetails } from '../types/types';
 import { KubernetesAuthTranslator } from './types';
@@ -29,23 +29,62 @@ const pipe = (fns: ReadonlyArray<any>) => (thing: string): string =>
 const removePadding = replace(/=+$/, '');
 const makeUrlSafe = pipe([replace('+', '-'), replace('/', '_')]);
 
+type SigningCreds = {
+  accessKeyId: string;
+  secretAccessKey: string;
+  sessionToken: string;
+};
 export class AwsIamKubernetesAuthTranslator
   implements KubernetesAuthTranslator {
-  async getBearerToken(clusterName: string): Promise<string> {
-    const credentials = await new Promise((resolve, reject) => {
+  async getBearerToken(
+    clusterName: string,
+    assumeRole: string | undefined,
+  ): Promise<string> {
+    const credentials = await new Promise<SigningCreds>((resolve, reject) => {
       AWS.config.getCredentials(err => {
         if (err) {
           reject(err);
         } else {
-          resolve(AWS.config.credentials);
+          const sts = new AWS.STS();
+          if (assumeRole) {
+            const params = {
+              RoleArn: assumeRole,
+              RoleSessionName: 'backstage-login',
+            };
+            sts.assumeRole(
+              params,
+              function (
+                assumeRoleError: AWS.AWSError,
+                assumedRole: AWS.STS.AssumeRoleResponse,
+              ) {
+                if (assumeRoleError) {
+                  console.log(assumeRoleError, assumeRoleError.stack);
+                } else {
+                  if (assumedRole.Credentials) {
+                    resolve({
+                      accessKeyId: assumedRole.Credentials.AccessKeyId,
+                      secretAccessKey: assumedRole.Credentials.SecretAccessKey,
+                      sessionToken: assumedRole.Credentials.SessionToken,
+                    });
+                  } else {
+                    console.log(
+                      'failed to retrieve credentials for the assumed role',
+                    );
+                  }
+                }
+              },
+            );
+          } else {
+            resolve({
+              accessKeyId: credentials.accessKeyId,
+              secretAccessKey: credentials.secretAccessKey,
+              sessionToken: credentials.sessionToken,
+            });
+          }
         }
       });
     });
 
-    if (!(credentials instanceof Credentials)) {
-      throw new Error('no AWS credentials found.');
-    }
-    await credentials.getPromise();
     const request = {
       host: `sts.amazonaws.com`,
       path: `/?Action=GetCallerIdentity&Version=2011-06-15&X-Amz-Expires=60`,
@@ -54,11 +93,8 @@ export class AwsIamKubernetesAuthTranslator
       },
       signQuery: true,
     };
-    const signedRequest = sign(request, {
-      accessKeyId: credentials.accessKeyId,
-      secretAccessKey: credentials.secretAccessKey,
-      sessionToken: credentials.sessionToken,
-    });
+
+    const signedRequest = sign(request, credentials);
 
     return pipe([
       (signed: any) => `https://${signed.host}${signed.path}`,
@@ -79,6 +115,7 @@ export class AwsIamKubernetesAuthTranslator
 
     clusterDetailsWithAuthToken.serviceAccountToken = await this.getBearerToken(
       clusterDetails.name,
+      clusterDetails.assumeRole,
     );
     return clusterDetailsWithAuthToken;
   }
