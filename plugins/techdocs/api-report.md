@@ -24,6 +24,12 @@ export const DocsCardGrid: ({
 }) => JSX.Element | null;
 
 // @public (undocumented)
+export const DocsResultListItem: ({ result, lineClamp, }: {
+    result: any;
+    lineClamp?: number | undefined;
+}) => JSX.Element;
+
+// @public (undocumented)
 export const DocsTable: ({
   entities,
   title,

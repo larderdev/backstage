@@ -17,7 +17,7 @@
 import React from 'react';
 import { screen, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { SearchFilter } from './SearchFilter';
+import { SearchFilter, TypeFilter } from './SearchFilter';
 
 import { SearchContextProvider } from '../SearchContext';
 import { useApi } from '@backstage/core-plugin-api';
@@ -38,6 +38,7 @@ describe('SearchFilter', () => {
   const name = 'field';
   const values = ['value1', 'value2'];
   const filters = { unrelated: 'unrelated' };
+  const typeValues = ['preselected'];
 
   const query = jest.fn().mockResolvedValue({});
   (useApi as jest.Mock).mockReturnValue({ query: query });
@@ -369,6 +370,189 @@ describe('SearchFilter', () => {
         expect(query).toHaveBeenLastCalledWith(
           expect.objectContaining({ filters }),
         );
+      });
+    });
+  });
+
+  describe('Type Filter', () => {
+    it('Renders field name and values when provided as props', async () => {
+      render(
+        <SearchContextProvider initialState={initialState}>
+          <TypeFilter name={name} values={values} />
+        </SearchContextProvider>,
+      );
+
+      await waitFor(() => {
+        expect(screen.getByText(name)).toBeInTheDocument();
+      });
+
+      userEvent.click(screen.getByRole('button'));
+
+      await waitFor(() => {
+        expect(screen.getByRole('listbox')).toBeInTheDocument();
+      });
+
+      expect(
+        screen.getByRole('option', { name: values[0] }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('option', { name: values[1] }),
+      ).toBeInTheDocument();
+    });
+
+    it('Renders correctly based on type filter state', async () => {
+      render(
+        <SearchContextProvider
+          initialState={{
+            ...initialState,
+            types: [values[0]],
+          }}
+        >
+          <TypeFilter name={name} values={values} />
+        </SearchContextProvider>,
+      );
+
+      await waitFor(() => {
+        expect(screen.getByText(name)).toBeInTheDocument();
+      });
+
+      userEvent.click(screen.getByRole('button'));
+
+      await waitFor(() => {
+        expect(screen.getByRole('listbox')).toBeInTheDocument();
+      });
+
+      expect(screen.getByRole('option', { name: values[0] })).toHaveAttribute(
+        'aria-selected',
+        'true',
+      );
+      expect(
+        screen.getByRole('option', { name: values[1] }),
+      ).not.toHaveAttribute('aria-selected');
+      expect(screen.getByRole('option', { name: 'All' })).not.toHaveAttribute(
+        'aria-selected',
+      );
+    });
+
+    it('Renders correctly based on type filter defaultValue', async () => {
+      render(
+        <SearchContextProvider initialState={initialState}>
+          <TypeFilter name={name} values={values} defaultValue={values[0]} />
+        </SearchContextProvider>,
+      );
+
+      await waitFor(() => {
+        expect(screen.getByText(name)).toBeInTheDocument();
+      });
+
+      userEvent.click(screen.getByRole('button'));
+
+      await waitFor(() => {
+        expect(screen.getByRole('listbox')).toBeInTheDocument();
+      });
+
+      expect(screen.getByRole('option', { name: values[0] })).toHaveAttribute(
+        'aria-selected',
+        'true',
+      );
+      expect(
+        screen.getByRole('option', { name: values[1] }),
+      ).not.toHaveAttribute('aria-selected');
+      expect(screen.getByRole('option', { name: 'All' })).not.toHaveAttribute(
+        'aria-selected',
+      );
+    });
+
+    it('Selecting a value sets type filter state', async () => {
+      render(
+        <SearchContextProvider initialState={initialState}>
+          <TypeFilter name={name} values={values} />
+        </SearchContextProvider>,
+      );
+
+      await waitFor(() => {
+        expect(screen.getByText(name)).toBeInTheDocument();
+      });
+
+      const button = screen.getByRole('button');
+
+      userEvent.click(button);
+
+      await waitFor(() => {
+        expect(screen.getByRole('listbox')).toBeInTheDocument();
+      });
+
+      userEvent.click(screen.getByRole('option', { name: values[0] }));
+
+      await waitFor(() => {
+        expect(query).toHaveBeenLastCalledWith(
+          expect.objectContaining({
+            types: [values[0]],
+          }),
+        );
+      });
+
+      userEvent.click(button);
+
+      await waitFor(() => {
+        expect(screen.getByRole('listbox')).toBeInTheDocument();
+      });
+
+      userEvent.click(screen.getByRole('option', { name: 'All' }));
+
+      await waitFor(() => {
+        expect(query).toHaveBeenLastCalledWith(
+          expect.objectContaining({
+            types: [],
+          }),
+        );
+      });
+    });
+
+    it('Selecting a value maintains unrelated filter state, selecting All defaults to default empty state', async () => {
+      render(
+        <SearchContextProvider
+          initialState={{
+            ...initialState,
+            types: typeValues,
+          }}
+        >
+          <TypeFilter name={name} values={values} />
+        </SearchContextProvider>,
+      );
+
+      await waitFor(() => {
+        expect(screen.getByText(name)).toBeInTheDocument();
+      });
+
+      const button = screen.getByRole('button');
+
+      userEvent.click(button);
+
+      await waitFor(() => {
+        expect(screen.getByRole('listbox')).toBeInTheDocument();
+      });
+
+      userEvent.click(screen.getByRole('option', { name: values[0] }));
+
+      await waitFor(() => {
+        expect(query).toHaveBeenLastCalledWith(
+          expect.objectContaining({
+            types: [...typeValues, values[0]],
+          }),
+        );
+      });
+
+      userEvent.click(button);
+
+      await waitFor(() => {
+        expect(screen.getByRole('listbox')).toBeInTheDocument();
+      });
+
+      userEvent.click(screen.getByRole('option', { name: 'All' }));
+
+      await waitFor(() => {
+        expect(query).toHaveBeenLastCalledWith(expect.objectContaining([]));
       });
     });
   });

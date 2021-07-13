@@ -113,6 +113,9 @@ export const SearchResult: ({
 export const SidebarSearch: () => JSX.Element;
 
 // @public (undocumented)
+export const TypeFilter: ({ values, className, name, defaultValue, }: Component) => JSX.Element;
+
+// @public (undocumented)
 export const useSearch: () => SearchContextValue;
 
 // (No @packageDocumentation comment for this package)

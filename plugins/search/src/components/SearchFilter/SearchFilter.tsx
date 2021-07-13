@@ -24,13 +24,22 @@ import {
   Select,
   MenuItem,
   FormLabel,
+  Chip,
 } from '@material-ui/core';
 
 import { useSearch } from '../SearchContext';
+import { useEffectOnce } from 'react-use';
 
 const useStyles = makeStyles({
   label: {
     textTransform: 'capitalize',
+  },
+  chips: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  chip: {
+    margin: 2,
   },
 });
 
@@ -102,6 +111,68 @@ const CheckboxFilter = ({
           label={value}
         />
       ))}
+    </FormControl>
+  );
+};
+
+const TypeFilter = ({
+  values = [],
+  className,
+  name,
+  defaultValue,
+}: Component) => {
+  const classes = useStyles();
+  const { types, setTypes } = useSearch();
+
+  useEffectOnce(() => {
+    if (defaultValue && Array.isArray(defaultValue)) {
+      setTypes(defaultValue);
+    } else if (defaultValue) {
+      setTypes([defaultValue]);
+    }
+  });
+
+  const handleChange = (e: ChangeEvent<{ value: unknown }>) => {
+    const value = e.target.value as string[];
+    if (!value || value.includes('*')) {
+      setTypes([]);
+    } else {
+      setTypes(value.filter(it => it !== 'All'));
+    }
+  };
+
+  return (
+    <FormControl
+      className={className}
+      variant="filled"
+      fullWidth
+      data-testid="search-typefilter-next"
+    >
+      <InputLabel className={classes.label} margin="dense">
+        {name}
+      </InputLabel>
+      <Select
+        multiple
+        variant="outlined"
+        value={types.length ? types : ['All']}
+        onChange={handleChange}
+        renderValue={selected => (
+          <div className={classes.chips}>
+            {(selected as string[]).map(value => (
+              <Chip key={value} label={value} className={classes.chip} />
+            ))}
+          </div>
+        )}
+      >
+        <MenuItem value="*">
+          <em>All</em>
+        </MenuItem>
+        {values.map((value: string) => (
+          <MenuItem key={value} value={value}>
+            {value}
+          </MenuItem>
+        ))}
+      </Select>
     </FormControl>
   );
 };
@@ -184,4 +255,4 @@ SearchFilter.Select = (props: Omit<Props, 'component'> & Component) => (
  */
 const SearchFilterNext = SearchFilter;
 
-export { SearchFilter, SearchFilterNext };
+export { SearchFilter, SearchFilterNext, TypeFilter };

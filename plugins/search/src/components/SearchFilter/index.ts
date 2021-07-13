@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export { SearchFilter, SearchFilterNext } from './SearchFilter';
+export { SearchFilter, SearchFilterNext, TypeFilter } from './SearchFilter';
