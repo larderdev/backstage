@@ -14,5 +14,6 @@
  * limitations under the License.
  */
 
+export { ElasticSearchSearchEngine } from './ElasticSearchSearchEngine';
 export { LunrSearchEngine } from './LunrSearchEngine';
 export type { ConcreteLunrQuery } from './LunrSearchEngine';

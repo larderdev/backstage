@@ -16,5 +16,5 @@
 
 export { IndexBuilder } from './IndexBuilder';
 export { Scheduler } from './Scheduler';
-export { LunrSearchEngine } from './engines';
+export { LunrSearchEngine, ElasticSearchSearchEngine } from './engines';
 export type { SearchEngine } from './types';

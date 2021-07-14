@@ -20,6 +20,8 @@
   },
   "dependencies": {
     "@backstage/search-common": "^0.1.2",
+    "@elastic/elasticsearch": "^7.13.0",
+    "elastic-builder": "^2.16.0",
     "winston": "^3.2.1",
     "lunr": "^2.3.9",
     "@types/lunr": "^2.3.3"
