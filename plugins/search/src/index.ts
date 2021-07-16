@@ -32,7 +32,7 @@ export {
   useSearch,
   SearchPage as Router,
   SearchFilter,
-  TypeFilter,
+  SearchType,
   SearchFilterNext,
   SidebarSearch,
 } from './components';

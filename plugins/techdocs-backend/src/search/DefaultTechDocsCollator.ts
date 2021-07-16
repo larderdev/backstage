@@ -34,6 +34,7 @@ export interface TechDocsDocument extends IndexableDocument {
   namespace: string;
   name: string;
   lifecycle: string;
+  owner: string;
 }
 
 export class DefaultTechDocsCollator implements DocumentCollator {
@@ -42,7 +43,7 @@ export class DefaultTechDocsCollator implements DocumentCollator {
   private readonly logger: Logger;
   private readonly catalogClient: CatalogApi;
   private readonly parallelismLimit: number;
-  public readonly type: string = 'tech-docs';
+  public readonly type: string = 'techdocs';
 
   constructor({
     discovery,

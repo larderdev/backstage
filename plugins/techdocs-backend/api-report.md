@@ -15,9 +15,14 @@ import { PluginEndpointDiscovery } from '@backstage/backend-common';
 import { PreparerBuilder } from '@backstage/techdocs-common';
 import { PublisherBase } from '@backstage/techdocs-common';
 
+// Warning: (ae-forgotten-export) The symbol "RouterOptions" needs to be exported by the entry point index.d.ts
+// Warning: (ae-missing-release-tag) "createRouter" is exported by the package, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
 // @public (undocumented)
 export function createRouter(options: RouterOptions): Promise<express.Router>;
 
+// Warning: (ae-missing-release-tag) "DefaultTechDocsCollator" is exported by the package, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
 // @public (undocumented)
 export class DefaultTechDocsCollator implements DocumentCollator {
   constructor({
@@ -48,6 +53,8 @@ export class DefaultTechDocsCollator implements DocumentCollator {
   readonly type: string;
 }
 
+// Warning: (ae-missing-release-tag) "TechDocsDocument" is exported by the package, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
 // @public (undocumented)
 export interface TechDocsDocument extends IndexableDocument {
   // (undocumented)
@@ -58,6 +65,8 @@ export interface TechDocsDocument extends IndexableDocument {
   name: string;
   // (undocumented)
   namespace: string;
+  // (undocumented)
+  owner: string;
 }
 
 export * from '@backstage/techdocs-common';

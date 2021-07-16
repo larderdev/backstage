@@ -22,7 +22,7 @@ import {
   SearchBar,
   SearchFilter,
   SearchResult,
-  TypeFilter,
+  SearchType,
   DefaultResultListItem,
 } from '@backstage/plugin-search';
 import { Content, Header, Lifecycle, Page } from '@backstage/core-components';
@@ -41,6 +41,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
+// TODO: Move this into the search plugin once pagination is natively supported.
+// See: https://github.com/backstage/backstage/issues/6062
 const SearchResultList = ({ results }: SearchResultSet) => {
   const pageSize = 10;
   const [page, setPage] = useState(1);
@@ -62,7 +64,7 @@ const SearchResultList = ({ results }: SearchResultSet) => {
                     result={document}
                   />
                 );
-              case 'tech-docs':
+              case 'techdocs':
                 return (
                   <DocsResultListItem
                     key={document.location}
@@ -104,8 +106,8 @@ const SearchPage = () => {
           </Grid>
           <Grid item xs={3}>
             <Paper className={classes.filters}>
-              <TypeFilter
-                values={['tech-docs', 'software-catalog']}
+              <SearchType
+                values={['techdocs', 'software-catalog']}
                 name="type"
                 defaultValue="software-catalog"
               />
