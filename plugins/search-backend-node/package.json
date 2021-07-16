@@ -22,6 +22,7 @@
     "@backstage/config": "^0.1.5",
     "@backstage/search-common": "^0.1.2",
     "@elastic/elasticsearch": "^7.13.0",
+    "aws-elasticsearch-js": "^1.0.3",
     "elastic-builder": "^2.16.0",
     "winston": "^3.2.1",
     "lunr": "^2.3.9",

@@ -20,6 +20,7 @@ export interface Config {
     engine?: 'Lunr' | 'ElasticSearch';
 
     elasticSearch?: {
+      connectionType: 'elastic' | 'aws' | 'url';
       node?: string | string[];
       cloudId?: string;
       auth?: {

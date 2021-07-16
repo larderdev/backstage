@@ -24,6 +24,7 @@ import { QueryTranslator, SearchEngine } from '../types';
 import esb from 'elastic-builder';
 import { Client } from '@elastic/elasticsearch';
 import { Config } from '@backstage/config';
+import { createConnector } from 'aws-elasticsearch-js';
 
 export type ConcreteElasticSearchQuery = {
   documentTypes?: string[];
