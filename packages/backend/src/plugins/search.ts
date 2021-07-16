@@ -26,9 +26,10 @@ import { DefaultTechDocsCollator } from '@backstage/plugin-techdocs-backend';
 export default async function createPlugin({
   logger,
   discovery,
+  config,
 }: PluginEnvironment) {
   // Initialize a connection to a search engine.
-  const searchEngine = new ElasticSearchSearchEngine({ logger });
+  const searchEngine = new ElasticSearchSearchEngine({ logger, config });
   const indexBuilder = new IndexBuilder({ logger, searchEngine });
 
   // Collators are responsible for gathering documents known to plugins. This

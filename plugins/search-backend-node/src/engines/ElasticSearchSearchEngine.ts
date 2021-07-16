@@ -19,40 +19,63 @@ import {
   SearchQuery,
   SearchResultSet,
 } from '@backstage/search-common';
-import lunr from 'lunr';
 import { Logger } from 'winston';
 import { QueryTranslator, SearchEngine } from '../types';
 import esb from 'elastic-builder';
 import { Client } from '@elastic/elasticsearch';
+import { Config } from '@backstage/config';
 
 export type ConcreteElasticSearchQuery = {
   documentTypes?: string[];
   elasticQueryBuilder: () => any;
 };
 
-type ElasticSearchResultEnvelope = {
-  result: lunr.Index.Result;
-  type: string;
+type ElasticConfigAuth = {
+  username?: string;
+  password?: string;
+  apiKey?: string;
+  bearer?: string;
 };
 
 type ElasticSearchQueryTranslator = (
   query: SearchQuery,
 ) => ConcreteElasticSearchQuery;
 
+type ElasticSearchOptions = { logger: Logger; config: Config };
+
 export class ElasticSearchSearchEngine implements SearchEngine {
-  private elasticSearchClient = new Client({
-    node: 'http://localhost:9200',
-  });
+  private readonly ALIAS_POSTFIX = `__search`;
+  private documentTypes: Record<string, IndexableDocument> = {};
 
-  private ALIAS_POSTFIX = `__search`;
-
-  protected lunrIndices: Record<string, lunr.Index> = {};
-  protected documentTypes: Record<string, IndexableDocument>;
+  private readonly elasticSearchClient: Client;
   protected logger: Logger;
 
-  constructor({ logger }: { logger: Logger }) {
+  constructor({ logger, config }: ElasticSearchOptions) {
     this.logger = logger;
-    this.documentTypes = {};
+    this.elasticSearchClient = ElasticSearchSearchEngine.constructElasticSearchClient(
+      config.getConfig('search.elasticSearch'),
+    );
+  }
+
+  private static constructElasticSearchClient(config?: Config) {
+    if (!config) {
+      throw new Error('No elastic search config found');
+    }
+
+    if (config.getOptionalString('node')) {
+      return new Client({
+        node: config.getOptionalString('node'),
+        auth: config.get<ElasticConfigAuth>('auth'),
+      });
+    }
+    if (config.getOptionalString('cloudId')) {
+      return new Client({
+        cloud: {
+          id: config.getString('cloudId'),
+        },
+        auth: config.get<ElasticConfigAuth>('auth'),
+      });
+    }
   }
 
   protected translator: QueryTranslator = ({
@@ -90,6 +113,7 @@ export class ElasticSearchSearchEngine implements SearchEngine {
   }
 
   async index(type: string, documents: IndexableDocument[]): Promise<void> {
+    console.log(this.elasticSearchClient);
     const alias = `${type}${this.ALIAS_POSTFIX}`;
     const aliases = await this.elasticSearchClient.cat.aliases({
       format: 'json',
