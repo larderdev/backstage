@@ -101,7 +101,7 @@ const SearchPage = () => {
         <Grid container direction="row">
           <Grid item xs={12}>
             <Paper className={classes.bar}>
-              <SearchBar debounceTime={100} />
+              <SearchBar debounceTime={350} />
             </Paper>
           </Grid>
           <Grid item xs={3}>

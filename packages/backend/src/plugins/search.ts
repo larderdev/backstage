@@ -18,6 +18,7 @@ import { createRouter } from '@backstage/plugin-search-backend';
 import {
   IndexBuilder,
   ElasticSearchSearchEngine,
+  LunrSearchEngine,
 } from '@backstage/plugin-search-backend-node';
 import { PluginEnvironment } from '../types';
 import { DefaultCatalogCollator } from '@backstage/plugin-catalog-backend';
@@ -29,7 +30,13 @@ export default async function createPlugin({
   config,
 }: PluginEnvironment) {
   // Initialize a connection to a search engine.
-  const searchEngine = new ElasticSearchSearchEngine({ logger, config });
+  const searchEngine =
+    config.getOptionalString('search.engine') === 'ElasticSearch'
+      ? await ElasticSearchSearchEngine.initialize({
+          logger,
+          config,
+        })
+      : new LunrSearchEngine({ logger });
   const indexBuilder = new IndexBuilder({ logger, searchEngine });
 
   // Collators are responsible for gathering documents known to plugins. This

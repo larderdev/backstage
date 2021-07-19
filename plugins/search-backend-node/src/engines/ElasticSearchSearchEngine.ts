@@ -20,56 +20,80 @@ import {
   SearchResultSet,
 } from '@backstage/search-common';
 import { Logger } from 'winston';
-import { QueryTranslator, SearchEngine } from '../types';
+import { SearchEngine } from '../types';
 import esb from 'elastic-builder';
 import { Client } from '@elastic/elasticsearch';
 import { Config } from '@backstage/config';
-import { createConnector } from 'aws-elasticsearch-js';
+import {
+  createAWSConnection,
+  awsGetCredentials,
+} from '@acuris/aws-es-connection';
 
 export type ConcreteElasticSearchQuery = {
-  documentTypes?: string[];
+  documentFields?: string[];
   elasticQueryBuilder: () => any;
 };
 
 type ElasticConfigAuth = {
-  username?: string;
-  password?: string;
-  apiKey?: string;
-  bearer?: string;
+  username: string;
+  password: string;
+  apiKey: string;
+  bearer: string;
 };
 
 type ElasticSearchQueryTranslator = (
   query: SearchQuery,
 ) => ConcreteElasticSearchQuery;
 
-type ElasticSearchOptions = { logger: Logger; config: Config };
+type ElasticSearchOptions = {
+  logger: Logger;
+  config: Config;
+  aliasPostfix?: string;
+};
+
+type ElasticSearchResult = {
+  _index: string;
+  _type: string;
+  _score: number;
+  _source: IndexableDocument;
+};
 
 export class ElasticSearchSearchEngine implements SearchEngine {
-  private readonly ALIAS_POSTFIX = `__search`;
   private documentTypes: Record<string, IndexableDocument> = {};
 
-  private readonly elasticSearchClient: Client;
-  protected logger: Logger;
+  constructor(
+    private readonly aliasPostfix: string,
+    private readonly elasticSearchClient: Client,
+    private readonly logger: Logger,
+  ) {}
 
-  constructor({ logger, config }: ElasticSearchOptions) {
-    this.logger = logger;
-    this.elasticSearchClient = ElasticSearchSearchEngine.constructElasticSearchClient(
-      config.getConfig('search.elasticSearch'),
+  static async initialize({
+    logger,
+    config,
+    aliasPostfix = `search`,
+  }: ElasticSearchOptions) {
+    logger.info('Initializing ElasticSearch search engine.');
+    return new ElasticSearchSearchEngine(
+      `__${aliasPostfix}`,
+      await ElasticSearchSearchEngine.constructElasticSearchClient(
+        config.getConfig('search.elasticSearch'),
+      ),
+      logger,
     );
   }
 
-  private static constructElasticSearchClient(config?: Config) {
+  private static async constructElasticSearchClient(config?: Config) {
     if (!config) {
       throw new Error('No elastic search config found');
     }
 
-    if (config.getOptionalString('node')) {
+    if (config.getOptionalString('provider') === 'custom') {
       return new Client({
-        node: config.getOptionalString('node'),
+        node: config.getString('node'),
         auth: config.get<ElasticConfigAuth>('auth'),
       });
     }
-    if (config.getOptionalString('cloudId')) {
+    if (config.getOptionalString('provider') === 'elastic') {
       return new Client({
         cloud: {
           id: config.getString('cloudId'),
@@ -77,45 +101,59 @@ export class ElasticSearchSearchEngine implements SearchEngine {
         auth: config.get<ElasticConfigAuth>('auth'),
       });
     }
+    if (config.getOptionalString('provider') === 'aws') {
+      const awsCredentials = await awsGetCredentials();
+      const AWSConnection = createAWSConnection(awsCredentials);
+      return new Client({
+        node: config.getString('node'),
+        ...AWSConnection,
+      });
+    }
+    throw new Error('Failed to initialize ElasticSearch client');
   }
 
-  protected translator: QueryTranslator = ({
+  protected translator({
     term,
     filters,
     types,
-  }: SearchQuery): ConcreteElasticSearchQuery => {
+  }: SearchQuery): ConcreteElasticSearchQuery {
+    const searchableFields = [
+      ...new Set(
+        types
+          ? types.flatMap(it => {
+              if (!this.documentTypes[it]) return [];
+              return Object.keys(this.documentTypes[it]).map(key => key);
+            })
+          : Object.values(this.documentTypes).flatMap(it =>
+              Object.keys(it).map(key => key),
+            ),
+      ),
+    ];
     return {
       elasticQueryBuilder: () => {
-        const searchableFields = [
-          ...new Set(
-            types
-              ? types.flatMap(it =>
-                  Object.keys(this.documentTypes[it]).map(key => key),
-                )
-              : Object.values(this.documentTypes).flatMap(it =>
-                  Object.keys(it).map(key => key),
-                ),
-          ),
-        ];
-
-        console.log(searchableFields);
-
         return esb
-          .multiMatchQuery(searchableFields, term)
-          .fuzziness('auto')
-          .minimumShouldMatch(1);
+          .requestBodySearch()
+          .query(
+            esb
+              .multiMatchQuery(searchableFields, term)
+              .fuzziness('auto')
+              .minimumShouldMatch(1),
+          );
       },
-      documentTypes: types,
+      documentFields: searchableFields,
     };
-  };
+  }
 
   setTranslator(translator: ElasticSearchQueryTranslator) {
     this.translator = translator;
   }
 
   async index(type: string, documents: IndexableDocument[]): Promise<void> {
-    console.log(this.elasticSearchClient);
-    const alias = `${type}${this.ALIAS_POSTFIX}`;
+    this.logger.info(
+      `Started indexing ${documents.length} documents for index ${type}`,
+    );
+    console.time(`indexing ${type}`);
+    const alias = `${type}${this.aliasPostfix}`;
     const aliases = await this.elasticSearchClient.cat.aliases({
       format: 'json',
       name: alias,
@@ -125,80 +163,57 @@ export class ElasticSearchSearchEngine implements SearchEngine {
     );
     const timestamp = Date.now();
 
-    const index = `${type}__${timestamp}`;
+    const index = `${type}-index__${timestamp}`;
 
     await this.elasticSearchClient.indices.create({
       index,
     });
-
-    const body = documents.flatMap(doc => [{ index: { _index: index } }, doc]);
-
-    const { body: bulkResponse } = await this.elasticSearchClient.bulk({
-      refresh: true,
-      body,
+    const result = await this.elasticSearchClient.helpers.bulk({
+      datasource: documents,
+      onDocument() {
+        return {
+          index: { _index: index },
+        };
+      },
+      refreshOnCompletion: index,
     });
 
-    if (bulkResponse.errors) {
-      const erroredDocuments: any[] = [];
-      // The items array has the same order of the dataset we just indexed.
-      // The presence of the `error` key indicates that the operation
-      // that we did for the document has failed.
-      bulkResponse.items.forEach((action: any, i: any) => {
-        const operation = Object.keys(action)[0];
-        if (action[operation].error) {
-          erroredDocuments.push({
-            // If the status is 429 it means that you can retry the document,
-            // otherwise it's very likely a mapping error, and you should
-            // fix the document before to try it again.
-            status: action[operation].status,
-            error: action[operation].error,
-            operation: body[i * 2],
-            document: body[i * 2 + 1],
-          });
-        }
-      });
-      console.log(erroredDocuments);
-    }
-
+    this.documentTypes[type] = documents[0];
+    this.logger.info(`Indexing completed for index ${type}`, result);
+    console.timeEnd(`indexing ${type}`);
     await this.elasticSearchClient.indices.updateAliases({
       body: {
         actions: [
-          { remove: { index: `${type}__*`, alias } },
+          { remove: { index: `${type}-index__*`, alias } },
           { add: { index, alias } },
         ],
       },
     });
 
-    console.log(removableIndices);
+    this.logger.info('Removing stale search indices', removableIndices);
     await this.elasticSearchClient.indices.delete({ index: removableIndices });
-
-    this.documentTypes[type] = documents[0];
   }
 
   async query(query: SearchQuery): Promise<SearchResultSet> {
-    const { documentTypes, elasticQueryBuilder } = this.translator(
+    const { elasticQueryBuilder } = this.translator(
       query,
     ) as ConcreteElasticSearchQuery;
 
-    const requestBody = esb.requestBodySearch().query(elasticQueryBuilder());
+    const requestBody = elasticQueryBuilder();
 
     const queryIndices = query.types
-      ? query.types.map(it => `${it}${this.ALIAS_POSTFIX}`)
-      : '*';
+      ? query.types.map(it => `${it}${this.aliasPostfix}`)
+      : `*${this.aliasPostfix}`;
     const body = requestBody.toJSON();
-    console.log(queryIndices);
-    console.log(body);
     const result = await this.elasticSearchClient.search({
       index: queryIndices,
       body,
     });
     return {
-      results: result.body.hits.hits.map(d => {
-        return {
-          type: d._index.split('__')[0],
-          document: d._source,
-        };
-      }),
+      results: result.body.hits.hits.map((d: ElasticSearchResult) => ({
+        type: d._index.split('__')[0],
+        document: d._source,
+      })),
     };
   }
 }
